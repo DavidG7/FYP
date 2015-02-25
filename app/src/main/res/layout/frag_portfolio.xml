@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5"
+
+        android:orientation="vertical">
+
+       <TextView
+        android:id="@+id/tv_portfolio_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_gravity="bottom"
+        android:textSize="35dp"
+        android:text="Portfolio Value"
+        />
+
+        <SeekBar
+            android:id="@+id/seekBar1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:progressDrawable="@drawable/progress_drawable"
+            android:paddingLeft="100dp"
+            android:paddingRight="100dp"
+            android:thumb="@drawable/thumbler_small"
+            android:indeterminate="false" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:background="@color/list_divider"
+            android:layout_width = "fill_parent"
+            android:layout_height="1dip"
+            android:layout_centerVertical ="true"
+/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_height="0dp"
+        android:layout_weight="0.5" >
+
+
+        <ImageButton
+            android:id="@+id/ib_trans_history"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:background="@android:color/transparent"
+            android:src="@drawable/trans_history"
+
+
+         />
+        <View
+            android:background="@color/list_divider"
+            android:layout_width = "1dp"
+            android:layout_height="fill_parent"
+            android:layout_centerVertical ="true"
+            />
+
+        <FrameLayout
+            android:id="@+id/fl_chart_port"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"/>
+
+
+    </LinearLayout>
+    <View
+        android:background="@color/list_divider"
+        android:layout_width = "fill_parent"
+        android:layout_height="1dp"
+        android:layout_centerVertical ="true"
+        />
+</LinearLayout>

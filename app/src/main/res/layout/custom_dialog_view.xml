@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+
+            >
+
+        <TextView
+        android:id="@+id/tv_custom_dialog_heading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:text="BANK OF IRELAND"
+        android:textSize="30dp"
+        android:gravity="center"
+        android:textColor="@color/change_pos"
+        />
+            <View
+                android:background="@color/list_divider"
+                android:layout_width = "match_parent"
+                android:layout_height="1dp"
+
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="vertical" android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            >
+
+
+            <View
+                android:background="@color/list_divider"
+                android:layout_width = "match_parent"
+                android:layout_height="1dp"
+
+                />
+
+            <TextView
+
+                android:id="@+id/tv_dialog_data"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="20dp"
+                android:gravity="left"
+                android:textColor="@color/change_pos"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal" android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="0dp"
+            android:layout_weight="0.3"
+            >
+
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_weight="0.3"
+                android:layout_height="match_parent"
+                android:src = "@drawable/bank_of_ireland"/>
+
+            <ImageView
+               android:layout_width="0dp"
+               android:layout_weight="0.3"
+               android:layout_height="match_parent"
+               android:src = "@drawable/change_pos"/>
+
+            <TextView
+               android:layout_width="0dp"
+               android:layout_weight="0.3"
+               android:layout_height="match_parent"
+               android:text="+3.36%"
+               android:textSize="30dp"
+               android:gravity="center"
+               android:textColor="@color/change_pos"
+               />
+    </LinearLayout>
+
+</LinearLayout>
