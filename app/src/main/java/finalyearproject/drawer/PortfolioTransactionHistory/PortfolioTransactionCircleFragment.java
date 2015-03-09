@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
 import finalyearproject.drawer.PortfolioTransactionHistory.TransHistoryView;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
@@ -18,7 +22,7 @@ import finalyearproject.drawer.SQLiteDatabase.StockPurchase;
 public class PortfolioTransactionCircleFragment extends Fragment {
 
     FrameLayout mTransCircleContainer;
-    private StockPurchase[] mLastTenRecords;
+    private ArrayList<StockPurchase> mLastTenRecords;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -27,15 +31,42 @@ public class PortfolioTransactionCircleFragment extends Fragment {
         mTransCircleContainer = (FrameLayout) android.findViewById(R.id.fl_trans_circle_container);
         MySQLiteHelper stock_individual = new MySQLiteHelper(getActivity());
         stock_individual.open();
-        mLastTenRecords = new StockPurchase[10];
+        mLastTenRecords = new ArrayList<StockPurchase>();
         mLastTenRecords = stock_individual.getStockGroupEntry();
         stock_individual.close();
+        mLastTenRecords = getLastTenRecords();
         mTransCircleContainer.addView(new TransHistoryView(getActivity(), mLastTenRecords));
         return android;
     }
 
 
-    public StockPurchase[] getLastTenRecords() {
-        return mLastTenRecords;
+    public ArrayList<StockPurchase> getLastTenRecords() {
+        for(int i = mLastTenRecords.size()-1;i >=10;i--){
+            mLastTenRecords.remove(i);
+        }
+        Collections.sort(mLastTenRecords, new Comparator<StockPurchase>() {
+            @Override
+            public int compare(StockPurchase lhs, StockPurchase rhs) {
+                return rhs.getNum()-lhs.getNum();
+            }
+        });
+        return  mLastTenRecords;
+    }
+
+
+
+    public class CustomComparator implements Comparator<StockPurchase> {
+
+        @Override
+        public int compare(StockPurchase one, StockPurchase two) {
+            Integer p1 = one.getNum();
+            Integer p2 = two.getNum();
+            if(p1>=p2){
+                return p1;
+
+            }else{
+                return p2;
+            }
+        }
     }
 }

@@ -53,7 +53,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
     private NavDrawerListAdapter adapter;
     private ViewFlipper flipper;
     public ResultWrapper result;
-    private double mPortfolioValue;
+    private double mPortfolioValue,mPortfolioCost;
     private MySQLiteHelper stock_group;
     private SharedPref pref;
     private ArrayList<Integer> favourites;
@@ -67,6 +67,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
         stock_group = new MySQLiteHelper(this);
         stock_group.open();
         setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
+        setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
         stock_group.close();
 
         String callResult = "";
@@ -74,7 +75,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
         if (bundle != null) {
             callResult = bundle.getString("ResultWrapper");
         }
-         result = new Gson().fromJson(callResult, ResultWrapper.class);
+        result = new Gson().fromJson(callResult, ResultWrapper.class);
 
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -166,6 +167,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
     public void update(Subject subject) {
         stock_group.open();
         setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
+        setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
         stock_group.close();
     }
 
@@ -175,6 +177,14 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
     private void setPortfolioValue(double portfolioValue){
         mPortfolioValue = portfolioValue;
+    }
+
+    public double getPortfolioCost(){
+        return mPortfolioCost;
+    }
+
+    private void setPortfolioCost(double portfolioCost){
+        mPortfolioCost = portfolioCost;
     }
 
 
@@ -250,8 +260,8 @@ public class MainActivity extends ActionBarActivity implements Observer {
                 }
                 break;
             case 3:
-                 //fragment = new PhotosFragment();
-              //  fragment = new MasterChartFragment();
+                //fragment = new PhotosFragment();
+                 fragment = new MasterChartFragment();
 
                 break;
             case 4:
@@ -333,6 +343,16 @@ public class MainActivity extends ActionBarActivity implements Observer {
     @Subscribe
     public void watchlistToISEQCallback(WatchlistToISEQEvent event) {
         displayView(0);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+            System.exit(-1);
+        }else{
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
     }
 
 }

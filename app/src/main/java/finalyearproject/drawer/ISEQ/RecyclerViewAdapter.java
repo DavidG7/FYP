@@ -25,8 +25,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.TreeMap;
 
+import finalyearproject.drawer.Dialogs.ISEQDialog;
+import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialogView;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.FavouritesEvent;
 import finalyearproject.drawer.EventBus.ObserverEvent;
@@ -34,6 +37,7 @@ import finalyearproject.drawer.Main.StockItemRow;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
 import finalyearproject.drawer.SharedPreferences.SharedPref;
+import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ListItemViewHolder> {
@@ -47,6 +51,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     //private int fav_res;
     private TreeMap<Integer,Integer> fav_res = new TreeMap<Integer,Integer>();
     private boolean isWatchList;
+    MaterialDialog mMaterialDialog;
+    LayoutInflater inflater;
 
 
 
@@ -71,6 +77,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public ListItemViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.listitem_row, viewGroup, false);
+        inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         return new ListItemViewHolder(itemView);
     }
 
@@ -180,14 +187,30 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        viewHolder.extra.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+               Random random = new Random();
+               int randomInt = random.nextInt(10 - 1 + 1) + 1;
                String value;
                int position = viewHolder.getPosition();
                MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
                stock_group.open();
                value = Double.toString(stockItems.get(position).getLastTradePrice());
-               stock_group.createStockItemEntry(position,stockItems.get(position).getSymbol(),stockItems.get(position).getName(), 1, Double.parseDouble(value), 1 * Double.parseDouble(value),1 * Double.parseDouble(value));
+               stock_group.createStockItemEntry(position,stockItems.get(position).getSymbol(),stockItems.get(position).getName(), randomInt, Double.parseDouble(value), randomInt * Double.parseDouble(value),randomInt * Double.parseDouble(value));
                BusProvider.getInstance().post(new ObserverEvent());
                stock_group.close();
+               mMaterialDialog = new MaterialDialog(mContext)
+
+                       .setView(new ISEQDialog(mContext))
+                               //.setBackgroundResource(R.drawable.dublin_watchlist)
+                       .setPositiveButton("OK", new View.OnClickListener() {
+                           @Override
+                           public void onClick(View v) {
+                               mMaterialDialog.dismiss();
+
+                           }
+                       });
+
+
+               mMaterialDialog.show();
            }
        });
 

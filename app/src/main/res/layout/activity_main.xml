@@ -7,8 +7,8 @@
     <!-- Framelayout to display Fragments -->
     <FrameLayout
         android:id="@+id/frame_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <!-- Listview to display slider menu -->
     <LinearLayout
@@ -38,10 +38,10 @@
             android:background="@color/list_background">
 
             <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="fitXY"
-            android:src="@drawable/drawer_image_1" />
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/drawer_image_1" />
 
             <ImageView
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/drawer_image_2"/>
 
-           <ImageView
+            <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -60,17 +60,17 @@
 
 
         <ListView
-        android:id="@+id/list_slidermenu"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.570"
-        android:gravity="left"
-        android:layout_gravity="start"
-        android:choiceMode="singleChoice"
-        android:divider="@drawable/list_selector"
-        android:dividerHeight="0.5dip"
-        android:background="@color/White"/>
+            android:id="@+id/list_slidermenu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.570"
+            android:gravity="left"
+            android:layout_gravity="start"
+            android:choiceMode="singleChoice"
+            android:divider="@drawable/list_selector"
+            android:dividerHeight="0.5dip"
+            android:background="@color/White"/>
 
-   </LinearLayout>
+    </LinearLayout>
 
 </android.support.v4.widget.DrawerLayout>

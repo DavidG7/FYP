@@ -2,12 +2,17 @@
 
 
 
-<style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+<style name="AppTheme" parent="Theme.AppCompat">
     <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
     <item name="android:background">@color/White</item>
     <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
 
 </style>
+
+    <!--<style name="AppTheme" parent="Theme.AppCompat">
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+    </style>-->
 
 
 

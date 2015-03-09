@@ -3,46 +3,87 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.5"
 
         android:orientation="vertical">
-
-       <TextView
-        android:id="@+id/tv_portfolio_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="bottom"
-        android:textSize="35dp"
-        android:text="Portfolio Value"
-        />
-
-        <SeekBar
-            android:id="@+id/seekBar1"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:layout_margin="10dp"
-            android:progressDrawable="@drawable/progress_drawable"
-            android:paddingLeft="100dp"
-            android:paddingRight="100dp"
-            android:thumb="@drawable/thumbler_small"
-            android:indeterminate="false" />
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/portfolio_green"
+           android:orientation="vertical">
 
+
+            <TextView
+                android:id="@+id/tv_portfolio_info"
+                android:layout_width="40dp"
+                android:layout_margin="20dp"
+                android:layout_height="40dp"
+                android:text="i"
+                android:elevation="8dp"
+                android:fontFamily="serif"
+                android:textSize="30dp"
+                android:gravity="center"
+                android:background="@drawable/mycircle"
+                android:textColor="@color/White"
+
+
+                />
+            <TextView
+                android:id="@+id/tv_portfolio_value"
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom|center"
+                android:textColor="@color/list_divider_pressed"
+                android:layout_gravity="top"
+                android:background="@null"
+                android:textSize="35dp"
+                android:text="Portfolio Value"
+                />
+
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+
+            android:layout_weight="0.5">
+
+            <SeekBar
+                android:id="@+id/seekBar1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:paddingLeft="100dp"
+                android:paddingRight="100dp"
+                android:indeterminate="false" />
+
+           <!-- <ImageView
+
+                android:layout_width="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_height="50dp"
+                android:layout_margin="20dp"
+                android:background="@drawable/icon"
+
+
+
+                />-->
 
         </RelativeLayout>
 
-        <View
-            android:background="@color/list_divider"
-            android:layout_width = "fill_parent"
-            android:layout_height="1dip"
-            android:layout_centerVertical ="true"
-/>
+
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:orientation="horizontal"
@@ -57,30 +98,28 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@android:color/transparent"
+            android:background="@drawable/button_border_portfolio"
             android:src="@drawable/trans_history"
 
 
          />
-        <View
-            android:background="@color/list_divider"
-            android:layout_width = "1dp"
-            android:layout_height="fill_parent"
-            android:layout_centerVertical ="true"
-            />
+
+        <RelativeLayout
+            android:id="@+id/rl_chart_port"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/button_border_portfolio"
+            android:layout_weight="0.6">
+
 
         <FrameLayout
             android:id="@+id/fl_chart_port"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.6"/>
-
+            />
+    </RelativeLayout>
 
     </LinearLayout>
-    <View
-        android:background="@color/list_divider"
-        android:layout_width = "fill_parent"
-        android:layout_height="1dp"
-        android:layout_centerVertical ="true"
-        />
+
 </LinearLayout>

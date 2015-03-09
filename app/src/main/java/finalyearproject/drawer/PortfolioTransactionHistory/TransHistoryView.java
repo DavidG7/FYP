@@ -48,10 +48,10 @@ public class TransHistoryView extends View {
 
     int arrowDrawable;
 
-    StockPurchase[] mLastTenRecords;
+    ArrayList<StockPurchase> mLastTenRecords;
 
 
-    public TransHistoryView(Context context, final StockPurchase[] mLastTenRecords) {
+    public TransHistoryView(Context context, final ArrayList<StockPurchase> mLastTenRecords) {
         super(context);
         // TODO Auto-generated constructor stub
         this.mContext = context;
@@ -114,8 +114,13 @@ public class TransHistoryView extends View {
                     }
                     v.invalidate();
                     if(getIsHit() == true) {
-                        TransHistoryMaterialDialog dialog = new TransHistoryMaterialDialog(mContext, mLastTenRecords, getTemp());
-                        dialog.build();
+                        try {
+                            TransHistoryMaterialDialog dialog = new TransHistoryMaterialDialog(mContext, mLastTenRecords, getTemp());
+                            dialog.build();
+                        }catch(IndexOutOfBoundsException e){
+                            e.printStackTrace();
+                        }
+
                         setIsHit(false);
                     }
                 }
@@ -154,8 +159,12 @@ public class TransHistoryView extends View {
             canvas.drawBitmap(boughtImage,(mXArray.get(i)-(boughtImage.getWidth()/2)), (mYArray.get(i)-(boughtImage.getHeight()/2)),  paint);
             paint.setColor(Color.parseColor(mTextColors[i]));
             paint.setTextSize(mTextSizes[i]);
-            canvas.drawText(mLastTenRecords[i].getTickerId(),mXArray.get(i)-(boughtImage.getWidth()/4),mYArray.get(i)+(boughtImage.getHeight()/2)+20,paint);
-            canvas.drawText("("+Integer.toString(mLastTenRecords[i].getNum())+")",mXArray.get(i)-15,mYArray.get(i)+(boughtImage.getHeight()/2)+40,paint);
+            try {
+                canvas.drawText(mLastTenRecords.get(i).getTickerId(), mXArray.get(i) - (boughtImage.getWidth() / 4), mYArray.get(i) + (boughtImage.getHeight() / 2) + 20, paint);
+                canvas.drawText("(" + Integer.toString(mLastTenRecords.get(i).getNum()) + ")", mXArray.get(i) - 15, mYArray.get(i) + (boughtImage.getHeight() / 2) + 40, paint);
+            }catch(IndexOutOfBoundsException e){
+                e.printStackTrace();
+            }
 
         }
 

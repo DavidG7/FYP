@@ -163,13 +163,13 @@ public class MySQLiteHelper {
     }
 
 
-    public StockPurchase[] getStockGroupEntry() {
+    public ArrayList<StockPurchase> getStockGroupEntry() {
         // TODO Auto-generated method stub
 
         String[] columns = new String[]{S_ID,S_TID,S_NAME,S_NUM,S_INDVAL,S_TVAL,S_TCOST};
         Cursor c = ourDatabase.query(NAME_GROUP, columns, null, null, null, null, null);
 
-        StockPurchase[] stockGroupData = new StockPurchase[10];
+        ArrayList<StockPurchase> stockGroupData = new ArrayList<StockPurchase>();
 
         int i_id = c.getColumnIndex(S_ID);
         int i_tid = c.getColumnIndex(S_TID);
@@ -181,9 +181,9 @@ public class MySQLiteHelper {
 
 
         int i = 0;
-        for(c.moveToLast(); i <10 ;c.moveToPrevious()){
+        for(c.moveToLast();  !c.isBeforeFirst() ;c.moveToPrevious()){
             // result = result + c.getString(b_symbol) + "//split//" + c.getString(b_name) + "//split//" + c.getString(b_change_percent)+"//split//" + c.getString(b_price) + "//split//";
-            stockGroupData[i] = new StockPurchase(c.getInt(i_id), c.getString(i_tid), c.getString(i_name),c.getInt(i_num), c.getDouble(i_cval), c.getDouble(i_tval),c.getDouble(i_tcost));
+            stockGroupData.add(new StockPurchase(c.getInt(i_id), c.getString(i_tid), c.getString(i_name),c.getInt(i_num), c.getDouble(i_cval), c.getDouble(i_tval),c.getDouble(i_tcost)));
             i++;
         }
         return stockGroupData;
@@ -240,6 +240,18 @@ public class MySQLiteHelper {
         }
         return portfolioValue;
     }
+
+    public double getPortfolioCostFromSQLLiteDB() {
+
+        double portfolioCost = 0.0;
+        Cursor cursor = ourDatabase.rawQuery(
+                "SELECT SUM(" + S_TCOST + ") FROM " + NAME_GROUP, null);
+        if (cursor.moveToFirst()) {
+            portfolioCost = cursor.getDouble(0);
+        }
+        return portfolioCost;
+    }
+
 
 
     public long createStockBackupEntry(String b_symbol, String b_name, double b_price, String b_change_percent) {

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
+import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.otto.Subscribe;
 
 import java.util.concurrent.ExecutionException;
@@ -29,7 +30,7 @@ import finalyearproject.drawer.REST.RESTCall;
 public class FragmentMain extends Fragment {
 
     private Scroller mScroller;
-    private ProgressBar mProgress;
+    private CircleProgressBar mProgress;
     private ProgressBar progress;
     private int count = 0;
     private Runnable runnable;
@@ -67,7 +68,8 @@ public class FragmentMain extends Fragment {
     private View createView(final LayoutInflater inflater, final ViewGroup container) {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         mScroller = (Scroller) view.findViewById(R.id.scroller);
-        mProgress = (ProgressBar) view.findViewById(R.id.progressBar_splash);
+        mProgress = (CircleProgressBar) view.findViewById(R.id.progressBar_splash);
+        mProgress.setColorSchemeResources(R.color.list_divider);
         return view;
     }
 
@@ -92,7 +94,7 @@ public class FragmentMain extends Fragment {
  }
 
 
-    public ProgressBar getProgressBar(){
+    public CircleProgressBar getProgressBar(){
         return mProgress;
     }
 

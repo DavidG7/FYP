@@ -17,6 +17,20 @@
             android:layout_weight="0.9"
             android:orientation="horizontal"
             >
+            <TextView
+
+                android:id = "@+id/tv_transaction_title"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:textColor="@color/list_divider"
+                android:layout_gravity="top"
+                android:background="@null"
+                android:gravity="center"
+                android:textSize="25dp"
+                android:fontFamily="serif"
+                android:text="Transaction History"
+                />
         </LinearLayout>
 
         <ImageButton
