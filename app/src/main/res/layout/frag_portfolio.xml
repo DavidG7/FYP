@@ -98,8 +98,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.4"
-            android:background="@drawable/button_border_portfolio"
-            android:src="@drawable/trans_history"
+            android:background="@drawable/border_selector"
+            android:src="@drawable/trans_icon_selector"
 
 
          />
@@ -108,7 +108,7 @@
             android:id="@+id/rl_chart_port"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/button_border_portfolio"
+            android:background="@drawable/border_selector"
             android:layout_weight="0.6">
 
 

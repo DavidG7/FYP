@@ -19,6 +19,8 @@ import com.squareup.otto.Subscribe;
 import com.yalantis.pulltorefresh.library.PullToRefreshView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.ExitEvent;
@@ -41,10 +43,10 @@ public class ISEQFragment extends Fragment implements Subject {
 
     private ArrayList stockMarketObservers;
     private ArrayList StockItems;
+    private ArrayList <Quote> QuoteItems;
 
     RecyclerView recyclerView;
     RecyclerViewAdapter recylerViewAdapter;
-    Quote[] q;
     String value;
     boolean mWatchlist = false;
     ArrayList<Integer> favourites;
@@ -52,12 +54,6 @@ public class ISEQFragment extends Fragment implements Subject {
     ResultWrapper result;
     PullToRefreshView mPullToRefreshView;
 
-   // MySQLiteHelper stock_backup;
-    ImageView mExtra;
-
-   /* private final static String symbol[] = new String[57];
-    private final static String name[] = new String[57];
-    private final static String change[] = new String[57];*/
 
 
     public ISEQFragment(Observer observer) {
@@ -65,6 +61,7 @@ public class ISEQFragment extends Fragment implements Subject {
 
         stockMarketObservers = new ArrayList();
         StockItems = new ArrayList();
+        QuoteItems = new ArrayList<Quote>();
         this.favourites = new ArrayList<Integer>();
         this.attach(observer);
         BusProvider.getInstance().register(this);
@@ -81,6 +78,12 @@ public class ISEQFragment extends Fragment implements Subject {
         }catch(Exception e){
             e.printStackTrace();
         }
+        try {
+            QuoteItems.addAll(new ArrayList(Arrays.asList(result.getQuery().getResults().getQuote())));
+        }catch(NullPointerException e){
+
+            e.printStackTrace();
+        }
         Bundle bundle = getArguments();
         try {
             mWatchlist = bundle.getBoolean("Watchlist");
@@ -94,7 +97,7 @@ public class ISEQFragment extends Fragment implements Subject {
 
 
         recyclerView = (RecyclerView) android.findViewById(R.id.recyclerView);
-        recylerViewAdapter = new RecyclerViewAdapter(getActivity(),StockItems,mWatchlist);
+        recylerViewAdapter = new RecyclerViewAdapter(getActivity(),StockItems,mWatchlist,QuoteItems);
 
         recyclerView.setAdapter(recylerViewAdapter);
 
@@ -150,33 +153,40 @@ public class ISEQFragment extends Fragment implements Subject {
 
         stock_backup.open();
         StockItems.clear();
+        stock_backup.truncateTable("STOCK_BACKUP");
         try {
-            q = result.getQuery().getResults().getQuote();
+
        //     stock_backup.truncate("STOCK_BACKUP");
+            if(result!=null) {
 
-            if (mWatchlist == true) {
+                if (mWatchlist == true) {
 
-                for (int i = 0; i < favourites.size(); i++) {
-                    StockItems.add(new StockItemRow(q[favourites.get(i)].getsymbol(), q[favourites.get(i)].getName(), q[favourites.get(i)].getChangeInPercent(), q[favourites.get(i)].getLastTradePriceOnly()));
-                    stock_backup.createStockBackupEntry(q[favourites.get(i)].getsymbol(),q[favourites.get(i)].getName(),q[favourites.get(i)].getLastTradePriceOnly(),q[favourites.get(i)].getChangeInPercent());
+                    for (int i = 0; i < favourites.size(); i++) {
+                        StockItems.add(new StockItemRow(QuoteItems.get(favourites.get(i)).getsymbol(), QuoteItems.get(favourites.get(i)).getName(), QuoteItems.get(favourites.get(i)).getChangeInPercent(), QuoteItems.get(favourites.get(i)).getLastTradePriceOnly()));
+                        stock_backup.createStockBackupEntry(QuoteItems.get(favourites.get(i)).getsymbol(), QuoteItems.get(favourites.get(i)).getName(), QuoteItems.get(favourites.get(i)).getLastTradePriceOnly(), QuoteItems.get(favourites.get(i)).getChangeInPercent());
+                    }
+                } else {
+                    for (int i = 0; i < QuoteItems.size(); i++) {
+                        StockItemRow item = new StockItemRow(QuoteItems.get(i).getsymbol(), QuoteItems.get(i).getName(), QuoteItems.get(i).getChangeInPercent(), QuoteItems.get(i).getLastTradePriceOnly());
+                        StockItems.add(item);
+                        stock_backup.createStockBackupEntry(QuoteItems.get(i).getsymbol(), QuoteItems.get(i).getName(), QuoteItems.get(i).getLastTradePriceOnly(), QuoteItems.get(i).getChangeInPercent());
+                    }
+
                 }
-            } else {
-                for (int i = 0; i < q.length; i++) {
-                    StockItemRow item = new StockItemRow(q[i].getsymbol(), q[i].getName(), q[i].getChangeInPercent(), q[i].getLastTradePriceOnly());
-                    StockItems.add(item);
-                    stock_backup.createStockBackupEntry(q[i].getsymbol(),q[i].getName(),q[i].getLastTradePriceOnly(),q[i].getChangeInPercent());
-                }
-
+            }else{
+                StockItems.addAll(getStockItemsFromBackup());
             }
 
 
         }catch(NullPointerException e){
-            ArrayList<StockItemRow> items = new ArrayList<StockItemRow>();
+
+            //QuoteItems = null;
+            /*ArrayList<StockItemRow> items = new ArrayList<StockItemRow>();
             items = stock_backup.getStockBackup();
             for(int i = 0;i < items.size();i++) {
                 StockItems.add(items.get(i));
             }
-            //stock_backup.getStockBackup();
+            //stock_backup.getStockBackup();*/
         }
 
         recylerViewAdapter.notifyDataSetChanged();
@@ -228,6 +238,15 @@ public class ISEQFragment extends Fragment implements Subject {
     @Subscribe
     public void adapterCallback(ObserverEvent event) {
         notifyObservers();
+    }
+
+    public ArrayList<StockItemRow> getStockItemsFromBackup(){
+        MySQLiteHelper stock_backup = new MySQLiteHelper(getActivity());
+        ArrayList<StockItemRow> temp = new ArrayList<StockItemRow>();
+        stock_backup.open();
+        temp = stock_backup.getStockBackup();
+        stock_backup.close();
+        return temp;
     }
 
 

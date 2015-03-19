@@ -11,6 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import finalyearproject.drawer.Main.StockItemRow;
 import finalyearproject.drawer.POJO.Quote;
@@ -33,6 +34,7 @@ public class MySQLiteHelper {
     public static final String S_INDVAL = "INDIVIDUAL_VALUE";
     public static final String S_TVAL= "TOTAL_VALUE";
     public static final String S_TCOST = "TOTAL_COST";
+    public static final String S_DATE = "DATE";
     public static final String NAME_GROUP = "STOCK_GROUP";
 
 
@@ -91,7 +93,8 @@ public class MySQLiteHelper {
                             S_NUM + " INTEGER, " +
                             S_INDVAL + " DOUBLE, " +
                             S_TVAL + " DOUBLE, " +
-                            S_TCOST + " DOUBLE);"
+                            S_TCOST + " DOUBLE, " +
+                            S_DATE + " TEXT);"
             );
 
             db.execSQL("CREATE TABLE "  + NAME_INDIVIDUAL + " (" +
@@ -147,7 +150,7 @@ public class MySQLiteHelper {
 
 
 
-    public long createStockItemEntry(int s_id, String s_tid, String s_name, int s_num, double s_indv, double s_tval,double s_tcost) {
+    public long createStockItemEntry(int s_id, String s_tid, String s_name, int s_num, double s_indv, double s_tval,double s_tcost, String s_date) {
         // TODO Auto-generated method stub
         ContentValues cv = new ContentValues();
         cv.put(S_ID, s_id);
@@ -157,6 +160,7 @@ public class MySQLiteHelper {
         cv.put(S_INDVAL, s_indv);
         cv.put(S_TVAL,s_tval);
         cv.put(S_TCOST,s_tcost);
+        cv.put(S_DATE,s_date);
 
         return ourDatabase.insert(NAME_GROUP, null, cv);
 
@@ -166,7 +170,7 @@ public class MySQLiteHelper {
     public ArrayList<StockPurchase> getStockGroupEntry() {
         // TODO Auto-generated method stub
 
-        String[] columns = new String[]{S_ID,S_TID,S_NAME,S_NUM,S_INDVAL,S_TVAL,S_TCOST};
+        String[] columns = new String[]{S_ID,S_TID,S_NAME,S_NUM,S_INDVAL,S_TVAL,S_TCOST,S_DATE};
         Cursor c = ourDatabase.query(NAME_GROUP, columns, null, null, null, null, null);
 
         ArrayList<StockPurchase> stockGroupData = new ArrayList<StockPurchase>();
@@ -178,12 +182,13 @@ public class MySQLiteHelper {
         int i_cval = c.getColumnIndex(S_INDVAL);
         int i_tval = c.getColumnIndex(S_TVAL);
         int i_tcost = c.getColumnIndex(S_TCOST);
+        int i_date = c.getColumnIndex(S_DATE);
 
 
         int i = 0;
         for(c.moveToLast();  !c.isBeforeFirst() ;c.moveToPrevious()){
             // result = result + c.getString(b_symbol) + "//split//" + c.getString(b_name) + "//split//" + c.getString(b_change_percent)+"//split//" + c.getString(b_price) + "//split//";
-            stockGroupData.add(new StockPurchase(c.getInt(i_id), c.getString(i_tid), c.getString(i_name),c.getInt(i_num), c.getDouble(i_cval), c.getDouble(i_tval),c.getDouble(i_tcost)));
+            stockGroupData.add(new StockPurchase(c.getInt(i_id), c.getString(i_tid), c.getString(i_name),c.getInt(i_num), c.getDouble(i_cval), c.getDouble(i_tval),c.getDouble(i_tcost),c.getString(i_date)));
             i++;
         }
         return stockGroupData;
@@ -256,20 +261,25 @@ public class MySQLiteHelper {
 
     public long createStockBackupEntry(String b_symbol, String b_name, double b_price, String b_change_percent) {
         // TODO Auto-generated method stub
+        ourDatabase.delete(NAME_BACKUP, null, null);
         ContentValues cv = new ContentValues();
         cv.put(KEY_SYMBOL, b_symbol);
         cv.put(KEY_NAME, b_name);
         cv.put(KEY_PRICE, b_price);
         cv.put(KEY_CHANGE_PERCENT, b_change_percent);
 
-
-
         return ourDatabase.insert(NAME_BACKUP, null, cv);
 
     }
 
+    public void truncateTable(String TABLE_NAME) {
+        // TODO Auto-generated method stub
+        ourDatabase.delete(TABLE_NAME, null, null);
+ }
+
     public ArrayList<StockItemRow> getStockBackup() {
         // TODO Auto-generated method stub
+
 
         String[] columns = new String[]{KEY_SYMBOL,KEY_NAME,KEY_CHANGE_PERCENT,KEY_PRICE};
         Cursor c = ourDatabase.query(NAME_BACKUP, columns, null, null, null, null, null);
@@ -281,16 +291,10 @@ public class MySQLiteHelper {
         int b_change_percent = c.getColumnIndex(KEY_CHANGE_PERCENT);
         int b_price = c.getColumnIndex(KEY_PRICE);
 
-
-
-
         for(c.moveToFirst(); !c.isAfterLast();c.moveToNext()){
-           // result = result + c.getString(b_symbol) + "//split//" + c.getString(b_name) + "//split//" + c.getString(b_change_percent)+"//split//" + c.getString(b_price) + "//split//";
             backups.add(new StockItemRow(c.getString(b_symbol),c.getString(b_name),c.getString(b_change_percent),c.getDouble(b_price)));
         }
-        /*StockItemRow [] backupsArray = new StockItemRow[backups.size()];
-        backups.toArray(backupsArray);*/
-  //      throw new StackOverflowError();
+
         return backups ;
 
     }
@@ -300,61 +304,16 @@ public class MySQLiteHelper {
     {
         Quote[] quotes = result.getQuery().getResults().getQuote();
         ContentValues args = new ContentValues();
-        for(int i = 0; i< quotes.length;i++) {
-            args.put(S_INDVAL, quotes[i].getLastTradePriceOnly());
-            args.put(S_TVAL,quotes[i].getLastTradePriceOnly()*getNumberOfStocksIndividualTranche(i));
-            ourDatabase.update(NAME_GROUP, args, S_ID + "=" + i, null);
-        }
-    }
-
-    public void truncate(String TABLE_NAME)
-     {
-            ourDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
-            ourDatabase.execSQL("VACUUM");
-     }
-
-
-
-
-
-
-
-
-
-    public void deleteSQLTable(String table, String whereClause, String[] whereArgs){
-        ourHelper.getWritableDatabase();
-        ourDatabase.delete(table, whereClause, whereArgs);
-    }
-
-
-
-    public String checkIfDatabaseNotEmpty(String Table){
-        Cursor cur = ourDatabase.rawQuery("SELECT COUNT(*) FROM " + Table, null);
-        if (cur != null){
-            cur.moveToFirst();
-
-            if (cur.getInt(0) == 0) {
-                // Empty
-                return "EMPTY";
+        try {
+            for (int i = 0; i < quotes.length; i++) {
+                args.put(S_INDVAL, quotes[i].getLastTradePriceOnly());
+                args.put(S_TVAL, quotes[i].getLastTradePriceOnly() * getNumberOfStocksIndividualTranche(i));
+                ourDatabase.update(NAME_GROUP, args, S_ID + "=" + i, null);
             }
-
-        }
-        return "NOT EMPTY";
+        }catch (NullPointerException e){
+              e.printStackTrace();
     }
-
-    public int getNumberOfRowsInTable(String table){
-        try{
-            Cursor c = ourDatabase.rawQuery("select * from " + table,null);
-            Log.i("Number of Records"," :: "+c.getCount());
-            return c.getCount();
-        }catch(Exception e){
-            return 0;
-        }
     }
-
-
-
-
 
 }
 

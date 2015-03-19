@@ -23,6 +23,8 @@ public class LineChartFragment extends Fragment {
 
     LineChart chart;
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

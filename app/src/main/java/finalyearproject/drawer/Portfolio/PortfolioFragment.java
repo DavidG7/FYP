@@ -101,7 +101,7 @@ public class PortfolioFragment extends Fragment{
         });
 
 
-        mPortChart= new BarChartFragment();
+        mPortChart= new BarChartFragment(null);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fl_chart_port,mPortChart);
         transaction.commit();

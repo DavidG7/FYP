@@ -10,7 +10,7 @@ import java.text.DecimalFormat;
 
 public class Quote {
 
-    private String symbol;//TICKER ID
+    private String symbol;//TICKER ID /*######*/
     private String Ask;//THE CURRENT PRICE
     private String AverageDailyVolume;
     private String Bid;
@@ -24,18 +24,18 @@ public class Quote {
     private String Currency;
     private String ChangeRealtime;
     private String AfterHoursChangeRealtime;
-    private String DividendShare;
+    private String DividendShare; /*######*/
     private String LastTradeDate;
-    private Object TradeDate;
+    private Object TradeDate; /*######*/
     private String EarningsShare;
     private Object ErrorIndicationreturnedforsymbolchangedinvalid;
-    private String EPSEstimateCurrentYear;
+    private String EPSEstimateCurrentYear; /*######*/
     private String EPSEstimateNextYear;
     private String EPSEstimateNextQuarter;
-    private String DaysLow;
-    private String DaysHigh;
-    private String YearLow;
-    private String YearHigh;
+    private String DaysLow; /*######*/
+    private String DaysHigh; /*######*/
+    private String YearLow; /*######*/
+    private String YearHigh; /*######*/
     private String HoldingsGainPercent;
     private Object AnnualizedGain;
     private Object HoldingsGain;
@@ -56,7 +56,7 @@ public class Quote {
     private String LastTradePriceOnly;
     private Object HighLimit;
     private Object LowLimit;
-    private String DaysRange;
+    private String DaysRange; /*######*/
     private String DaysRangeRealtime;
     private String FiftydayMovingAverage;
     private String TwoHundreddayMovingAverage;
@@ -96,19 +96,45 @@ public class Quote {
     private String PercentChange;
 
 
+    public String getName(){
+        return Name;
+    }
+
     public String getsymbol(){
         return symbol;
     }
 
-    public String getName(){
-        return Name;
+    public String getDaysLow(){
+        return DaysLow;
     }
+
+    public String getDaysHigh(){
+        return DaysHigh;
+    }
+
+    public String getYearsLow(){
+        return YearLow;
+    }
+
+    public String getYearsHigh(){
+        return YearHigh;
+    }
+
+    public String getVolume(){
+        return Volume;
+    }
+
+
+    public String getLastTradeTime(){
+        return LastTradeTime;
+    }
+
 
     /*public String getChangeinPercent(){
         return ChangeinPercent;
     }*/
 
-    public Double getLastTradePriceOnly(){
+    public double getLastTradePriceOnly(){
         return Double.parseDouble(LastTradePriceOnly);
     }
 

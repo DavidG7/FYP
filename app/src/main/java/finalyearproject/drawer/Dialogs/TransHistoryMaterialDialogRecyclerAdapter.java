@@ -21,19 +21,20 @@ public class TransHistoryMaterialDialogRecyclerAdapter extends RecyclerView.Adap
         private int itemLayout;
         String[] mListText;
 
+
         public TransHistoryMaterialDialogRecyclerAdapter(ArrayList<String> data) {
-            //this.data = data;
-            mListText = new String[]{"Ticker ID: ","Number of Stocks Bought: ","Cost of Purchase: ","Current Value: "};
+            this.data = data;
+            mListText = new String[]{"Ticker ID: ","Date of Purchase: ","Number of Stocks Bought: ","Cost of Purchase: ","Current Value: ","Current Individual Value: "};
         }
 
         @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_dialog_item_row, parent, false);
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.dialog_item_row, parent, false);
             return new ViewHolder(v);
         }
 
         @Override public void onBindViewHolder(ViewHolder holder, int position) {
             String singleData = data.get(position);
-            //holder.mListText.setText(mListText[position]+ singleData);
+            holder.mListText.setText(mListText[position]+ singleData);
             holder.itemView.setTag(singleData);
         }
 
@@ -44,9 +45,10 @@ public class TransHistoryMaterialDialogRecyclerAdapter extends RecyclerView.Adap
         public static class ViewHolder extends RecyclerView.ViewHolder {
             public TextView mListText;
 
+
             public ViewHolder(View itemView) {
                 super(itemView);
-                mListText= (TextView) itemView.findViewById(R.id.custom_dialog_list);
+                mListText= (TextView) itemView.findViewById(R.id.tv_stock_dialog_data);
             }
         }
 

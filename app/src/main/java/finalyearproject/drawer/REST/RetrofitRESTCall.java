@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 import finalyearproject.drawer.POJO.ResultWrapper;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
+import retrofit.RetrofitError;
 
 /**
  * Created by Dvaid on 19/01/2015.
@@ -41,13 +42,17 @@ public class RetrofitRESTCall implements RESTCall{
         @Override
         protected ResultWrapper doInBackground(Void... params) {
 
+                //try {
+                    ResultWrapper result = RetrofitInterface.getStockApiClient()
+                            .listQuotes();
+                    MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
+                    stock_group.open();
+                    stock_group.updateStockValues(result);
+                    stock_group.close();
+              //  }catch(RetrofitError e){
+                 //   e.printStackTrace();
+              //  }
 
-            ResultWrapper result = RetrofitInterface.getStockApiClient()
-                    .listQuotes();
-            MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
-            stock_group.open();
-            stock_group.updateStockValues(result);
-            stock_group.close();
             return result;
         }
 

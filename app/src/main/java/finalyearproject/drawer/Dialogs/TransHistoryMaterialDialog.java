@@ -1,10 +1,14 @@
 package finalyearproject.drawer.Dialogs;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.View;
+import android.widget.Button;
 
 import java.util.ArrayList;
 
+import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.StockPurchase;
 import me.drakeet.materialdialog.MaterialDialog;
 
@@ -34,19 +38,25 @@ public class TransHistoryMaterialDialog {
 
         //ArrayAdapter<String> modeAdapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_list_item_1, android.R.id.text1, stringArray);
         //contentView.setAdapter(modeAdapter);
-        mMaterialDialog = new MaterialDialog(mContext)
-
-                .setView(new TransHistoryMaterialDialogView(mContext,mLastTenRecords.get(mPosition)))
-                //.setBackgroundResource(R.drawable.dublin_watchlist)
-                .setPositiveButton("OK", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mMaterialDialog.dismiss();
-
-                    }
-                });
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
 
-        mMaterialDialog.show();
+                               builder.setView(new TransHistoryMaterialDialogView(mContext, mLastTenRecords.get(mPosition),mPosition))
+                                       //.setBackgroundResource(R.drawable.dublin_watchlist)
+                                       .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(DialogInterface dialog, int id) {
+                                               dialog.dismiss();
+
+                                           }
+                                       });
+
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        final Button buttonPositiveInvolvement = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        buttonPositiveInvolvement.setTextColor(mContext.getResources().getColor(R.color.list_divider));
+
+
+        }
     }
-}

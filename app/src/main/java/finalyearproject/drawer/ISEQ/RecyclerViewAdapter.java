@@ -5,13 +5,21 @@ package finalyearproject.drawer.ISEQ;
  */
 
 import android.annotation.TargetApi;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,8 +28,10 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -33,7 +43,9 @@ import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialogView;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.FavouritesEvent;
 import finalyearproject.drawer.EventBus.ObserverEvent;
+import finalyearproject.drawer.Main.MainActivity;
 import finalyearproject.drawer.Main.StockItemRow;
+import finalyearproject.drawer.POJO.Quote;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
 import finalyearproject.drawer.SharedPreferences.SharedPref;
@@ -44,32 +56,32 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     private List<StockItemRow> stockItems;
+    private List<Quote> quoteItems;
     private TypedArray ISEQIcons;
     private Context mContext;
     private ArrayList<Integer> favourites;
     private SharedPref pref;
-    //private int fav_res;
     private TreeMap<Integer,Integer> fav_res = new TreeMap<Integer,Integer>();
     private boolean isWatchList;
-    MaterialDialog mMaterialDialog;
     LayoutInflater inflater;
+    EditText mNumberStocks;
 
 
 
 
-    RecyclerViewAdapter(Context context, List modelData, boolean isWatchList) {
+
+    RecyclerViewAdapter(Context context, List modelData, boolean isWatchList,List quoteData) {
         if (modelData == null) {
             throw new IllegalArgumentException("modelData must not be null");
         }
         this.stockItems = modelData;
-
+        this.quoteItems = quoteData;
         this.ISEQIcons = context.getResources().obtainTypedArray(R.array.iseq_icons);
         this.mContext = context;
         this.favourites = new ArrayList<Integer>();
         this.pref = new SharedPref(mContext);
         this.favourites = pref.loadSavedPreferences();
         this.isWatchList = isWatchList;
-        //BusProvider.getInstance().register(this);
 
     }
 
@@ -90,11 +102,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.txtViewChange.setText(stockModel.getChange());
         viewHolder.txtViewPrice.setText("€" +   Double.toString(stockModel.getLastTradePrice()));
         if(isWatchList == true){
-
-            //viewHolder.icon.setImageResource(ISEQIcons.getResourceId(favourites.get(position), -1));
            Picasso.with(mContext).load(ISEQIcons.getResourceId(favourites.get(position), -1)).into(viewHolder.icon);
         }else {
-            //viewHolder.icon.setImageResource(ISEQIcons.getResourceId(position, -1));
            Picasso.with(mContext).load(ISEQIcons.getResourceId(position, -1)).into(viewHolder.icon);
         }
 
@@ -118,10 +127,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
         if(isWatchList==true){
-            //fav_res = R.drawable.star_pressed;
             fav_res.put(position,R.drawable.star_pressed);
         }else {
-            //fav_res = R.drawable.star;
             int test = R.drawable.star;
             for (int i = 0; i < favourites.size(); i++) {
                 if (position == favourites.get(i)) {
@@ -148,7 +155,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 } else if (isWatchList == false) {
                     if (fav_res.get(viewHolder.getPosition()) == R.drawable.star) {
 
-                        //fav_res = R.drawable.star_pressed;
+
                         HashSet tempHash = new HashSet();
                         tempHash.addAll(favourites);
                         tempHash.add(viewHolder.getPosition());
@@ -187,34 +194,92 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        viewHolder.extra.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
-               Random random = new Random();
-               int randomInt = random.nextInt(10 - 1 + 1) + 1;
-               String value;
-               int position = viewHolder.getPosition();
-               MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
-               stock_group.open();
-               value = Double.toString(stockItems.get(position).getLastTradePrice());
-               stock_group.createStockItemEntry(position,stockItems.get(position).getSymbol(),stockItems.get(position).getName(), randomInt, Double.parseDouble(value), randomInt * Double.parseDouble(value),randomInt * Double.parseDouble(value));
-               BusProvider.getInstance().post(new ObserverEvent());
-               stock_group.close();
-               mMaterialDialog = new MaterialDialog(mContext)
 
-                       .setView(new ISEQDialog(mContext))
-                               //.setBackgroundResource(R.drawable.dublin_watchlist)
-                       .setPositiveButton("OK", new View.OnClickListener() {
+               final int position = viewHolder.getPosition();
+               Quote tempQuoteItem = quoteItems.get(position);
+               final View iseqDialog = new ISEQDialog(mContext,tempQuoteItem);
+               mNumberStocks = (EditText) iseqDialog.findViewById(R.id.et_num_stocks);
+
+
+               AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+
+                       builder.setView(iseqDialog)
+
+                       .setPositiveButton("BUY", new DialogInterface.OnClickListener() {
                            @Override
-                           public void onClick(View v) {
-                               mMaterialDialog.dismiss();
+                           public void onClick(DialogInterface dialog, int id) {
+
+
+                               int numOfStocksBought = Integer.parseInt(mNumberStocks.getText().toString());
+                               if (numOfStocksBought != 0) {
+                                   String value;
+
+                                   Calendar c = Calendar.getInstance();
+                                   SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy" );
+                                   String formattedDate = df.format(c.getTime());
+
+                                   MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
+                                   stock_group.open();
+                                   value = Double.toString(stockItems.get(position).getLastTradePrice());
+                                   stock_group.createStockItemEntry(position, stockItems.get(position).getSymbol(), stockItems.get(position).getName(), numOfStocksBought, Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value),formattedDate);
+                                   BusProvider.getInstance().post(new ObserverEvent());
+                                   stock_group.close();
+
+
+                               }
 
                            }
-                       });
+                       })
+                               .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                                   public void onClick(DialogInterface dialog, int id) {
+
+                                   }
+                               });
 
 
-               mMaterialDialog.show();
+
+
+               final AlertDialog alertDialog = builder.create();
+               mNumberStocks.addTextChangedListener(new TextWatcher() {
+
+                   @Override
+                   public void onTextChanged(CharSequence s, int start, int before, int count) {
+                   }
+
+                   @Override
+                   public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                   }
+
+                   @Override
+                   public void afterTextChanged(Editable s) {
+                       try {
+                           if (Integer.parseInt(s.toString()) == 0) {
+                               alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(false);
+                           } else {
+                               alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(true);
+                           }
+                       }catch(NumberFormatException e){
+                           e.printStackTrace();
+                           alertDialog.getButton(Dialog.BUTTON_POSITIVE).setEnabled(false);
+                       }
+                   }
+               });
+
+               alertDialog.show();
+               setDialogSpecifics(alertDialog);
+
            }
        });
 
 
+    }
+
+    public void setDialogSpecifics(AlertDialog alertDialog){
+        final Button buttonPositiveInvolvement = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        final Button buttonNegativeInvolvement = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE);
+        buttonPositiveInvolvement.setTextColor(mContext.getResources().getColor(R.color.list_divider));
+        buttonNegativeInvolvement.setTextColor(mContext.getResources().getColor(R.color.list_divider));
+        buttonPositiveInvolvement.setEnabled(false);
     }
 
 
