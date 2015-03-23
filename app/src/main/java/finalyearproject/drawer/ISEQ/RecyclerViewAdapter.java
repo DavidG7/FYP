@@ -49,7 +49,6 @@ import finalyearproject.drawer.POJO.Quote;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
 import finalyearproject.drawer.SharedPreferences.SharedPref;
-import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ListItemViewHolder> {

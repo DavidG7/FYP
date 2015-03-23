@@ -40,18 +40,20 @@ public class MasterChartFragment extends Fragment {
     private static final int NUM_PAGES = 3;
     private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
-    private ImageView mLine,mBar,mPie;
+    private TextView mLine,mBar,mPie;
     private TextView mSpinnerHeading;
 
     private ResultWrapper mResult;
     private Quote[] mQuotes;
     private Quote mActiveQuote;
 
+    private int mPosition;
+
     Fragment[] chartFragments = new Fragment[3];
 
     private ArrayList<String> state = new ArrayList<String>();
 
-    public MasterChartFragment(ResultWrapper result){
+    public MasterChartFragment(ResultWrapper result, int position){
         this.mResult = result;
         this.mQuotes = mResult.getQuery().getResults().getQuote();
         for(int i = 0;i<mQuotes.length;i++) {
@@ -59,6 +61,7 @@ public class MasterChartFragment extends Fragment {
         }
         mActiveQuote = mQuotes[0];
         BusProvider.getInstance().register(this);
+        this.mPosition = position;
 
     }
 
@@ -71,10 +74,11 @@ public class MasterChartFragment extends Fragment {
 
         mPager = (ViewPager) charts.findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
-        mLine = (ImageView) charts.findViewById(R.id.iv_line_chart);
-        mBar = (ImageView) charts.findViewById(R.id.iv_bar_chart);
-        mPie = (ImageView) charts.findViewById(R.id.iv_pie_chart);
+        mLine = (TextView) charts.findViewById(R.id.tv_line_chart);
+        mBar = (TextView) charts.findViewById(R.id.tv_bar_chart);
+        mPie = (TextView) charts.findViewById(R.id.tv_pie_chart);
         mSpinnerHeading = (TextView) charts.findViewById(R.id.chart_spinner_heading);
+        mSpinnerHeading.setText(mQuotes[mPosition].getsymbol());
 
         mPager.setAdapter(mPagerAdapter);
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -112,8 +116,8 @@ public class MasterChartFragment extends Fragment {
             public void onItemSelected(AdapterView<?> arg0, View view, int position, long id) {
                 mSpinnerHeading.setText(mQuotes[position].getsymbol());
                 mActiveQuote = mQuotes[position];
-                //mPagerAdapter = new ScreenSlidePagerAdapter(getChildFragmentManager());
                 mPager.setAdapter(new ScreenSlidePagerAdapter(getChildFragmentManager()));
+                iconSwitch(0);
             }
 
 
@@ -137,7 +141,7 @@ private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         chartFragments[0] = new BarChartFragment(mActiveQuote);
         chartFragments[1] = new LineChartFragment();
-        chartFragments[2] = new PieChartFragment();
+        chartFragments[2] = new PieChartFragment(mActiveQuote);
     }
 
     @Override
@@ -160,19 +164,28 @@ private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public void iconSwitch(int position){
         switch ( position ) {
            case 0:
-                mBar.setImageResource(R.drawable.bar_chart_selected);
-                mLine.setImageResource(R.drawable.line_chart);
-                mPie.setImageResource(R.drawable.pie_chart);
+                mBar.setBackgroundResource(R.drawable.mycircle);
+                mLine.setBackgroundResource(R.drawable.mycircle_white);
+                mPie.setBackgroundResource(R.drawable.mycircle_white);
+               mBar.setTextColor(getResources().getColor(R.color.White));
+               mLine.setTextColor(getResources().getColor(R.color.list_divider));
+               mPie.setTextColor(getResources().getColor(R.color.list_divider));
                 break;
             case 1:
-                mBar.setImageResource(R.drawable.bar_chart);
-                mLine.setImageResource(R.drawable.line_chart_selected);
-                mPie.setImageResource(R.drawable.pie_chart);
+                mBar.setBackgroundResource(R.drawable.mycircle_white);
+                mLine.setBackgroundResource(R.drawable.mycircle);
+                mPie.setBackgroundResource(R.drawable.mycircle_white);
+                mBar.setTextColor(getResources().getColor(R.color.list_divider));
+                mLine.setTextColor(getResources().getColor(R.color.White));
+                mPie.setTextColor(getResources().getColor(R.color.list_divider));
                 break;
             case 2:
-                mBar.setImageResource(R.drawable.bar_chart);
-                mLine.setImageResource(R.drawable.line_chart);
-                mPie.setImageResource(R.drawable.pie_chart_selected);
+                mBar.setBackgroundResource(R.drawable.mycircle_white);
+                mLine.setBackgroundResource(R.drawable.mycircle_white);
+                mPie.setBackgroundResource(R.drawable.mycircle);
+                mBar.setTextColor(getResources().getColor(R.color.list_divider));
+                mLine.setTextColor(getResources().getColor(R.color.list_divider));
+                mPie.setTextColor(getResources().getColor(R.color.White));
                 break;
         }
     }

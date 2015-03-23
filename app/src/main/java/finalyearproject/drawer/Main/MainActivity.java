@@ -261,7 +261,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
                 break;
             case 3:
                 //fragment = new PhotosFragment();
-                 fragment = new MasterChartFragment(result);
+                 fragment = new MasterChartFragment(result,0);
 
                 break;
             case 4:

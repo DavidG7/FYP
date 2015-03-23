@@ -16,4 +16,26 @@ public class NumberFormatter {
         }
         return percentChangeAsString;
     }
+
+
+    public double getPercentOfOneNumFromAnother(double smaller, double larger){
+        double result = 0.0;
+        if(smaller != 0.0 || larger != 0.0){
+
+            result = (smaller / larger) * 100;
+        }
+        return result;
+    }
+
+    public double getFoolsRatio(double priceToEarnings, double estimateNext,double estimateCurrent){
+
+        double growthRate = getGrowthRate(estimateNext,estimateCurrent);
+        double foolsRatio = (priceToEarnings/growthRate);
+        return foolsRatio;
+    }
+
+    public double getGrowthRate(double estimateNext,double estimateCurrent){
+        double growthRate = (((estimateNext-estimateCurrent)/estimateCurrent)*100);
+        return growthRate;
+    }
 }

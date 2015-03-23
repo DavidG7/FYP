@@ -18,6 +18,7 @@
             android:layout_weight="0.30"
             android:orientation="vertical" >
 
+
             <com.andexert.library.RippleView
                 android:id="@+id/more"
                 android:layout_width="45dp"
@@ -25,22 +26,22 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/mycircle"
-                android:elevation="8dp"
+                android:elevation="12dp"
                 app:rv_color = "@color/White"
                 app:rv_alpha = "255"
                 app:rv_rippleDuration = "200"
                 app:rv_centered = "true"
                 >
-            <ImageView
-                android:id="@+id/extra"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:src = "@drawable/plus"
-                android:background="@drawable/mycircle"
-                android:textColor="@color/White"
+                <ImageView
+                    android:id="@+id/extra"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:src = "@drawable/plus"
+                    android:background="@drawable/mycircle"
+                    android:textColor="@color/White"
 
-             />
+                    />
             </com.andexert.library.RippleView>
 
             <ImageView
@@ -101,7 +102,7 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/mycircle"
-                android:elevation="8dp"
+                android:elevation="12dp"
                 />
 
             <ImageView

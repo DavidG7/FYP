@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/motly"
+            android:padding="10dp"
+            android:layout_weight="0.2"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:text="Motley Fools Calculator"
+            android:fontFamily="serif"
+            android:textSize="25dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/list_divider"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:id="@+id/tv_fools_pe"
+           android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:fontFamily="serif"
+            android:text="Price to earnings ratio: "
+            android:textSize="18dp"
+            android:textColor="@color/list_divider"
+            android:layout_gravity="center"
+
+            />
+
+        <EditText
+            android:id="@+id/et_fools_pe"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18dp"
+            android:inputType="numberDecimal"
+            android:textColor="@color/list_divider"
+            android:layout_gravity = "center"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:layout_weight="0.15">
+
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/tv_fools_estimate_next"
+            android:text="Earnings estimate for next year: "
+            android:textSize="18dp"
+            android:fontFamily="serif"
+            android:textColor="@color/list_divider"
+            android:layout_gravity="center"
+
+            />
+
+        <EditText
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18dp"
+            android:inputType="number"
+            android:id="@+id/et_fools_estimate_next"
+            android:textColor="@color/list_divider"
+            android:layout_gravity = "center"
+            />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:layout_weight="0.15">
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:fontFamily="serif"
+            android:text="Current earnings: "
+            android:textSize="18dp"
+            android:textColor="@color/list_divider"
+            android:layout_gravity="center"
+
+            />
+
+        <EditText
+            android:id="@+id/et_fools_estimate_current"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:textSize="18dp"
+            android:inputType="number"
+            android:textColor="@color/list_divider"
+            android:layout_gravity = "center"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal" android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingLeft="10dp"
+        android:layout_weight="0.15">
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_fools_calculate"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:clipToPadding="false"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/mycircle_green"
+        android:text="GO"
+        android:fontFamily="serif"
+        android:elevation="12dp"
+        android:textColor="@color/White"
+        android:gravity="center"
+        android:textSize="15dp"
+        />
+    <TextView
+        android:id="@+id/tv_fools_result"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:textColor="@color/White"
+        android:fontFamily="serif"
+        android:textSize = "25dp"
+        android:background="@color/list_divider"
+        android:layout_weight="0.1">
+    </TextView>
+
+
+</LinearLayout>

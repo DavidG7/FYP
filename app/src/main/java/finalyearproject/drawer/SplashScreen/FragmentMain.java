@@ -61,7 +61,7 @@ public class FragmentMain extends Fragment {
         return view;
     }
 
-    private void buildViews() {
+        private void buildViews() {
         mScroller.initializeScrollView(0);
     }
 

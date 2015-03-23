@@ -6,16 +6,16 @@
         android:id="@+id/ll_chart_ticker"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight ="0.10"
+        android:layout_weight ="0.15"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/chart_spinner_heading"
             android:layout_width="0dp"
-            android:text="BIR.IR"
+
             android:textColor="@color/list_divider_pressed"
             android:gravity="center_vertical|right"
             android:layout_height="match_parent"
-            android:layout_weight ="0."
+            android:layout_weight ="0.9"
           >
         </TextView>
         <Spinner
@@ -23,9 +23,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight ="0.1"
-            android:background="@android:color/transparent"
-            android:prompt="@string/drawer_open"
-            android:dropDownWidth="250dp"
+
+
+            android:dropDownWidth="225dp"
 
 
         />
@@ -37,7 +37,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.65">
+        android:layout_weight="0.6">
 
     <FrameLayout
         android:id="@+id/graph_container"
@@ -56,28 +56,41 @@
 
 
 
-        <ImageView
-            android:id="@+id/iv_bar_chart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.333"
-            android:src="@drawable/bar_chart_selected"
+        <TextView
+            android:id="@+id/tv_bar_chart"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="62dp"
+            android:background="@drawable/mycircle"
+            android:text="B"
+            android:textColor="@color/White"
+            android:gravity="center"
+            android:textSize="25dp"
            />
 
-        <ImageView
-            android:id="@+id/iv_line_chart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.333"
-            android:src="@drawable/line_chart"
+        <TextView
+            android:id="@+id/tv_line_chart"
+            android:layout_height="45dp"
+            android:layout_width="45dp"
+            android:background="@drawable/mycircle_white"
+            android:text="L"
+            android:textColor="@color/list_divider"
+            android:gravity="center"
+            android:textSize="25dp"
+
             />
 
-        <ImageView
-            android:id="@+id/iv_pie_chart"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.333"
-            android:src="@drawable/pie_chart"
+        <TextView
+            android:id="@+id/tv_pie_chart"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/mycircle_white"
+            android:text="P"
+            android:textColor="@color/list_divider"
+            android:gravity="center"
+            android:textSize="25dp"
             />
 
         </LinearLayout>

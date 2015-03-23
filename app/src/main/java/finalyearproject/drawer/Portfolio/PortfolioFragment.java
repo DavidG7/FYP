@@ -14,10 +14,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import finalyearproject.drawer.ChartFragment.BarChartFragment;
+import finalyearproject.drawer.ChartFragment.LineChartFragment;
 import finalyearproject.drawer.Main.MainActivity;
 import finalyearproject.drawer.PortfolioTransactionHistory.PortfolioTransactionActivity;
 import finalyearproject.drawer.R;
-import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by Dvaid on 06/02/2015.
@@ -27,7 +27,7 @@ public class PortfolioFragment extends Fragment{
     Fragment mPortChart;
     TextView mPortfolioValueView;
     ImageButton mPortTransHistory;
-    MaterialDialog mMaterialDialog;
+
     String portfolioStringValue,portfolioStringCost;
     TextView mPortValueInfo;
     RelativeLayout  mRelatveLayoutFragment;
@@ -80,7 +80,7 @@ public class PortfolioFragment extends Fragment{
             public void onClick(View v) {
                 mPortValueInfo.setTextColor(getResources().getColor(R.color.list_divider));
                 mPortValueInfo.setBackgroundResource(R.drawable.mycircle_white);
-                mMaterialDialog = new MaterialDialog(getActivity())
+                /*mMaterialDialog = new MaterialDialog(getActivity())
 
                         .setTitle("Portfolio Value")
                         .setMessage("Current Value: " + portfolioStringValue + "\n"+ "BoughtValue: " + portfolioStringCost)
@@ -96,12 +96,12 @@ public class PortfolioFragment extends Fragment{
                         });
 
 
-                mMaterialDialog.show();
+                mMaterialDialog.show();*/
             }
         });
 
 
-        mPortChart= new BarChartFragment(null);
+        mPortChart= new LineChartFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fl_chart_port,mPortChart);
         transaction.commit();

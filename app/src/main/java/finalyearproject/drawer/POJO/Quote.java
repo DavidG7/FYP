@@ -97,64 +97,77 @@ public class Quote {
 
 
     public String getName(){
-        return Name;
+        if(Name != null) {
+            return Name;
+        }else{
+            return "NULL";
+        }
     }
 
     public String getsymbol(){
-        return symbol;
+        if(symbol != null) {
+            return symbol;
+        }else{
+            return "NULL.IR";
+        }
     }
 
     public String getDaysLow(){
-        return DaysLow;
+        if(DaysLow != null) {
+            return DaysLow;
+        }else{
+            return "0.0";
+        }
     }
 
     public String getDaysHigh(){
-        return DaysHigh;
+        if(DaysHigh != null) {
+            return DaysHigh;
+        }else{
+            return "0.0";
+        }
     }
 
     public String getYearsLow(){
-        return YearLow;
+        if(YearLow != null) {
+            return YearLow;
+        }else{
+            return "0.0";
+        }
     }
 
     public String getYearsHigh(){
-        return YearHigh;
+        if(YearHigh != null) {
+            return YearHigh;
+        }else{
+            return "0.0";
+        }
     }
 
     public String getVolume(){
-        return Volume;
+        if(Volume != null) {
+            return Volume;
+        }else{
+            return "0.0";
+        }
     }
 
 
     public String getLastTradeTime(){
-        return LastTradeTime;
+        if(LastTradeTime != null) {
+            return LastTradeTime;
+        }else{
+            return "00.00pm";
+        }
     }
 
-
-    /*public String getChangeinPercent(){
-        return ChangeinPercent;
-    }*/
 
     public double getLastTradePriceOnly(){
         return Double.parseDouble(LastTradePriceOnly);
     }
 
     public String getChangeInPercent(){
-        /*try {
-            Double current = getLastTradePriceOnly();
-            Double previous = Double.parseDouble(PreviousClose);
 
-
-            Double changeUnFormatted = (current - previous) / previous;
-
-             return ((double)Math.round(changeUnFormatted * 10000) / 10000);
-            //temp = temp.movePointRight(2);
-            //return temp.doubleValue();
-
-        }catch(NullPointerException e){
-            Double d = 0.00;
-            return d;
-
-        }*/
         try {
             String temp = ChangeinPercent.replaceAll("[^\\d.]", "");
             if(ChangeinPercent.contains("-")){
@@ -167,15 +180,5 @@ public class Quote {
         }
     }
 
-    /*public double getNullAsk(){
-        String valueFromPercent = ChangeinPercent.replaceAll("[^.0-9]","");
-        System.out.print("GAGAGAGAGAGGAGAGAG "+valueFromPercent+"   "+ PreviousClose);
-        try {
-            double result = Double.parseDouble(PreviousClose) / 100 * (100 + Double.parseDouble(valueFromPercent));
-            return Double.parseDouble(String.format("%.4f", result));
-        }catch(Exception e){
-            return 0.0;
-        }
-    }*/
 
 }

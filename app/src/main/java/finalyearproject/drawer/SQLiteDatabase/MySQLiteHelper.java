@@ -246,6 +246,17 @@ public class MySQLiteHelper {
         return portfolioValue;
     }
 
+    public double getStockItemPortfolioValueFromSQLLiteDB(String symbol) {
+
+        double portfolioValue = 0.0;
+        Cursor cursor = ourDatabase.rawQuery(
+                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_GROUP + " WHERE " + S_TID +" LIKE "+ "'" + symbol + "'" , null);
+        if (cursor.moveToFirst()) {
+            portfolioValue = cursor.getDouble(0);
+        }
+        return portfolioValue;
+    }
+
     public double getPortfolioCostFromSQLLiteDB() {
 
         double portfolioCost = 0.0;

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.StockPurchase;
-import me.drakeet.materialdialog.MaterialDialog;
 
 /**
  * Created by Dvaid on 19/02/2015.
@@ -18,7 +17,6 @@ import me.drakeet.materialdialog.MaterialDialog;
 public class TransHistoryMaterialDialog {
 
     Context mContext;
-    MaterialDialog mMaterialDialog;
     ArrayList<StockPurchase> mLastTenRecords;
     int mPosition;
 
