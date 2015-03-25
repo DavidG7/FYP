@@ -9,30 +9,20 @@
         android:layout_weight="0.2">
 
         <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:src="@drawable/motly"
-            android:padding="10dp"
-            android:background="@drawable/mycircle_white"
-            android:elevation="12dp"
-            android:layout_weight="0.2"/>
+            android:layout_gravity="center"
+            android:paddingLeft="165dp"
+            />
 
-        <TextView
-            android:layout_width="0dp"
-            android:text="Motley Fools Calculator"
-            android:fontFamily="serif"
-            android:textSize="25dp"
-            android:gravity="center_vertical"
-            android:textColor="@color/list_divider"
-            android:layout_height="match_parent"
-            android:layout_weight="0.8"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="30dp"
         android:layout_weight="0.15">
 
         <TextView
@@ -41,7 +31,7 @@
             android:layout_width="wrap_content"
             android:fontFamily="serif"
             android:text="Price to earnings ratio: "
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:textColor="@color/list_divider"
             android:layout_gravity="center"
 
@@ -50,8 +40,9 @@
         <EditText
             android:id="@+id/et_fools_pe"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18dp"
+            android:layout_width="100dp"
+            android:background="@color/LightGrey"
+            android:textSize="15dp"
             android:inputType="numberDecimal"
             android:textColor="@color/list_divider"
             android:layout_gravity = "center"
@@ -63,7 +54,7 @@
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="30dp"
         android:layout_weight="0.15">
 
 
@@ -72,7 +63,7 @@
             android:layout_width="wrap_content"
             android:id="@+id/tv_fools_estimate_next"
             android:text="Earnings estimate for next year: "
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:fontFamily="serif"
             android:textColor="@color/list_divider"
             android:layout_gravity="center"
@@ -81,9 +72,11 @@
 
         <EditText
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18dp"
+
+            android:textSize="15dp"
             android:inputType="number"
+            android:layout_width="100dp"
+            android:background="@color/LightGrey"
             android:id="@+id/et_fools_estimate_next"
             android:textColor="@color/list_divider"
             android:layout_gravity = "center"
@@ -95,15 +88,28 @@
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingLeft="10dp"
-        android:layout_weight="0.15">
+        android:paddingLeft="30dp"
+        android:layout_weight="0.30">
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="0.7">
+
+            <LinearLayout
+                android:orientation="horizontal" android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="0.5">
+
 
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:fontFamily="serif"
             android:text="Current earnings: "
-            android:textSize="18dp"
+            android:textSize="15dp"
             android:textColor="@color/list_divider"
             android:layout_gravity="center"
 
@@ -112,56 +118,71 @@
         <EditText
             android:id="@+id/et_fools_estimate_current"
             android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="18dp"
+            android:layout_width="100dp"
+            android:background="@color/LightGrey"
+            android:textSize="15dp"
             android:inputType="number"
             android:textColor="@color/list_divider"
             android:layout_gravity = "center"
             />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal" android:layout_width="match_parent"
+                android:layout_height="0dp"
+
+                android:layout_weight="0.5">
+
+                <TextView
+                    android:id="@+id/tv_fools_calculate"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:clipToPadding="false"
+                    android:background="@drawable/mycircle_green"
+                    android:text="GO"
+
+                    android:fontFamily="serif"
+                    android:elevation="12dp"
+                    android:layout_gravity="center"
+                    android:textColor="@color/White"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="vertical" android:layout_width="0dp"
+            android:layout_height="match_parent"
+
+            android:layout_weight="0.3">
+
+            <TextView
+                android:id="@+id/tv_reveal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:clipToPadding="false"
+                android:layout_gravity="center"
+                android:background="@drawable/mycircle_green"
+                android:text="R"
+                android:visibility="invisible"
+                android:layout_marginTop="30dp"
+                android:fontFamily="serif"
+                android:elevation="12dp"
+                android:textColor="@color/White"
+                android:gravity="center"
+                android:textSize="15dp"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 
 
-    <LinearLayout
-        android:orientation="horizontal" android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:paddingLeft="10dp"
-        android:layout_weight="0.15">
-
-    <TextView
-        android:id="@+id/tv_fools_calculate"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:clipToPadding="false"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/mycircle_green"
-        android:text="GO"
-        android:fontFamily="serif"
-        android:elevation="12dp"
-        android:textColor="@color/White"
-        android:gravity="center"
-        android:textSize="15dp"
-        />
 
 
 
-        <TextView
-            android:id="@+id/tv_reveal"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:clipToPadding="false"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/mycircle_green"
-            android:text="R"
-            android:visibility="invisible"
-            android:fontFamily="serif"
-            android:elevation="12dp"
-            android:textColor="@color/White"
-            android:gravity="center"
-            android:textSize="15dp"
-            />
-
-    </LinearLayout>
     <TextView
         android:id="@+id/tv_fools_result"
         android:layout_width="match_parent"
@@ -169,8 +190,10 @@
         android:textColor="@color/White"
         android:fontFamily="serif"
         android:textSize = "25dp"
+        android:paddingLeft="30dp"
+        android:gravity="center_vertical"
         android:background="@color/list_divider"
-        android:layout_weight="0.2">
+        android:layout_weight="0.15">
     </TextView>
 
 

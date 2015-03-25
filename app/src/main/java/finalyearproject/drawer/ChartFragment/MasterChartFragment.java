@@ -133,7 +133,7 @@ public class MasterChartFragment extends Fragment {
  * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
  * sequence.
  */
-private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
+private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
 
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {

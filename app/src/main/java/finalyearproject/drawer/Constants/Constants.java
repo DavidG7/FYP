@@ -1,5 +1,8 @@
 package finalyearproject.drawer.Constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Dvaid on 24/11/2014.
  */
@@ -11,6 +14,18 @@ public class Constants {
             "\"IPDC.IR\",\"IR5B.IR\",\"IRES.IR\",\"IETF.IR\",\"KJY.IR\",\"JEV.IR\",\"KRZ.IR\",\"KRX.IR\",\"MSTY.IR\",\"3MP.IR\"," +
             "\"MIO.IR\",\"OIZ.IR\",\"ORQ.IR\",\"OVXA.IR\",\"PLS.IR\",\"IL0.IR\",\"EG5A.IR\",\"P8ET.IR\",\"OKRA.IR\",\"PZQA.IR\"," +
             "\"RY4B.IR\",\"SK3.IR\",\"TCO.IR\",\"T7O.IR\",\"TQW.IR\",\"MDY.IR\",\"ZAZ.IR\"";
+
+    public static final Map<String, String> myFoolsMapping;
+    static
+    {
+        myFoolsMapping= new HashMap<String, String>();
+        myFoolsMapping.put("1", "Buy");
+        myFoolsMapping.put("2", "Look to Buy");
+        myFoolsMapping.put("3", "Watch (or \"hold\")");
+        myFoolsMapping.put("4", "Look to sell");
+        myFoolsMapping.put("5", "Consider shorting");
+        myFoolsMapping.put("6", "Short");
+    }
 }
 
 
