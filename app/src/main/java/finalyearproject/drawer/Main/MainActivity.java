@@ -25,7 +25,8 @@ import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
 
-import finalyearproject.drawer.Calculator.CalculatorFragment;
+import finalyearproject.drawer.Calculator.FoolsRatioCalculatorFragment;
+import finalyearproject.drawer.Calculator.MasterCalculatorFragment;
 import finalyearproject.drawer.ChartFragment.MasterChartFragment;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.ExitEvent;
@@ -266,7 +267,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
                 break;
             case 4:
                 // fragment = new CommunityFragment();
-                fragment = new CalculatorFragment();
+                fragment = new MasterCalculatorFragment();
                 break;
 
             case 5:

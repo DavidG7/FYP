@@ -132,9 +132,7 @@ public class Scroller extends LinearLayout implements ScrollViewListener {
                 }
             }
         });
-       /* setLevelOfMask(100);
 
-        scrollTo(100);*/
 
     }
 

@@ -20,12 +20,7 @@ import finalyearproject.drawer.POJO.ResultWrapper;
 public class MySQLiteHelper {
 
 
-    public static final String KEY_P_ID = "PURCHASE_ID";
-    public static final String KEY_S_GID = "GROUP_ID";
-    public static final String KEY_S_NUM = "NUMBER";
-    public static final String KEY_S_COST = "INDIVIDUAL_COST";
-    public static final String KEY_S_TCOST = "TOTAL_COST";
-    public static final String NAME_INDIVIDUAL = "STOCK_INDIVIDUAL";
+
 
     public static final String S_ID = "STOCK_ID";
     public static final String S_TID = "TICKER_ID";
@@ -35,7 +30,7 @@ public class MySQLiteHelper {
     public static final String S_TVAL= "TOTAL_VALUE";
     public static final String S_TCOST = "TOTAL_COST";
     public static final String S_DATE = "DATE";
-    public static final String NAME_GROUP = "STOCK_GROUP";
+    public static final String NAME_PURCHASE = "STOCK_PURCHASE";
 
 
     public static final String KEY_SYMBOL = "SYMBOL";
@@ -55,7 +50,7 @@ public class MySQLiteHelper {
 
     public double getNumberOfStocksIndividualTranche(int position) {
         String[] columns = new String[]{S_NUM};
-        Cursor c = ourDatabase.query(NAME_GROUP, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
 
         double result = 0.0;
 
@@ -86,7 +81,7 @@ public class MySQLiteHelper {
         public void onCreate(SQLiteDatabase db) {
             // TODO Auto-generated method stub
 
-            db.execSQL("CREATE TABLE "  + NAME_GROUP + " (" +
+            db.execSQL("CREATE TABLE "  + NAME_PURCHASE + " (" +
                             S_ID + " INTEGER, "+
                             S_TID + " TEXT, "+
                             S_NAME + " TEXT, " +
@@ -97,13 +92,6 @@ public class MySQLiteHelper {
                             S_DATE + " TEXT);"
             );
 
-            db.execSQL("CREATE TABLE "  + NAME_INDIVIDUAL + " (" +
-                            KEY_P_ID + " INTEGER PRIMARY KEY, "+
-                            KEY_S_GID + " INTEGER, "+
-                            KEY_S_NUM + " INTEGER, "+
-                            KEY_S_COST+ " INTEGER, "+
-                            KEY_S_TCOST+ " INTEGER);"
-            );
 
             db.execSQL("CREATE TABLE "  + NAME_BACKUP + " (" +
                             KEY_SYMBOL + " TEXT, "+
@@ -119,8 +107,7 @@ public class MySQLiteHelper {
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
             // TODO Auto-generated method stub
-            db.execSQL("DROP TABLE IF EXISTS " + NAME_GROUP);
-            db.execSQL("DROP TABLE IF EXISTS " + NAME_INDIVIDUAL);
+            db.execSQL("DROP TABLE IF EXISTS " + NAME_PURCHASE);
             db.execSQL("DROP TABLE IF EXISTS " + NAME_BACKUP);
 
             onCreate(db);
@@ -162,7 +149,7 @@ public class MySQLiteHelper {
         cv.put(S_TCOST,s_tcost);
         cv.put(S_DATE,s_date);
 
-        return ourDatabase.insert(NAME_GROUP, null, cv);
+        return ourDatabase.insert(NAME_PURCHASE, null, cv);
 
     }
 
@@ -171,7 +158,7 @@ public class MySQLiteHelper {
         // TODO Auto-generated method stub
 
         String[] columns = new String[]{S_ID,S_TID,S_NAME,S_NUM,S_INDVAL,S_TVAL,S_TCOST,S_DATE};
-        Cursor c = ourDatabase.query(NAME_GROUP, columns, null, null, null, null, null);
+        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
 
         ArrayList<StockPurchase> stockGroupData = new ArrayList<StockPurchase>();
 
@@ -196,50 +183,15 @@ public class MySQLiteHelper {
     }
 
 
-    public long createStockIndividualEntry(int s_gid, int s_num, double cost, double t_cost) {
-        // TODO Auto-generated method stub
-        ContentValues cv = new ContentValues();
-        cv.put(KEY_S_GID, s_gid);
-        cv.put(KEY_S_NUM, s_num);
-        cv.put(KEY_S_COST, cost);
-        cv.put(KEY_S_TCOST, t_cost);
 
 
-
-        return ourDatabase.insert(NAME_INDIVIDUAL, null, cv);
-
-    }
-
-
-    public String getStockItemIndividualData() {
-        // TODO Auto-generated method stub
-
-        String[] columns = new String[]{KEY_P_ID,KEY_S_GID,KEY_S_NUM,KEY_S_COST,KEY_S_TCOST};
-        Cursor c = ourDatabase.query(NAME_INDIVIDUAL, columns, null, null, null, null, null);
-
-        String result = "";
-
-        int i_pid = c.getColumnIndex(KEY_P_ID);
-        int i_gid = c.getColumnIndex(KEY_S_GID);
-        int i_num = c.getColumnIndex(KEY_S_NUM);
-        int i_cost = c.getColumnIndex(KEY_S_COST);
-        int i_tcost = c.getColumnIndex(KEY_S_TCOST);
-
-
-        for(c.moveToFirst(); !c.isAfterLast();c.moveToNext()){
-            result = result + c.getString(i_pid) + "//split//" + c.getString(i_gid) + "//split//" + c.getString(i_num)+"//split//" + c.getString(i_cost) + "//split//" + c.getString(i_tcost)+"//split//";
-
-        }
-        return result;
-
-    }
 
 
     public double getPortfolioValueFromSQLLiteDB() {
 
         double portfolioValue = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_GROUP, null);
+                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE, null);
         if (cursor.moveToFirst()) {
             portfolioValue = cursor.getDouble(0);
         }
@@ -250,7 +202,7 @@ public class MySQLiteHelper {
 
         double portfolioValue = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_GROUP + " WHERE " + S_TID +" LIKE "+ "'" + symbol + "'" , null);
+                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE + " WHERE " + S_TID +" LIKE "+ "'" + symbol + "'" , null);
         if (cursor.moveToFirst()) {
             portfolioValue = cursor.getDouble(0);
         }
@@ -261,7 +213,7 @@ public class MySQLiteHelper {
 
         double portfolioCost = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TCOST + ") FROM " + NAME_GROUP, null);
+                "SELECT SUM(" + S_TCOST + ") FROM " + NAME_PURCHASE, null);
         if (cursor.moveToFirst()) {
             portfolioCost = cursor.getDouble(0);
         }
@@ -319,7 +271,7 @@ public class MySQLiteHelper {
             for (int i = 0; i < quotes.length; i++) {
                 args.put(S_INDVAL, quotes[i].getLastTradePriceOnly());
                 args.put(S_TVAL, quotes[i].getLastTradePriceOnly() * getNumberOfStocksIndividualTranche(i));
-                ourDatabase.update(NAME_GROUP, args, S_ID + "=" + i, null);
+                ourDatabase.update(NAME_PURCHASE, args, S_ID + "=" + i, null);
             }
         }catch (NullPointerException e){
               e.printStackTrace();

@@ -2,6 +2,7 @@ package finalyearproject.drawer.ChartFragment;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -99,8 +100,6 @@ public class MasterChartFragment extends Fragment {
             }
         });
 
-        ChartSpinnerAdapter spinnerAdapter = new ChartSpinnerAdapter(getActivity(),0,state);
-
 
         final Spinner spinner = (Spinner) charts.findViewById(R.id.chart_spinner);
 
@@ -134,7 +133,7 @@ public class MasterChartFragment extends Fragment {
  * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
  * sequence.
  */
-private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+private class ScreenSlidePagerAdapter extends FragmentPagerAdapter {
 
 
     public ScreenSlidePagerAdapter(FragmentManager fm) {

@@ -4,23 +4,17 @@ package finalyearproject.drawer.PortfolioTransactionHistory;
  * Created by Dvaid on 17/02/2015.
  */
 
-import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
-import android.graphics.drawable.Animatable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import finalyearproject.drawer.Calculator.CalculatorFragment;
-import finalyearproject.drawer.PortfolioTransactionHistory.PortfolioTransactionCircleFragment;
 import finalyearproject.drawer.R;
 
 
