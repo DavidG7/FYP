@@ -154,7 +154,7 @@ public class ISEQFragment extends Fragment implements Subject {
         stock_backup.open();
         StockItems.clear();
         stock_backup.truncateTable("STOCK_BACKUP");
-        try {
+
 
        //     stock_backup.truncate("STOCK_BACKUP");
             if(result!=null) {
@@ -178,7 +178,6 @@ public class ISEQFragment extends Fragment implements Subject {
             }
 
 
-        }catch(NullPointerException e){
 
             //QuoteItems = null;
             /*ArrayList<StockItemRow> items = new ArrayList<StockItemRow>();
@@ -187,7 +186,7 @@ public class ISEQFragment extends Fragment implements Subject {
                 StockItems.add(items.get(i));
             }
             //stock_backup.getStockBackup();*/
-        }
+
 
         recylerViewAdapter.notifyDataSetChanged();
       //  stock_backup.close();

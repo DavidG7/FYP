@@ -78,6 +78,9 @@ public class MasterChartFragment extends Fragment {
         mLine = (TextView) charts.findViewById(R.id.tv_line_chart);
         mBar = (TextView) charts.findViewById(R.id.tv_bar_chart);
         mPie = (TextView) charts.findViewById(R.id.tv_pie_chart);
+
+        setListeners();
+
         mSpinnerHeading = (TextView) charts.findViewById(R.id.chart_spinner_heading);
         mSpinnerHeading.setText(mQuotes[mPosition].getsymbol());
 
@@ -107,7 +110,7 @@ public class MasterChartFragment extends Fragment {
 
         final ArrayAdapter<String> adapter1 = new ChartSpinnerAdapter(
                 getActivity(), android.R.layout.simple_spinner_item,
-                state);
+                state,mSpinnerHeading);
         spinner.setAdapter(adapter1);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -116,6 +119,7 @@ public class MasterChartFragment extends Fragment {
                 mSpinnerHeading.setText(mQuotes[position].getsymbol());
                 mActiveQuote = mQuotes[position];
                 mPager.setAdapter(new ScreenSlidePagerAdapter(getChildFragmentManager()));
+
                 iconSwitch(0);
             }
 
@@ -139,7 +143,7 @@ private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
     public ScreenSlidePagerAdapter(FragmentManager fm) {
         super(fm);
         chartFragments[0] = new BarChartFragment(mActiveQuote);
-        chartFragments[1] = new LineChartFragment();
+        chartFragments[1] = new LineChartYahooFragment(mActiveQuote);
         chartFragments[2] = new PieChartFragment(mActiveQuote);
     }
 
@@ -195,6 +199,35 @@ private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         String textForSpinnerHeading = event.getActiveQuoteText();
         int position = event.getPosition();
         mSpinnerHeading.setText(textForSpinnerHeading);
+    }
+
+    public void setListeners(){
+        mBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPager.setCurrentItem(0,true);
+// Commit the transaction
+                iconSwitch(0);
+            }
+        });
+
+        mLine.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPager.setCurrentItem(1,true);
+// Commit the transaction
+                iconSwitch(1);
+            }
+        });
+
+        mPie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mPager.setCurrentItem(2,true);
+// Commit the transaction
+                iconSwitch(2);
+            }
+        });
     }
 
 }

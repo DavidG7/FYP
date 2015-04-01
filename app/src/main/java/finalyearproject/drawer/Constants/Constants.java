@@ -26,6 +26,12 @@ public class Constants {
         myFoolsMapping.put("5", "Consider shorting");
         myFoolsMapping.put("6", "Short");
     }
+
+
+    public static final String BUY = "BUY";
+    public static final String SELL = "SELL";
+    public static final String BOTH = "BOTH";
+
 }
 
 

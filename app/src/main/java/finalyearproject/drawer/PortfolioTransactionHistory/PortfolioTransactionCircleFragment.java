@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.PortfolioTransactionHistory.TransHistoryView;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
@@ -32,7 +33,7 @@ public class PortfolioTransactionCircleFragment extends Fragment {
         MySQLiteHelper stock_individual = new MySQLiteHelper(getActivity());
         stock_individual.open();
         mLastTenRecords = new ArrayList<StockPurchase>();
-        mLastTenRecords = stock_individual.getStockGroupEntry();
+        mLastTenRecords = stock_individual.getStockGroupEntry(Constants.BOTH);
         stock_individual.close();
         mLastTenRecords = getLastTenRecords();
         mTransCircleContainer.addView(new TransHistoryView(getActivity(), mLastTenRecords));

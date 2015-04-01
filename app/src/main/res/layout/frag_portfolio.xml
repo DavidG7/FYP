@@ -56,7 +56,7 @@
             android:layout_weight="0.5">
 
             <SeekBar
-                android:id="@+id/seekBar1"
+                android:id="@+id/sb_portfolio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"

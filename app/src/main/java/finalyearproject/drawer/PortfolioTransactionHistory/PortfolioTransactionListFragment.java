@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.ISEQ.RecyclerViewAdapter;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.RecyclerViewAddOns.DividerItemDecoration;
@@ -36,7 +37,7 @@ public class PortfolioTransactionListFragment extends Fragment {
         MySQLiteHelper stock_individual = new MySQLiteHelper(getActivity());
         stock_individual.open();
         mStockPurchases = new ArrayList<StockPurchase>();
-        mStockPurchases = stock_individual.getStockGroupEntry();
+        mStockPurchases = stock_individual.getStockGroupEntry(Constants.BOTH);
         stock_individual.close();
 
         mTransListRecycler = (RecyclerView) android.findViewById(R.id.rv_trans_list);

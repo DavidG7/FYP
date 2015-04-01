@@ -12,9 +12,9 @@ public class StockPurchase {
     double curValue;
     double totalValue;
     double totalCost;
-    String date;
+    String date, type;
 
-    public StockPurchase(int id,String tickerId,String name,int num,double curValue,double totalValue,double totalCost,String date){
+    public StockPurchase(int id,String tickerId,String name,int num,double curValue,double totalValue,double totalCost,String date, String type){
         this.id = id;
         this.tickerId = tickerId;
         this.name = name;
@@ -23,6 +23,7 @@ public class StockPurchase {
         this.totalValue = totalValue;
         this.totalCost = totalCost;
         this.date = date;
+        this.type = type;
     }
 
     public int getId(){
@@ -54,6 +55,11 @@ public class StockPurchase {
 
     public String getDate(){
         return date;
+    }
+
+
+    public String getType(){
+        return type;
     }
 
 

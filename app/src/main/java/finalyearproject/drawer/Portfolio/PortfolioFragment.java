@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import finalyearproject.drawer.ChartFragment.BarChartFragment;
@@ -31,8 +32,7 @@ public class PortfolioFragment extends Fragment{
     String portfolioStringValue,portfolioStringCost;
     TextView mPortValueInfo;
     RelativeLayout  mRelatveLayoutFragment;
-
-
+    SeekBar mPortfolioSeekbar;
 
 
     @Override
@@ -42,6 +42,7 @@ public class PortfolioFragment extends Fragment{
         mPortfolioValueView = (TextView) android.findViewById(R.id.tv_portfolio_value);
         mPortTransHistory = (ImageButton) android.findViewById(R.id.ib_trans_history);
         mPortValueInfo = (TextView) android.findViewById(R.id.tv_portfolio_info);
+        mPortfolioSeekbar = (SeekBar) android.findViewById(R.id.sb_portfolio);
         //mPortValue.setImageDrawable(new TextDrawable(mPortValue,"i"));
 
         portfolioStringValue = ("€" + Double.toString(((MainActivity) this.getActivity()).getPortfolioValue()));
@@ -63,13 +64,7 @@ public class PortfolioFragment extends Fragment{
         mPortTransHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Intent portfolioTrans = new Intent(getActivity(), PortfolioTransactionActivity.class);
-                startActivity(portfolioTrans);*/
-               /* Fragment transCircle = new PortfolioTransactionFragment();
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame_container, transCircle);
-                transaction.addToBackStack(null);
-                transaction.commit();*/
+
                 Intent trans_history = new Intent(getActivity(), PortfolioTransactionActivity.class);
                 startActivity(trans_history);
             }
@@ -105,6 +100,26 @@ public class PortfolioFragment extends Fragment{
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.add(R.id.fl_chart_port,mPortChart);
         transaction.commit();
+
+        mPortfolioSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(progress == 100){
+                    Intent sell_stocks = new Intent(getActivity(), PortfolioSellActivity.class);
+                    startActivity(sell_stocks);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
 
         return android;
     }

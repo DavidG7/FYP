@@ -163,7 +163,11 @@ public class Quote {
 
 
     public double getLastTradePriceOnly(){
-        return Double.parseDouble(LastTradePriceOnly);
+        if(LastTradePriceOnly!= null) {
+            return Double.parseDouble(LastTradePriceOnly);
+        }else{
+            return 0.0;
+        }
     }
 
     public String getChangeInPercent(){

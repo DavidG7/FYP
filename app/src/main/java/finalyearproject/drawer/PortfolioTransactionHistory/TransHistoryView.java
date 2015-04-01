@@ -14,6 +14,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialog;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.StockPurchase;
@@ -29,6 +30,7 @@ public class TransHistoryView extends View {
     Canvas mCanvas;
     private static int xScreen,yScreen;
     String mColor = "#009A49";
+    private String mColorBackup = "#ffb347";
     private int temp;
     private boolean isHit;
     public float[] mRadii = new float[10];
@@ -57,12 +59,40 @@ public class TransHistoryView extends View {
         this.mContext = context;
         this.mLastTenRecords = mLastTenRecords;
         mRadii = new float[] {185f,150f,110f,110f,110f,95f,95f,70f,70f,70f};
-        mColors = new String[]{"#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49"};
+        mImages = new int[10];
+        mColors = new String[10];//{"#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49"};
+        for(int i = 0;i < 10;i++){
+            try {
+                if (mLastTenRecords.get(i).getType().equals(Constants.BUY)) {
+                    mColors[i] = "#009A49";
+                    if(i < 7){
+                        mImages[i] =  R.drawable.bought_image;
+                    }else{
+                        mImages[i] = R.drawable.bought_image_green;
+                    }
+
+                } else if (mLastTenRecords.get(i).getType().equals(Constants.SELL)) {
+                    mColors[i] = "#BB202F";
+                    if(i < 7){
+                        mImages[i] =  R.drawable.sold_image;
+                    }else{
+                        mImages[i] = R.drawable.sold_image_red;
+                    }
+                }
+            }catch(IndexOutOfBoundsException e){
+                mColors[i] = "#ffb347";
+                if(i < 7){
+                    mImages[i] =  R.drawable.icon_image;
+                }else{
+                    mImages[i] = R.drawable.icon_image_orange;
+                }
+            }
+        }
         mTextColors = new String[]{"#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#009A49","#009A49","#009A49"};
         mAlpha = new int[]{255,255,200,200,200,200,200,255,255,255};
-        mImages = new int[]{R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,
-                R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image_green,
-                R.drawable.bought_image_green,R.drawable.bought_image_green};
+       //{R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,
+              //  R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image_green,
+                //R.drawable.bought_image_green,R.drawable.bought_image_green};
         mScales = new int[]{150,150,100,100,100,80,80,60,60,60};
         mBrushStyles = new Paint.Style[]{Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,
                 Paint.Style.FILL,Paint.Style.FILL,Paint.Style.STROKE,Paint.Style.STROKE,Paint.Style.STROKE};
@@ -71,6 +101,9 @@ public class TransHistoryView extends View {
         mArrowColors = new String[]{"#ffffff","#ffb347"};
         mTextSizes = new float[]{20f,20f,17f,17f,17f,14f,14f,11f,11f,11f};
         arrowDrawable = R.drawable.arrow_back;
+
+
+
         this.setOnTouchListener(new OnTouchListener() {
 
 
@@ -84,15 +117,18 @@ public class TransHistoryView extends View {
 
 
                 if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+
                     for (int i = 0; i < NUM_OF_ELEMENTS; i++) {
                         if ((xTouchPosition <= mXArray.get(i) + mRadii[i] && xTouchPosition >= mXArray.get(i) - mRadii[i])
                                 && (yTouchPosition <= mYArray.get(i) + mRadii[i] && yTouchPosition >= mYArray.get(i) - mRadii[i])) {
                             setTemp(i);
                             setIsHit(true);
+                            mColorBackup = mColors[i];
                             mColors[i] = "#ffb347";
-                            if (i > 6) {
+
+                         /*   if (i > 6) {
                                 mImages[i] = R.drawable.bought_image_orange;
-                            }
+                            }*/
 
                             v.invalidate();
                         }
@@ -108,10 +144,11 @@ public class TransHistoryView extends View {
 
                     }
                 }else if(event.getAction() == android.view.MotionEvent.ACTION_UP){
-                    mColors[getTemp()] = "#009A49";
-                    if(getTemp()>6) {
-                        mImages[getTemp()] = R.drawable.bought_image_green;
-                    }
+
+                    mColors[getTemp()] = mColorBackup;
+                    /*if(getTemp()>6) {
+                       // mImages[getTemp()] = R.drawable.bought_image_green;
+                    }*/
                     v.invalidate();
                     if(getIsHit() == true) {
                         try {
@@ -168,15 +205,6 @@ public class TransHistoryView extends View {
 
         }
 
-       /* paint.setColor(Color.parseColor(mArrowColors[0]));
-        paint.setAlpha(255);
-        paint.setStyle(Paint.Style.FILL);
-        canvas.drawCircle((float)1*(xScreen/8),(float)1*(yScreen/10),51f, paint);
-        paint.setColor(Color.parseColor(mArrowColors[1]));
-        canvas.drawCircle((float)1*(xScreen/8),(float)1*(yScreen/10),50f, paint);
-        Bitmap arrowImage = BitmapFactory.decodeResource(this.getResources(),arrowDrawable);
-
-        canvas.drawBitmap(arrowImage,((float)1*(xScreen/8)-(arrowImage.getWidth()/2)), ((float)1*(yScreen/10)-(arrowImage.getHeight()/2)),  paint);*/
 
 
 

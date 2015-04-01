@@ -3,6 +3,7 @@ package finalyearproject.drawer.ChartFragment;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Color;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,12 +25,14 @@ public class ChartSpinnerAdapter extends ArrayAdapter<String> {
     private Context mContext;
     ArrayList<String> mModelData = null;
     private TypedArray ISEQIcons;
+    TextView mCurrentStockHeading;
 
-    public ChartSpinnerAdapter(Context context, int resource, ArrayList<String> modelData) {
+    public ChartSpinnerAdapter(Context context, int resource, ArrayList<String> modelData,TextView currentStockHeading) {
         super(context,resource,modelData);
         this.mContext = context;
         this.mModelData = modelData;
         this.ISEQIcons = context.getResources().obtainTypedArray(R.array.iseq_icons);
+        this.mCurrentStockHeading = currentStockHeading;
 
     }
 
@@ -43,19 +46,19 @@ public class ChartSpinnerAdapter extends ArrayAdapter<String> {
 
         TextView mSpinnerTicker = (TextView) row.findViewById(R.id.tv_spinner_item_ticker);
         ImageView mSpinnerIcon = (ImageView) row.findViewById(R.id.iv_spinner_item_icon);
+        ImageView mSpinnerSelected = (ImageView) row.findViewById(R.id.iv_spinner_item_indicator);
+
 
         mSpinnerTicker.setText(mModelData.get(position));
+        if(mCurrentStockHeading.getText().equals(mSpinnerTicker.getText())){
+            mSpinnerSelected.setImageResource(R.drawable.mycircle);
+        }else{
+            mSpinnerSelected.setImageResource(R.drawable.mycircle_white);
+        }
         Picasso.with(mContext).load(ISEQIcons.getResourceId(position, -1)).into(mSpinnerIcon);
 
-       /*mSpinnerTicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                BusProvider.getInstance().post(new SpinnerEvent(mModelData.get(position),position));
 
-            }
-        });*/
-        //BusProvider.getInstance().post(new SpinnerEvent(mModelData.get(position),position));
         return row;
 
     }

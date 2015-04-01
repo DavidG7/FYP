@@ -38,6 +38,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.TreeMap;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.Dialogs.ISEQDialog;
 import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialogView;
 import finalyearproject.drawer.EventBus.BusProvider;
@@ -194,7 +195,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
            @Override
            public void onClick(View v) {
 
-               final int position = viewHolder.getPosition();
+               final int position;
+               if(isWatchList == true){
+                   position = favourites.get(viewHolder.getPosition());
+               }else {
+                   position = viewHolder.getPosition();
+               }
+
                Quote tempQuoteItem = quoteItems.get(position);
                final View iseqDialog = new ISEQDialog(mContext,tempQuoteItem);
                mNumberStocks = (EditText) iseqDialog.findViewById(R.id.et_num_stocks);
@@ -219,8 +226,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                                    MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
                                    stock_group.open();
-                                   value = Double.toString(stockItems.get(position).getLastTradePrice());
-                                   stock_group.createStockItemEntry(position, stockItems.get(position).getSymbol(), stockItems.get(position).getName(), numOfStocksBought, Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value),formattedDate);
+                                   value = Double.toString(stockItems.get(viewHolder.getPosition()).getLastTradePrice());
+                                   stock_group.createStockItemEntry(position, stockItems.get(viewHolder.getPosition()).getSymbol(), stockItems.get(viewHolder.getPosition()).getName(), numOfStocksBought, Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value),formattedDate, Constants.BUY);
                                    BusProvider.getInstance().post(new ObserverEvent());
                                    stock_group.close();
 

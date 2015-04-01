@@ -44,6 +44,7 @@ import finalyearproject.drawer.Subject.Subject;
 
 
 public class MainActivity extends ActionBarActivity implements Observer {
+    private static final int MENU_ITEMS = 6;
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerLinLay;
     private ListView mDrawerList;
@@ -58,6 +59,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
     private MySQLiteHelper stock_group;
     private SharedPref pref;
     private ArrayList<Integer> favourites;
+    private boolean[] selectedVisible = new boolean[]{true,false,false,false,false,false};
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -95,25 +97,16 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
-        // adding nav drawer items to array
-        // Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Find People
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Photos
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
-
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // Communities, Will add a counter here
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));//, true, "22"));
-
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));//, true, "22"));
 
 
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1),selectedVisible[0]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1),selectedVisible[1]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1),selectedVisible[2]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1),selectedVisible[3]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1),selectedVisible[4]));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1),selectedVisible[5]));
 
-        // Recycle the typed array
         navMenuIcons.recycle();
-
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
 
@@ -135,12 +128,14 @@ public class MainActivity extends ActionBarActivity implements Observer {
             public void onDrawerClosed(View view) {
                 // getSupportActionBar().setTitle("iStocks");
                 // calling onPrepareOptionsMenu() to show action bar icons
+
                 invalidateOptionsMenu();
             }
 
             public void onDrawerOpened(View view) {
                 // getSupportActionBar().setTitle("iStocks");
                 // calling onPrepareOptionsMenu() to hide action bar icons
+                adapter.notifyDataSetChanged();
                 invalidateOptionsMenu();
             }
         };
@@ -244,13 +239,13 @@ public class MainActivity extends ActionBarActivity implements Observer {
         switch (position) {
             case 0:
                 fragment = new ISEQFragment(this);
+                updateNavDrawerItems(position);
                 break;
             case 1:
-                //fragment = new FindPeopleFragment();
                 fragment = new PortfolioFragment();
+                updateNavDrawerItems(position);
                 break;
             case 2:
-                // fragment = new PhotosFragment();
                 if(favourites.size()==0){
                     fragment = new WatchListEmptyFragment();
                 }else {
@@ -259,23 +254,21 @@ public class MainActivity extends ActionBarActivity implements Observer {
                     fragment = new ISEQFragment(this);
                     fragment.setArguments(bundle);
                 }
+
+                updateNavDrawerItems(position);
                 break;
             case 3:
-                //fragment = new PhotosFragment();
                  fragment = new MasterChartFragment(result,0);
-
+                 updateNavDrawerItems(position);
                 break;
             case 4:
-                // fragment = new CommunityFragment();
                 fragment = new MasterCalculatorFragment();
+                updateNavDrawerItems(position);
                 break;
 
             case 5:
-                // fragment = new CommunityFragment();
-               /* moveTaskToBack(true);
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(1);*/
                 fragment = new ExitFragment();
+                updateNavDrawerItems(position);
                 break;
 
 
@@ -355,5 +348,24 @@ public class MainActivity extends ActionBarActivity implements Observer {
             mDrawerLayout.openDrawer(Gravity.LEFT);
         }
     }
+
+
+    public void updateNavDrawerItems(int position){
+        //navDrawerItems.clear();
+      /*  */
+        for(int i = 0;i<selectedVisible.length;i++) {
+            if (i != position){
+                selectedVisible[i] = false;
+            }else{
+                selectedVisible[i] = true;
+            }
+            navDrawerItems.get(i).setCounterVisibility(selectedVisible[i]);
+        }
+
+   }
+
+
+
+
 
 }

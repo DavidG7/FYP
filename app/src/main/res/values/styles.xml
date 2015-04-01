@@ -22,6 +22,16 @@
 </style>
 
 
+    <style name="spinner_style" >
+    <item name="android:background">@drawable/spinner_background</item>
+    <item name="android:layout_marginLeft">4dp</item>
+    <item name="android:layout_marginRight">4dp</item>
+    <item name="android:layout_marginBottom">4dp</item>
+    <item name="android:paddingLeft">4dp</item>
+    <item name="android:paddingTop">2dp</item>
+    <item name="android:paddingBottom">2dp</item>
+</style>
+
  <style name="AppTheme.OverFlow">
      <item name="android:src">@drawable/actionbar_overflow</item>
 </style>
