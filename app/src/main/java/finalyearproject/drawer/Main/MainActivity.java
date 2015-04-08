@@ -1,10 +1,14 @@
 package finalyearproject.drawer.Main;
 
 import android.annotation.TargetApi;
+import android.app.ActivityManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -28,8 +32,10 @@ import java.util.ArrayList;
 import finalyearproject.drawer.Calculator.FoolsRatioCalculatorFragment;
 import finalyearproject.drawer.Calculator.MasterCalculatorFragment;
 import finalyearproject.drawer.ChartFragment.MasterChartFragment;
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.ExitEvent;
+import finalyearproject.drawer.EventBus.FavouritesEmptyEvent;
 import finalyearproject.drawer.EventBus.FavouritesEvent;
 import finalyearproject.drawer.EventBus.WatchlistToISEQEvent;
 import finalyearproject.drawer.Exit.ExitFragment;
@@ -59,7 +65,10 @@ public class MainActivity extends ActionBarActivity implements Observer {
     private MySQLiteHelper stock_group;
     private SharedPref pref;
     private ArrayList<Integer> favourites;
+    private ArrayList<Double> chart_values;
     private boolean[] selectedVisible = new boolean[]{true,false,false,false,false,false};
+
+    Fragment fragment = null;
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -67,9 +76,20 @@ public class MainActivity extends ActionBarActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
+        ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription("ISEQ Stock Exchange",bm,R.color.list_background);
+        MainActivity.setTaskDescription(tDesc);*/
+
+
+        pref = new SharedPref(this);
+
+        chart_values = pref.loadChartValueFavSavedPreferences(Constants.CHART_VALUES);
+
         stock_group = new MySQLiteHelper(this);
         stock_group.open();
         setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
+        //chart_values.add(stock_group.getPortfolioValueFromSQLLiteDB());
+        //pref.saveChartValuePreferences(chart_values,Constants.CHART_VALUES);
         setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
         stock_group.close();
 
@@ -107,7 +127,12 @@ public class MainActivity extends ActionBarActivity implements Observer {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1),selectedVisible[5]));
 
         navMenuIcons.recycle();
-        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                displayView(position);
+            }
+        });
 
 
 
@@ -129,6 +154,12 @@ public class MainActivity extends ActionBarActivity implements Observer {
                 // getSupportActionBar().setTitle("iStocks");
                 // calling onPrepareOptionsMenu() to show action bar icons
 
+
+                mDrawerLayout.closeDrawer(mDrawerLinLay);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.frame_container, fragment)
+                        .commit();
+
                 invalidateOptionsMenu();
             }
 
@@ -146,7 +177,10 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
-            displayView(0);
+            fragment = new ISEQFragment(this);
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.frame_container, fragment)
+                    .commit();
         }
 
         flipper = (ViewFlipper) findViewById(R.id.switcher);
@@ -155,8 +189,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
         BusProvider.getInstance().register(this);
 
-        pref = new SharedPref(this);
-        favourites = pref.loadSavedPreferences();
+        favourites = pref.loadFavSavedPreferences(Constants.FAVOURITES);
     }
 
     @Override
@@ -164,7 +197,9 @@ public class MainActivity extends ActionBarActivity implements Observer {
         stock_group.open();
         setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
         setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
+        chart_values.add(stock_group.getPortfolioValueFromSQLLiteDB());
         stock_group.close();
+        pref.saveChartValuePreferences(chart_values,Constants.CHART_VALUES);
     }
 
     public double getPortfolioValue(){
@@ -183,19 +218,6 @@ public class MainActivity extends ActionBarActivity implements Observer {
         mPortfolioCost = portfolioCost;
     }
 
-
-    /**
-     * Slide menu item click listener
-     * */
-    private class SlideMenuClickListener implements
-            ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-            // display view for selected nav drawer item
-            displayView(position);
-        }
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -235,7 +257,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
      * */
     private void displayView(int position) {
         // update the main content by replacing fragments
-        Fragment fragment = null;
+
         switch (position) {
             case 0:
                 fragment = new ISEQFragment(this);
@@ -279,13 +301,25 @@ public class MainActivity extends ActionBarActivity implements Observer {
         if (fragment != null) {
 
             // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
+           /* mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             setTitle(navMenuTitles[position]);
             mDrawerLayout.closeDrawer(mDrawerLinLay);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frame_container, fragment)
-                    .commit();
+                    .commit();*/
+
+
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            Handler mHandler = new Handler();
+            mHandler.postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    mDrawerLayout.closeDrawer(mDrawerLinLay);
+                }
+            }, 150);
 
         } else {
             // error in creating fragment
@@ -293,11 +327,6 @@ public class MainActivity extends ActionBarActivity implements Observer {
         }
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        //mTitle = title;
-        //getSupportActionBar().setTitle("iStocks");
-    }
 
 
 
@@ -336,7 +365,19 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
     @Subscribe
     public void watchlistToISEQCallback(WatchlistToISEQEvent event) {
-        displayView(0);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, new ISEQFragment(this))
+                .commit();
+        updateNavDrawerItems(0);
+     }
+
+    @Subscribe
+    public void favouritesEmptyCallback(FavouritesEmptyEvent event) {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frame_container, new WatchListEmptyFragment())
+                .commit();
+        favourites.clear();
+
     }
 
 
@@ -359,7 +400,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
             }else{
                 selectedVisible[i] = true;
             }
-            navDrawerItems.get(i).setCounterVisibility(selectedVisible[i]);
+            navDrawerItems.get(i).setSelected(selectedVisible[i]);
         }
 
    }

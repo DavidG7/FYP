@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.ExitEvent;
 import finalyearproject.drawer.EventBus.ObserverEvent;
@@ -91,7 +92,7 @@ public class ISEQFragment extends Fragment implements Subject {
             mWatchlist = false;
         }
         pref = new SharedPref(getActivity());
-        favourites = pref.loadSavedPreferences();
+        favourites = pref.loadFavSavedPreferences(Constants.FAVOURITES);
 
         View android = inflater.inflate(R.layout.frag_iseq, container, false);
 

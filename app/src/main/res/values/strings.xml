@@ -62,7 +62,7 @@
         <item>@drawable/donegal_investment</item>
         <item>@drawable/dragon_oil</item>
         <item>@drawable/falcon</item>
-        <item>@drawable/falcon</item>
+        <item>@drawable/fastnet</item>
         <item>@drawable/fbd</item>
         <item>@drawable/first_derivitives</item>
         <item>@drawable/fyffes</item>
@@ -73,39 +73,36 @@
         <item>@drawable/hibernia_reit</item>
         <item>@drawable/ifg</item>
         <item>@drawable/independent_news_media</item>
-        <item>@drawable/aib</item>
+        <item>@drawable/irsh_continental</item>
         <item>@drawable/ires</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/aib</item>
+        <item>@drawable/crest_filled_small</item>
+        <item>@drawable/karelian</item>
         <item>@drawable/kenmare</item>
         <item>@drawable/kerry_group</item>
         <item>@drawable/kingspan</item>
         <item>@drawable/mainstay_medical</item>
         <item>@drawable/malin</item>
-        <item>@drawable/bank_of_ireland</item>
+        <item>@drawable/merrion</item>
+        <item>@drawable/mincon</item>
+        <item>@drawable/origin</item>
+        <item>@drawable/ormonde</item>
+        <item>@drawable/ovoca</item>
+        <item>@drawable/paddy_power</item>
+        <item>@drawable/permanent_tsb</item>
+        <item>@drawable/petroceltic</item>
+        <item>@drawable/petroneft</item>
+        <item>@drawable/prime_active</item>
+        <item>@drawable/providence</item>
+        <item>@drawable/ryanair</item>
+        <item>@drawable/smurfit</item>
+        <item>@drawable/tesco</item>
+        <item>@drawable/total_produce</item>
+        <item>@drawable/tullow</item>
+        <item>@drawable/utv</item>
+        <item>@drawable/zamano</item>
         <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
         <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
-        <item>@drawable/bank_of_ireland</item>
-        <item>@drawable/aib</item>
+
     </array>
 
 

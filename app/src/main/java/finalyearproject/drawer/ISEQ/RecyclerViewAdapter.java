@@ -42,8 +42,10 @@ import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.Dialogs.ISEQDialog;
 import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialogView;
 import finalyearproject.drawer.EventBus.BusProvider;
+import finalyearproject.drawer.EventBus.FavouritesEmptyEvent;
 import finalyearproject.drawer.EventBus.FavouritesEvent;
 import finalyearproject.drawer.EventBus.ObserverEvent;
+import finalyearproject.drawer.Formatter.NumberFormatter;
 import finalyearproject.drawer.Main.MainActivity;
 import finalyearproject.drawer.Main.StockItemRow;
 import finalyearproject.drawer.POJO.Quote;
@@ -80,7 +82,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.mContext = context;
         this.favourites = new ArrayList<Integer>();
         this.pref = new SharedPref(mContext);
-        this.favourites = pref.loadSavedPreferences();
+        this.favourites = pref.loadFavSavedPreferences(Constants.FAVOURITES);
         this.isWatchList = isWatchList;
 
     }
@@ -97,7 +99,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onBindViewHolder(final ListItemViewHolder viewHolder, int position) {
-        StockItemRow stockModel = stockItems.get(position);
+        final StockItemRow stockModel = stockItems.get(position);
         viewHolder.txtViewSymbol.setText(stockModel.getSymbol());
         viewHolder.txtViewChange.setText(stockModel.getChange());
         viewHolder.txtViewPrice.setText("€" +   Double.toString(stockModel.getLastTradePrice()));
@@ -151,7 +153,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                   removeAt(viewHolder.getPosition());
                   favourites.remove(viewHolder.getPosition());
 
-                    pref.savePreferences(favourites);
+                    pref.saveFavPreferences(favourites,Constants.FAVOURITES);
+                    if(favourites.size()==0){
+                        BusProvider.getInstance().post(new FavouritesEmptyEvent());
+                    }
                 } else if (isWatchList == false) {
                     if (fav_res.get(viewHolder.getPosition()) == R.drawable.star) {
 
@@ -163,7 +168,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                         favourites.addAll(tempHash);
 
                         Collections.sort(favourites);
-                        pref.savePreferences(favourites);
+                        pref.saveFavPreferences(favourites, Constants.FAVOURITES);
                         fav_res.remove(viewHolder.getPosition());
                         fav_res.put(viewHolder.getPosition(), R.drawable.star_pressed);
 
@@ -176,7 +181,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                 favourites.remove(i);
                             }
                         }
-                        pref.savePreferences(favourites);
+                        pref.saveFavPreferences(favourites, Constants.FAVOURITES);
                         fav_res.remove(viewHolder.getPosition());
                         fav_res.put(viewHolder.getPosition(), R.drawable.star);
 
@@ -185,6 +190,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                     BusProvider.getInstance().post(new FavouritesEvent(favourites));
                     viewHolder.star.setImageResource(fav_res.get(viewHolder.getPosition()));
+
 
                 }
             }
@@ -203,7 +209,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                }
 
                Quote tempQuoteItem = quoteItems.get(position);
-               final View iseqDialog = new ISEQDialog(mContext,tempQuoteItem);
+               final View iseqDialog = new ISEQDialog(mContext,tempQuoteItem,position);
                mNumberStocks = (EditText) iseqDialog.findViewById(R.id.et_num_stocks);
 
 
@@ -218,16 +224,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                                int numOfStocksBought = Integer.parseInt(mNumberStocks.getText().toString());
                                if (numOfStocksBought != 0) {
-                                   String value;
+                                   double indCost = 0.0, totCost = 0.0;
 
                                    Calendar c = Calendar.getInstance();
-                                   SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy" );
+                                   SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy");
                                    String formattedDate = df.format(c.getTime());
+                                   NumberFormatter formatter = new NumberFormatter();
 
                                    MySQLiteHelper stock_group = new MySQLiteHelper(mContext);
                                    stock_group.open();
-                                   value = Double.toString(stockItems.get(viewHolder.getPosition()).getLastTradePrice());
-                                   stock_group.createStockItemEntry(position, stockItems.get(viewHolder.getPosition()).getSymbol(), stockItems.get(viewHolder.getPosition()).getName(), numOfStocksBought, Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value), numOfStocksBought * Double.parseDouble(value),formattedDate, Constants.BUY);
+                                   indCost = stockItems.get(viewHolder.getPosition()).getLastTradePrice();
+                                   totCost = formatter.round(stockItems.get(viewHolder.getPosition()).getLastTradePrice()*numOfStocksBought,3);
+                                   //double test = Double.parseDouble(value)
+                                   stock_group.createStockItemEntry(position, stockItems.get(viewHolder.getPosition()).getSymbol(), stockItems.get(viewHolder.getPosition()).getName(), numOfStocksBought, indCost, totCost, totCost, formattedDate, Constants.BUY);
                                    BusProvider.getInstance().post(new ObserverEvent());
                                    stock_group.close();
 

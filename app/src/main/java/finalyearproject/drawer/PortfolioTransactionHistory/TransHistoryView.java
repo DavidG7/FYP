@@ -88,7 +88,8 @@ public class TransHistoryView extends View {
                 }
             }
         }
-        mTextColors = new String[]{"#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#009A49","#009A49","#009A49"};
+        mTextColors = new String[]{"#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"};
+
         mAlpha = new int[]{255,255,200,200,200,200,200,255,255,255};
        //{R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,
               //  R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image_green,

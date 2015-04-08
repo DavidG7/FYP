@@ -42,8 +42,8 @@
                 android:gravity="center"
                 android:text="N"
                 android:textSize="20dp"
-                android:background="@drawable/mycircle"
-                android:textColor="@color/White"
+                android:background="@drawable/selector_portfolio_trans"
+                android:textColor="@drawable/selector_button_text"
 
                 />
 
@@ -58,8 +58,8 @@
                 android:gravity="center"
                 android:text = "Y"
                 android:textSize="20dp"
-                android:background="@drawable/mycircle"
-                android:textColor="@color/White"
+                android:background="@drawable/selector_portfolio_trans"
+                android:textColor="@drawable/selector_button_text"
 
                 />
 

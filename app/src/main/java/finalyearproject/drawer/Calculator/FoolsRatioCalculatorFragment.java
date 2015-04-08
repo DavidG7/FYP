@@ -32,7 +32,7 @@ public class FoolsRatioCalculatorFragment extends Fragment {
     TextView mCalculate, mResult,mReveal;
     NumberFormatter formatter;
     CircularReveal mCircularReveal;
-    Double mFoolsRatio;
+    double mFoolsRatio;
     int mCurrentColor;
 
     @Override
@@ -77,7 +77,7 @@ public class FoolsRatioCalculatorFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
 
-                builder.setView(new FoolsDialogView(getActivity(),mCurrentColor,mReveal))
+                builder.setView(new FoolsDialogView(getActivity(),mCurrentColor,mReveal,Double.parseDouble(mResult.getText().toString())))
 
                         //.setBackgroundResource(R.drawable.dublin_watchlist)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {

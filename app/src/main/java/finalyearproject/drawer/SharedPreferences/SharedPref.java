@@ -2,12 +2,15 @@ package finalyearproject.drawer.SharedPreferences;
 
 import android.content.Context;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+
+import finalyearproject.drawer.Formatter.NumberFormatter;
 
 
 /**
@@ -16,40 +19,69 @@ import android.preference.PreferenceManager;
 public class SharedPref {
     private SharedPreferences sharedPreferences;
     private static String PREF_NAME = "prefs";
-    private static String KEY = "Favourites";
-   // private int numOfFavourites;
+    // private int numOfFavourites;
     private Context mContext;
 
     public SharedPref(Context context) {
         this.mContext = context;
     }
 
-    public ArrayList<Integer> loadSavedPreferences() {
+    public  ArrayList<Integer> loadFavSavedPreferences(String key) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        String savedString = sharedPreferences.getString(KEY, "");
+        String savedString = sharedPreferences.getString(key, "");
         StringTokenizer st = new StringTokenizer(savedString, ",");
         int count = st.countTokens();
-        ArrayList<Integer> favourites = new ArrayList<Integer>();
-        for (int i = 0; i <count; i++) {
-            favourites.add(Integer.parseInt(st.nextToken()));
+        ArrayList<Integer> preferences = new ArrayList<Integer>();
+        for (int i = 0; i < count; i++) {
+             preferences.add(Integer.parseInt(st.nextToken()));
         }
-        return favourites;
-     }
-   
+        return preferences;
+    }
 
-           
-    public void savePreferences(ArrayList<Integer> favourites) {
+
+    public void saveFavPreferences(ArrayList<Integer> preferences, String key) {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         Editor editor = sharedPreferences.edit();
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < favourites.size(); i++) {
-            str.append(favourites.get(i)).append(",");
+        for (int i = 0; i < preferences.size(); i++) {
+            str.append(preferences.get(i)).append(",");
         }
-        editor.putString(KEY, str.toString());
+        editor.putString(key, str.toString());
         editor.commit();
-       // this.numOfFavourites = favourites.length;
+        // this.numOfFavourites = favourites.length;
 
     }
+
+
+    public  ArrayList<Double> loadChartValueFavSavedPreferences(String key) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        String savedString = sharedPreferences.getString(key, "");
+        StringTokenizer st = new StringTokenizer(savedString, ",");
+        int count = st.countTokens();
+        ArrayList<Double> preferences = new ArrayList<Double>();
+        for (int i = 0; i < count; i++) {
+             preferences.add(Double.parseDouble(st.nextToken()));
+        }
+        return preferences;
+    }
+
+
+    public void saveChartValuePreferences(ArrayList<Double> preferences, String key) {
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        Editor editor = sharedPreferences.edit();
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < preferences.size(); i++) {
+            str.append(preferences.get(i)).append(",");
+        }
+        editor.putString(key, str.toString());
+        editor.commit();
+        // this.numOfFavourites = favourites.length;
+
+    }
+
+
+
 
 }

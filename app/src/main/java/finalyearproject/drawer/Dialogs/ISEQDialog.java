@@ -1,6 +1,7 @@
 package finalyearproject.drawer.Dialogs;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +10,7 @@ import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -29,17 +31,22 @@ public class ISEQDialog extends LinearLayout {
 
     SeekBar mBuySeekBar;
     TextView mStockHeading;
+    ImageView mStockImage;
     EditText mNumberOfStocks;
     Context mContext;
     View mView;
     RecyclerView mStockDataList;
+    private TypedArray ISEQIcons;
     Quote mStockItem;
+    int mPosition;
 
 
-    public ISEQDialog(Context context, Quote stockItem) {
+    public ISEQDialog(Context context, Quote stockItem, int position) {
         super(context);
         this.mContext = context;
         this.mStockItem = stockItem;
+        this.ISEQIcons = context.getResources().obtainTypedArray(R.array.iseq_icons);
+        this.mPosition = position;
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if(inflater != null){
             mView =  inflater.inflate(R.layout.stock_dialog, null);
@@ -49,6 +56,7 @@ public class ISEQDialog extends LinearLayout {
         mStockDataList = (RecyclerView) mView.findViewById(R.id.rv_stock_data_list);
         mBuySeekBar = (SeekBar) mView.findViewById(R.id.sb_buy_stocks);
         mNumberOfStocks= (EditText) mView.findViewById(R.id.et_num_stocks);
+        mStockImage = (ImageView) mView.findViewById(R.id.iv_stock_dialog_icon);
 
         mBuySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 
@@ -70,6 +78,7 @@ public class ISEQDialog extends LinearLayout {
         });
 
         mStockHeading.setText(mStockItem.getName());
+        mStockImage.setImageResource(ISEQIcons.getResourceId(position,-1));
 
 
         ArrayList<String> test = new ArrayList<String>();

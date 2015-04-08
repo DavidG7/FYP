@@ -14,7 +14,9 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.R;
+import finalyearproject.drawer.SharedPreferences.SharedPref;
 
 /**
  * Created by Dvaid on 21/01/2015.
@@ -22,6 +24,7 @@ import finalyearproject.drawer.R;
 public class LineChartFragment extends Fragment {
 
     LineChart chart;
+    SharedPref mPref;
 
 
 
@@ -34,21 +37,34 @@ public class LineChartFragment extends Fragment {
         chart = (LineChart) lineGraph.findViewById(R.id.line_chart);
         chart.animateXY(3000, 3000);
         ArrayList<Entry> valsComp1 = new ArrayList<Entry>();
+        mPref = new SharedPref(getActivity());
+        ArrayList <Double> lineChartValues = mPref.loadChartValueFavSavedPreferences(Constants.CHART_VALUES);
 
-        Entry c1e1 = new Entry(1.43f, 0); // 0 == quarter 1
-        valsComp1.add(c1e1);
-        Entry c1e2 = new Entry(1.22f, 1); // 1 == quarter 2 ...
-        valsComp1.add(c1e2);
-        Entry c1e3 = new Entry(1.27f, 2); // 0 == quarter 1
-        valsComp1.add(c1e3);
-        Entry c1e4 = new Entry(1.56f, 3); // 1 == quarter 2 ...
-        valsComp1.add(c1e4);
+        for(int i =0;i<lineChartValues.size();i++) {
+           /* Entry c1e1 = new Entry(1.43f, i); // 0 == quarter 1
+
+            valsComp1.add(c1e1);
+
+            Entry c1e2 = new Entry(1.22f, i+1); // 1 == quarter 2 ...
+            valsComp1.add(c1e2);
+            Entry c1e3 = new Entry(1.27f, i+2); // 0 == quarter 1
+            valsComp1.add(c1e3);
+            Entry c1e4 = new Entry(1.56f, i+3); // 1 == quarter 2 ...
+            valsComp1.add(c1e4);*/
+            double temp = (double)lineChartValues.get(i);
+            int temp2 = (int)temp;
+            Entry entry = new Entry((float)temp2, i);
+            valsComp1.add(entry);
+        }
+
 
         // and so on ...
 
 
 
-        LineDataSet setComp1 = new LineDataSet(valsComp1, "BOI : Bank Of Ireland");
+        LineDataSet setComp1 = new LineDataSet(valsComp1, "Chart Value");
+        setComp1.setDrawCircles(false);
+
         setComp1.setColors(new int[] { R.color.list_divider}, getActivity());
 
         ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
@@ -56,7 +72,13 @@ public class LineChartFragment extends Fragment {
 
 
         ArrayList<String> xVals = new ArrayList<String>();
-        xVals.add("Jan"); xVals.add("Feb"); xVals.add("March"); xVals.add("April");
+        for(int i = 0;i<lineChartValues.size();i++){
+            xVals.add("");
+
+        }
+
+
+
 
         LineData data = new LineData(xVals, dataSets);
         chart.setData(data);

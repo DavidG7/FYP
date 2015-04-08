@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
+
     android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.5"
+
+        android:layout_weight="0.4"
 
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/ll_portfolio_value_background"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.5"
+            android:layout_weight="0.8"
             android:background="@drawable/portfolio_green"
            android:orientation="vertical">
 
 
             <TextView
                 android:id="@+id/tv_portfolio_info"
-                android:layout_width="40dp"
+                android:layout_width="50dp"
                 android:layout_margin="20dp"
-                android:layout_height="40dp"
+                android:layout_height="50dp"
                 android:text="i"
                 android:elevation="8dp"
-                android:fontFamily="serif"
+                android:fontFamily="sans-serif-medium"
                 android:textSize="30dp"
                 android:gravity="center"
-                android:background="@drawable/mycircle"
-                android:textColor="@color/White"
+                android:background="@drawable/selector_portfolio_trans"
+                android:textColor="@color/list_divider"
 
 
                 />
@@ -37,8 +40,8 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="bottom|center"
-                android:textColor="@color/list_divider_pressed"
+                android:gravity="center"
+                android:textColor="@color/White"
                 android:layout_gravity="top"
                 android:background="@null"
                 android:textSize="35dp"
@@ -48,36 +51,6 @@
 
 
         </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-
-            android:layout_weight="0.5">
-
-            <SeekBar
-                android:id="@+id/sb_portfolio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-
-                android:paddingLeft="100dp"
-                android:paddingRight="100dp"
-                android:indeterminate="false" />
-
-           <!-- <ImageView
-
-                android:layout_width="50dp"
-                android:layout_alignParentBottom="true"
-                android:layout_height="50dp"
-                android:layout_margin="20dp"
-                android:background="@drawable/icon"
-
-
-
-                />-->
-
-        </RelativeLayout>
 
 
 
@@ -90,35 +63,71 @@
         android:layout_width="match_parent"
 
         android:layout_height="0dp"
-        android:layout_weight="0.5" >
-
+        android:layout_weight="0.6" >
 
         <ImageButton
-            android:id="@+id/ib_trans_history"
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.4"
-            android:background="@drawable/border_selector"
+            android:layout_weight="0.1"
+            android:background="@android:color/transparent"
+            />
+        <ImageButton
+            android:id="@+id/ib_port_history"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+
+            android:background="@drawable/selector_portfolio_trans"
             android:src="@drawable/trans_icon_selector"
 
 
          />
 
-        <RelativeLayout
-            android:id="@+id/rl_chart_port"
+        <ImageButton
+
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:background="@drawable/border_selector"
-            android:layout_weight="0.6">
+            android:layout_weight="0.1"
+            android:background="@android:color/transparent"
+           />
 
 
-        <FrameLayout
-            android:id="@+id/fl_chart_port"
+
+       <LinearLayout
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:orientation="vertical"
+           android:layout_weight="0.4">
+
+        <ImageButton
+            android:id="@+id/ib_port_chart"
             android:layout_width="match_parent"
-            android:layout_margin="10dp"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
+            android:src ="@drawable/portfolio_chart_icon_selector"
+            android:background="@drawable/selector_portfolio_trans"
+            android:layout_weight="0.4"
             />
-    </RelativeLayout>
+
+           <ImageButton
+               android:id="@+id/ib_port_sell"
+               android:layout_width="100dp"
+               android:layout_height="0dp"
+               android:src ="@drawable/portfolio_sell_icon_selector"
+               android:background="@drawable/selector_portfolio_trans"
+               android:layout_weight="0.6"
+               />
+
+       </LinearLayout>
+
+        <ImageButton
+
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.1"
+            android:background="@android:color/transparent"
+            />
+
 
     </LinearLayout>
 

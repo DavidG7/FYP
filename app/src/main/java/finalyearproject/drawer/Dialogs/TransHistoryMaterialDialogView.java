@@ -60,7 +60,7 @@ public class TransHistoryMaterialDialogView extends FrameLayout {
         mTransDialogChangeIndicator =(ImageView) view.findViewById(R.id.iv_trans_dialog_change_indicator);
 
         mTransDialogHeading.setText(dataSource.getName());
-        Picasso.with(mContext).load(ISEQIcons.getResourceId(mPosition,0)).into(mTransDialogIcon);
+        Picasso.with(mContext).load(ISEQIcons.getResourceId(dataSource.getId(),0)).into(mTransDialogIcon);
 
 
         changeIndicator();

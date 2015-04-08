@@ -28,10 +28,15 @@
             android:background="@color/list_background">
         </ImageView>-->
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.430">
+
         <ViewFlipper
             android:id="@+id/switcher"
-            android:layout_weight="0.430"
-            android:layout_height="0dp"
+
+            android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:inAnimation="@anim/fade_in"
             android:outAnimation="@anim/fade_out"
@@ -56,8 +61,16 @@
                 android:src="@drawable/drawer_image_3" />
         </ViewFlipper>
 
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom"
+                android:background="@android:color/transparent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/profile_pic"/>
 
-
+        </FrameLayout>
 
         <ListView
             android:id="@+id/list_slidermenu"

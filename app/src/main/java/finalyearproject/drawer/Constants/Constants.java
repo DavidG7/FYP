@@ -11,7 +11,7 @@ public class Constants {
     public static final String STOCK_INDEXES = "\"AIB.IR\",\"BIR.IR\",\"DOY.IR\",\"EIL1.IR\",\"DOP.IR\",\"YZA.IR\",\"DD7D.IR\",\"DD7E.IR\",\"GCC.IR\",\"FKV.IR\"," +
             "\"DQ5.IR\",\"DD8B.IR\",\"CRG.IR\",\"DD8A.IR\",\"DHG.IR\",\"DLE.IR\",\"GUI.IR\",\"DQ7.IR\",\"DRS.IR\",\"FAC.IR\"," +
             "\"FOI.IR\",\"EG7.IR\",\"GYQ.IR\",\"FQ3.IR\",\"GAME.IR\",\"GL9.IR\",\"8GW.IR\",\"GN1.IR\",\"HBRN.IR\",\"IJG.IR\"," +
-            "\"IPDC.IR\",\"IR5B.IR\",\"IRES.IR\",\"IETF.IR\",\"KJY.IR\",\"JEV.IR\",\"KRZ.IR\",\"KRX.IR\",\"MSTY.IR\",\"3MP.IR\"," +
+            "\"IPDC.IR\",\"IR5B.IR\",\"IRES.IR\",\"IETF.IR\",\"KJY.IR\",\"JEV.IR\",\"KRZ.IR\",\"KRX.IR\",\"MSTY.IR\",\"MLC.IR\",\"3MP.IR\"," +
             "\"MIO.IR\",\"OIZ.IR\",\"ORQ.IR\",\"OVXA.IR\",\"PLS.IR\",\"IL0.IR\",\"EG5A.IR\",\"P8ET.IR\",\"OKRA.IR\",\"PZQA.IR\"," +
             "\"RY4B.IR\",\"SK3.IR\",\"TCO.IR\",\"T7O.IR\",\"TQW.IR\",\"MDY.IR\",\"ZAZ.IR\"";
 
@@ -31,6 +31,10 @@ public class Constants {
     public static final String BUY = "BUY";
     public static final String SELL = "SELL";
     public static final String BOTH = "BOTH";
+
+    public static final String FAVOURITES = "Favourites";
+    public static final String CHART_VALUES = "Chart Values";
+
 
 }
 

@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<com.andexert.library.RippleView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/ripple"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:rv_alpha = "255"
+    app:rv_rippleDuration = "50"
+    app:rv_color = "@color/list_divider"
+    rv_centered="true">
+
+
+<RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="57dp"
+    android:layout_height="48dp"
     android:background="@color/list_background">
 
     <ImageView
@@ -36,3 +49,5 @@
      />
 
 </RelativeLayout>
+
+</com.andexert.library.RippleView>

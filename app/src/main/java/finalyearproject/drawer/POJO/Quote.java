@@ -116,7 +116,7 @@ public class Quote {
         if(DaysLow != null) {
             return DaysLow;
         }else{
-            return "0.0";
+            return "0.000";
         }
     }
 
@@ -124,7 +124,7 @@ public class Quote {
         if(DaysHigh != null) {
             return DaysHigh;
         }else{
-            return "0.0";
+            return "0.000";
         }
     }
 
@@ -132,7 +132,7 @@ public class Quote {
         if(YearLow != null) {
             return YearLow;
         }else{
-            return "0.0";
+            return "0.000";
         }
     }
 
@@ -140,7 +140,7 @@ public class Quote {
         if(YearHigh != null) {
             return YearHigh;
         }else{
-            return "0.0";
+            return "0.000";
         }
     }
 
@@ -148,7 +148,7 @@ public class Quote {
         if(Volume != null) {
             return Volume;
         }else{
-            return "0.0";
+            return "0.000";
         }
     }
 
@@ -166,21 +166,28 @@ public class Quote {
         if(LastTradePriceOnly!= null) {
             return Double.parseDouble(LastTradePriceOnly);
         }else{
-            return 0.0;
+            return 0.000;
         }
     }
 
     public String getChangeInPercent(){
 
-        try {
+       /* try {
             String temp = ChangeinPercent.replaceAll("[^\\d.]", "");
             if(ChangeinPercent.contains("-")){
-                return "-1" + temp +"%";
+                return -1 + temp +"%";
             }
             temp = "+" + temp +"%";
             return temp;
         }catch(NullPointerException e){
-            return "0.00";
+            return "00.00";
+        }*/
+        try{
+            return  ChangeinPercent;
+
+        }catch(NullPointerException e){
+            e.printStackTrace();
+            return "+00.00%";
         }
     }
 

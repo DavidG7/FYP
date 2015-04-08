@@ -31,11 +31,9 @@ public class ExitFragment extends Fragment {
         mExitTrue.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.mycircle_white);
-                    ((Button)v).setTextColor(getActivity().getResources().getColor(R.color.list_divider));
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+               if (event.getAction() == MotionEvent.ACTION_UP) {
                     System.exit(-1);
+
                 }
                 return false;
             }
@@ -44,13 +42,8 @@ public class ExitFragment extends Fragment {
         mExitFalse.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.mycircle_white);
-                    ((Button)v).setTextColor(getActivity().getResources().getColor(R.color.list_divider));
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+              if (event.getAction() == MotionEvent.ACTION_UP) {
                     BusProvider.getInstance().post(new ExitEvent());
-                    v.setBackgroundResource(R.drawable.mycircle);
-                    ((Button)v).setTextColor(getActivity().getResources().getColor(R.color.White));
                 }
                 return false;
             }

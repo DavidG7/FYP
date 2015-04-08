@@ -3,31 +3,28 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-         <ImageView
-             android:layout_width="0dp"
-             android:layout_height="match_parent"
-             android:src="@drawable/motly"
-             android:padding="10dp"
-             android:layout_weight="0.2"/>
+<LinearLayout
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="0.7">
+
     <TextView
-        android:id="@+id/tv_fools_dialog_heading"
-        android:layout_width="0dp"
-        android:layout_weight="0.8"
+        android:id="@+id/tv_fools_dialog_explanation"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Motley Fools Score"
-        android:textSize="20dp"
-
+        android:text="Buy"
         android:fontFamily="serif"
-        android:padding="10dp"
+
+        android:textSize="15dp"
+        android:padding="20dp"
         />
 
-
-
-     </LinearLayout>
 
     <TextView
         android:id="@+id/tv_fools_dialog_score"
@@ -41,14 +38,42 @@
         />
 
     <TextView
-        android:id="@+id/tv_fools_dialog_explanation"
+        android:id="@+id/tv_fools_dialog_number"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buy"
-        android:fontFamily="serif"
 
-        android:textSize="15dp"
+        android:layout_height="wrap_content"
+        android:text="0.34"
+        android:textSize="20dp"
+
+        android:fontFamily="serif"
         android:padding="20dp"
         />
 
+
+
+
+
+
+
+
+
 </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:src="@drawable/motly"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>
+
+

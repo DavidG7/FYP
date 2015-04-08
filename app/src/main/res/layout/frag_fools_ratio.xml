@@ -160,11 +160,11 @@
 
             <TextView
                 android:id="@+id/tv_reveal"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:clipToPadding="false"
                 android:layout_gravity="center"
-                android:background="@drawable/mycircle_green"
+                android:background="@drawable/extra_selector"
                 android:text="R"
                 android:visibility="invisible"
                 android:layout_marginTop="30dp"

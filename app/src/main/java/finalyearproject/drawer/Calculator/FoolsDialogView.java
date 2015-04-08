@@ -14,24 +14,27 @@ import finalyearproject.drawer.R;
  */
 public class FoolsDialogView extends LinearLayout {
 
-    TextView mFoolsScore, mFoolsExplanation , mHeading;
+    TextView mFoolsScore, mFoolsExplanation , mNumberView;
     View view;
     TextView mReveal;
+    double mNumber;
 
-    public FoolsDialogView(Context context, int color, TextView reveal) {
+    public FoolsDialogView(Context context, int color, TextView reveal, double number) {
         super(context);
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         if (inflater != null) {
             view = inflater.inflate(R.layout.fools_dialog, null);
         }
         this.mReveal = reveal;
+        this.mNumber = number;
         mFoolsScore = (TextView) view.findViewById(R.id.tv_fools_dialog_score);
         mFoolsExplanation = (TextView) view.findViewById(R.id.tv_fools_dialog_explanation);
-        mHeading = (TextView) view.findViewById(R.id.tv_fools_dialog_heading);
+        mNumberView= (TextView) view.findViewById(R.id.tv_fools_dialog_number);
 
 
 
-        mHeading.setTextColor(color);
+        mNumberView.setTextColor(color);
+        mNumberView.setText(Double.toString(mNumber));
         mFoolsScore.setText(mReveal.getText());
         mFoolsScore.setTextColor(color);
         mFoolsExplanation.setText(Constants.myFoolsMapping.get(mReveal.getText()));

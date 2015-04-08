@@ -60,7 +60,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
         // displaying count
         // check whether it set visible or not
-        if(navDrawerItems.get(position).getCounterVisibility()){
+        if(navDrawerItems.get(position).getSelected()){
             imgCount.setBackgroundResource(R.drawable.mycircle);
         }else{
             // hide the counter view

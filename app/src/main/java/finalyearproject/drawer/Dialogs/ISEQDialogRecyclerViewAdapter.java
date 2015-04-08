@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -51,9 +52,11 @@ public class ISEQDialogRecyclerViewAdapter extends RecyclerView.Adapter<ISEQDial
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView stockText;
 
+
         public ViewHolder(View itemView) {
             super(itemView);
             stockText = (TextView) itemView.findViewById(R.id.tv_stock_dialog_data);
+
         }
     }
 

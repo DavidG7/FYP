@@ -1,5 +1,8 @@
 package finalyearproject.drawer.Formatter;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
  * Created by Dvaid on 12/03/2015.
  */
@@ -8,9 +11,9 @@ public class NumberFormatter {
     public String percentChange(double totalCost, double totalValue){
         String percentChangeAsString = "0.0%";
         try {
-            double temp = totalValue - totalCost;
-            double percent = temp / totalCost;
-            percentChangeAsString = percent+"%";
+            double temp = totalCost - totalValue;
+            double percent = (temp / totalValue)*100;
+            percentChangeAsString = Double.toString(percent)+"%";
         }catch(ArithmeticException e){
             e.printStackTrace();
         }
@@ -37,5 +40,13 @@ public class NumberFormatter {
     public double getGrowthRate(double estimateNext,double estimateCurrent){
         double growthRate = (((estimateNext-estimateCurrent)/estimateCurrent)*100);
         return growthRate;
+    }
+
+    public double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
     }
 }

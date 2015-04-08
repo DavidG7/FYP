@@ -7,15 +7,15 @@ public class NavDrawerItem {
 
     private String title;
     private int icon;
-    private boolean isCounterVisible = false;
+    private boolean isSelected = false;
 
     public NavDrawerItem(){}
 
 
-    public NavDrawerItem(String title, int icon, boolean isCounterVisible){
+    public NavDrawerItem(String title, int icon, boolean isSelected){
         this.title = title;
         this.icon = icon;
-        this.isCounterVisible = isCounterVisible;
+        this.isSelected = isSelected;
     }
 
     public String getTitle(){
@@ -27,8 +27,8 @@ public class NavDrawerItem {
     }
 
 
-    public boolean getCounterVisibility(){
-        return this.isCounterVisible;
+    public boolean getSelected(){
+        return this.isSelected;
     }
 
     public void setTitle(String title){
@@ -39,7 +39,7 @@ public class NavDrawerItem {
         this.icon = icon;
     }
 
-    public void setCounterVisibility(boolean isCounterVisible){
-        this.isCounterVisible = isCounterVisible;
+    public void setSelected(boolean isCounterVisible){
+        this.isSelected = isCounterVisible;
     }
 }

@@ -21,26 +21,20 @@ import finalyearproject.drawer.R;
  */
 public class WatchListEmptyFragment extends Fragment{
 
-    ImageButton mBubble;
+    ImageButton mWatchListEmpty;
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View android = inflater.inflate(R.layout.frag_watchlist_empty, container, false);
-        //mBubble = (ImageButton) android.findViewById(R.id.ib_bubble);
+        mWatchListEmpty = (ImageButton) android.findViewById(R.id.ib_watchlist_empty);
 
-       /* mBubble.setOnTouchListener(new View.OnTouchListener() {
+        mWatchListEmpty.setOnClickListener(new View.OnClickListener() {
+
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    v.setBackgroundResource(R.drawable.speech_bubble_pressed);
-
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-
-                    BusProvider.getInstance().post(new WatchlistToISEQEvent());
-                }
-                return false;
+            public void onClick(View v) {
+                BusProvider.getInstance().post(new WatchlistToISEQEvent());
             }
-        });**/
+        });
         return android;
     }
 

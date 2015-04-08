@@ -22,6 +22,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialogView;
+import finalyearproject.drawer.EventBus.BusProvider;
+import finalyearproject.drawer.EventBus.ObserverEvent;
 import finalyearproject.drawer.R;
 import finalyearproject.drawer.SQLiteDatabase.MySQLiteHelper;
 import finalyearproject.drawer.SQLiteDatabase.StockPurchase;
@@ -112,6 +114,8 @@ public class PortfolioSellView extends View {
 
                                                         }
                                                     }
+                                                    BusProvider.getInstance().post(new ObserverEvent());
+
                                                     invalidate();
                                                   }
                                             });
@@ -151,10 +155,17 @@ public class PortfolioSellView extends View {
             for (int j = 0; j < 4; j++) {
                 for (Iterator<Integer> it = mPurchasedStockIds.iterator(); it.hasNext(); ) {
                     if(count == it.next()){
-                        paint.setStyle(Paint.Style.FILL);
+                        paint.setStyle(Paint.Style.STROKE);
+                        paint.setStrokeWidth(2);
+                        paint.setColor(getResources().getColor(R.color.change_pos));
+                        //paint.setAlpha(140);
                         break;
                     }else{
+
                         paint.setStyle(Paint.Style.STROKE);
+                        paint.setStrokeWidth(1);
+                        paint.setColor(getResources().getColor(R.color.list_divider));
+
                     }
                 }
                 canvas.drawCircle(xPositions.get(j), yPositions.get(i*4-1), mRadius, paint);

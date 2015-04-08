@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
+import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -21,7 +22,6 @@ import finalyearproject.drawer.POJO.ResultWrapper;
 public class MySQLiteHelper {
 
 
-
     public static final String S_ID = "STOCK_ID";
     public static final String S_TID = "TICKER_ID";
     public static final String S_NAME = "NAME";
@@ -31,6 +31,7 @@ public class MySQLiteHelper {
     public static final String S_TCOST = "TOTAL_COST";
     public static final String S_DATE = "DATE";
     public static final String S_TYPE = "TYPE";
+    public static final String S_SOLD = "IS_SOLD";
     public static final String NAME_PURCHASE = "STOCK_PURCHASE";
 
 
@@ -49,14 +50,14 @@ public class MySQLiteHelper {
     private final Context ourContext;
     private SQLiteDatabase ourDatabase;
 
-    public double getNumberOfStocksIndividualTranche(int position) {
-        String[] columns = new String[]{S_NUM};
-        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, S_TYPE + " LIKE " + "'" + Constants.BUY + "'", null, null, null, null);
+    public double getValueFromRow(int position, String key) {
+        String[] columns = new String[]{key};
+        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
 
         double result = 0.0;
 
         try {
-            int i_num = c.getColumnIndex(S_NUM);
+            int i_num = c.getColumnIndex(key);
 
 
             c.moveToPosition(position);
@@ -66,6 +67,13 @@ public class MySQLiteHelper {
         }
 
         return result;
+
+       /* Cursor mCount= ourDatabase.rawQuery("SELECT " + S_NUM + " FROM "
+                + NAME_PURCHASE + " WHERE " + S_ID + " = " + position, null);
+        mCount.moveToFirst();
+        double value= mCount.getDouble(0);
+        mCount.close();
+        return value;*/
     }
 
 
@@ -83,6 +91,7 @@ public class MySQLiteHelper {
             // TODO Auto-generated method stub
 
             db.execSQL("CREATE TABLE "  + NAME_PURCHASE + " (" +
+
                             S_ID + " INTEGER, "+
                             S_TID + " TEXT, "+
                             S_NAME + " TEXT, " +
@@ -91,7 +100,8 @@ public class MySQLiteHelper {
                             S_TVAL + " DOUBLE, " +
                             S_TCOST + " DOUBLE, " +
                             S_DATE + " TEXT, " +
-                            S_TYPE + " TEXT);"
+                            S_TYPE + " TEXT, " +
+                            S_SOLD + " INTEGER);"
             );
 
 
@@ -151,6 +161,7 @@ public class MySQLiteHelper {
         cv.put(S_TCOST,s_tcost);
         cv.put(S_DATE,s_date);
         cv.put(S_TYPE, s_type);
+        cv.put(S_SOLD, -1);
 
         return ourDatabase.insert(NAME_PURCHASE, null, cv);
 
@@ -160,7 +171,7 @@ public class MySQLiteHelper {
     public ArrayList<StockPurchase> getStockGroupEntry(String type) {
         // TODO Auto-generated method stub
 
-        String[] columns = new String[]{S_ID, S_TID, S_NAME, S_NUM, S_INDVAL, S_TVAL, S_TCOST, S_DATE, S_TYPE};
+        String[] columns = new String[]{S_ID, S_TID, S_NAME, S_NUM, S_INDVAL, S_TVAL, S_TCOST, S_DATE, S_TYPE,S_SOLD};
         Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
 
         ArrayList<StockPurchase> stockGroupData = new ArrayList<StockPurchase>();
@@ -174,12 +185,13 @@ public class MySQLiteHelper {
         int i_tcost = c.getColumnIndex(S_TCOST);
         int i_date = c.getColumnIndex(S_DATE);
         int i_type = c.getColumnIndex(S_TYPE);
+        int i_sold = c.getColumnIndex(S_SOLD);
 
 
         for (c.moveToLast(); !c.isBeforeFirst(); c.moveToPrevious()) {
             // result = result + c.getString(b_symbol) + "//split//" + c.getString(b_name) + "//split//" + c.getString(b_change_percent)+"//split//" + c.getString(b_price) + "//split//";
             if (type.equals(Constants.BUY)) {
-                if (c.getString(i_type).equals(Constants.BUY)) {
+                if (c.getString(i_type).equals(Constants.BUY) && c.getInt(i_sold) == -1) {
                     stockGroupData.add(new StockPurchase(c.getInt(i_id), c.getString(i_tid), c.getString(i_name), c.getInt(i_num), c.getDouble(i_cval), c.getDouble(i_tval), c.getDouble(i_tcost), c.getString(i_date), c.getString(i_type)));
                 }
             } else if(type.equals(Constants.SELL)) {
@@ -204,7 +216,7 @@ public class MySQLiteHelper {
 
         double portfolioValue = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE + " WHERE " + S_TYPE + " LIKE " + "'" + Constants.BUY + "'", null);
+                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE + " WHERE " + S_TYPE + " LIKE " + "'" + Constants.BUY + "'" + " AND " + S_SOLD + " = -1" , null);
         if (cursor.moveToFirst()) {
             portfolioValue = cursor.getDouble(0);
         }
@@ -215,7 +227,7 @@ public class MySQLiteHelper {
 
         double portfolioValue = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE + " WHERE " + S_TID +" LIKE "+ "'" + symbol + "'" + " AND " +  S_TYPE + " LIKE " + "'" + Constants.BUY + "'"  , null);
+                "SELECT SUM(" + S_TVAL + ") FROM " + NAME_PURCHASE + " WHERE " + S_TID +" LIKE "+ "'" + symbol + "'" + " AND " +  S_TYPE + " LIKE " + "'" + Constants.BUY + "'" +" AND " + S_SOLD + " = -1" , null);
         if (cursor.moveToFirst()) {
             portfolioValue = cursor.getDouble(0);
         }
@@ -226,7 +238,7 @@ public class MySQLiteHelper {
 
         double portfolioCost = 0.0;
         Cursor cursor = ourDatabase.rawQuery(
-                "SELECT SUM(" + S_TCOST + ") FROM " + NAME_PURCHASE  + " WHERE " + S_TYPE + " LIKE " + "'" + Constants.BUY + "'", null);
+                "SELECT SUM(" + S_TCOST + ") FROM " + NAME_PURCHASE  + " WHERE " + S_TYPE + " LIKE " + "'" + Constants.BUY + "'" + " AND " + S_SOLD + " = -1", null);
         if (cursor.moveToFirst()) {
             portfolioCost = cursor.getDouble(0);
     }
@@ -280,20 +292,38 @@ public class MySQLiteHelper {
     {
         Quote[] quotes = result.getQuery().getResults().getQuote();
         ContentValues args = new ContentValues();
+
+        int numRows = (int)DatabaseUtils.queryNumEntries(ourDatabase, NAME_PURCHASE);
+
         try {
             for (int i = 0; i < quotes.length; i++) {
                 args.put(S_INDVAL, quotes[i].getLastTradePriceOnly());
-                args.put(S_TVAL, quotes[i].getLastTradePriceOnly() * getNumberOfStocksIndividualTranche(i));
-                ourDatabase.update(NAME_PURCHASE, args, S_ID + "=" + i + " AND " + S_TYPE + " LIKE " + "'" + Constants.BUY + "'", null);
+                ourDatabase.update(NAME_PURCHASE, args, S_ID + "=" + i, null);
             }
+            for(int i = 0; i<numRows;i++){
+
+                ContentValues cv = new ContentValues();
+                cv.put(S_TVAL, getValueFromRow(i,S_INDVAL) * getValueFromRow(i,S_NUM));
+                double temp1 = getValueFromRow(i,S_INDVAL);
+                double temp2 = getValueFromRow(i,S_NUM);
+                double temp3 = temp1*temp2;
+                Log.i("SQLITE CHECKER",Integer.toString(ourDatabase.update(NAME_PURCHASE, cv, "ROWID" + " = " + (i+1) , null)));// +1 accounts for autoincrementing S_AUTO_ID starting at 1
+
+            }
+
         }catch (NullPointerException e){
               e.printStackTrace();
     }
     }
 
 
-    public long sellStockItem(StockPurchase stockItemToSell){
-         ourDatabase.execSQL("delete from " + NAME_PURCHASE + " where " + S_ID + " = '" + stockItemToSell.getId() + "'");
+    public void sellStockItem(StockPurchase stockItemToSell){
+
+        ContentValues args =new ContentValues();
+        args.put(S_SOLD,0);
+
+        Log.i("UPDATE CHECKER",Integer.toString(ourDatabase.update(NAME_PURCHASE, args, S_TID + " LIKE " +   "'" + stockItemToSell.getTickerId() + "'", null)));
+
         ContentValues cv = new ContentValues();
         cv.put(S_ID, stockItemToSell.getId());
         cv.put(S_TID, stockItemToSell.getTickerId());
@@ -304,8 +334,13 @@ public class MySQLiteHelper {
         cv.put(S_TCOST,stockItemToSell.getTotalCost());
         cv.put(S_DATE,stockItemToSell.getDate());
         cv.put(S_TYPE, Constants.SELL);
+        cv.put(S_SOLD,0);
 
-        return ourDatabase.insert(NAME_PURCHASE, null, cv);
+
+        ourDatabase.insert(NAME_PURCHASE, null, cv);
+
+
+
 
     }
 

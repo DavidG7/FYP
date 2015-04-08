@@ -56,7 +56,9 @@ public class PieChartFragment extends Fragment {
         portfolioMinusStockValue = mNumFormatter.getPercentOfOneNumFromAnother(portfolioMinusStockValue,totalPortfolioValue);
         quoteValueInPortfolio = mNumFormatter.getPercentOfOneNumFromAnother(quoteValueInPortfolio,totalPortfolioValue);
 
-
+        if(portfolioMinusStockValue == 0 && quoteValueInPortfolio ==0){
+            portfolioMinusStockValue = 100.00;
+        }
         chart = (PieChart) pieGraph.findViewById(R.id.pie_chart);
         chart.animateXY(3000, 3000);
         ArrayList<Entry> valsComp1 = new ArrayList<Entry>();

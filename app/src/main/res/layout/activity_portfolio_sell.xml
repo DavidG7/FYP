@@ -3,16 +3,31 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:background="@color/change_neg"
-        android:text="SELL"
-        android:textSize="20dp"
+        android:padding="15dp"
+        android:src="@drawable/sell_image"
         android:paddingLeft="10dp"
+        android:layout_weight="0.2"
         android:fontFamily="sans-serif-medium"
         android:gravity="center_vertical"
-        android:layout_weight="0.15"/>
+     />
+
+        <TextView
+            android:layout_width="0dp"
+            android:background="@color/change_neg"
+            android:layout_height="match_parent"
+            android:layout_weight="0.8"/>
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +43,7 @@
 
                 android:id="@+id/fl_portfolio_sell"
                 android:layout_width="match_parent"
-                android:layout_height="1300dp"
+                android:layout_height="1275dp"
                 >
             </FrameLayout>
 

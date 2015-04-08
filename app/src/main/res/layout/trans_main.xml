@@ -17,31 +17,18 @@
             android:layout_weight="0.9"
             android:orientation="horizontal"
             >
-            <TextView
 
-                android:id = "@+id/tv_transaction_title"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                android:textColor="@color/list_divider"
-                android:layout_gravity="top"
-                android:background="@null"
-                android:gravity="center"
-                android:textSize="25dp"
-                android:fontFamily="serif"
-                android:text="Transaction History"
-                />
         </LinearLayout>
 
         <ImageButton
             android:id="@+id/ib_arrow"
-            android:src ="@drawable/arrow_forward"
+            android:src ="@drawable/arrow_selector"
             android:layout_width="wrap_content"
             android:layout_marginRight="20dp"
             android:layout_gravity="center"
             android:elevation="8dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/mycircle"
+            android:background="@drawable/selector_portfolio_trans"
         />
     </LinearLayout>
     <View

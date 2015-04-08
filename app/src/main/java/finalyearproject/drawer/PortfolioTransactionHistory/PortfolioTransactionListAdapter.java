@@ -30,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.TreeMap;
 
+import finalyearproject.drawer.Constants.Constants;
 import finalyearproject.drawer.Dialogs.TransHistoryMaterialDialog;
 import finalyearproject.drawer.EventBus.BusProvider;
 import finalyearproject.drawer.EventBus.FavouritesEvent;
@@ -62,8 +63,19 @@ public class PortfolioTransactionListAdapter extends RecyclerView.Adapter<Portfo
 
     @Override
     public void onBindViewHolder(ListItemViewHolder holder,final int position) {
+
             holder.mTransTicker.setText(mModelData.get(position).getTickerId());
             holder.mTransNum.setText("(" + mModelData.get(position).getNum()+ ")");
+            if(mModelData.get(position).getType().equals(Constants.BUY)){
+                holder.mTransIcon.setImageResource(R.drawable.bought_image_green);
+                holder.mTransTicker.setTextColor(mContext.getResources().getColor(R.color.change_pos));
+                holder.mTransNum.setTextColor(mContext.getResources().getColor(R.color.change_pos));
+            }else if(mModelData.get(position).getType().equals(Constants.SELL)){
+                holder.mTransIcon.setImageResource(R.drawable.sold_image_red);
+                holder.mTransTicker.setTextColor(mContext.getResources().getColor(R.color.change_neg));
+                holder.mTransNum.setTextColor(mContext.getResources().getColor(R.color.change_neg));
+            }
+
             holder.mTransMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -71,6 +83,8 @@ public class PortfolioTransactionListAdapter extends RecyclerView.Adapter<Portfo
                     dialog.build();
                 }
             });
+
+           //holder.mTransDate.setText(mModelData.get(position).getDate().substring(0,5));
 
     }
 
@@ -84,14 +98,17 @@ public class PortfolioTransactionListAdapter extends RecyclerView.Adapter<Portfo
     }
 
     public final static class ListItemViewHolder extends RecyclerView.ViewHolder {
-        TextView mTransTicker,mTransNum;
+        TextView mTransTicker,mTransNum,mTransDate;
         ImageButton mTransMore;
+        ImageView mTransIcon;
 
         public ListItemViewHolder(final View itemView) {
             super(itemView);
             mTransTicker = (TextView) itemView.findViewById(R.id.tv_trans_list_ticker);
             mTransNum = (TextView) itemView.findViewById(R.id.tv_trans_list_num);
+          //  mTransDate = (TextView) itemView.findViewById(R.id.tv_trans_list_date);
             mTransMore= (ImageButton) itemView.findViewById(R.id.ib_trans_list_more);
+            mTransIcon = (ImageView) itemView.findViewById(R.id.iv_trans_list_icon);
         }
     }
 
