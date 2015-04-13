@@ -9,10 +9,13 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.R;
 
 public class ChartSpinnerAdapter extends ArrayAdapter<String> {
@@ -21,6 +24,10 @@ public class ChartSpinnerAdapter extends ArrayAdapter<String> {
     private ArrayList<String> mModelData = null;
     private TypedArray mISEQIcons;
     private TextView mCurrentStockHeading;
+
+    @InjectView(R.id.tv_spinner_item_ticker)TextView spinnerTicker;
+    @InjectView(R.id.iv_spinner_item_icon)ImageView spinnerIcon;
+    @InjectView(R.id.iv_spinner_item_indicator)ImageView spinnerSelected;
 
     public ChartSpinnerAdapter(Context context, int resource, ArrayList<String> modelData,TextView currentStockHeading) {
         super(context,resource,modelData);
@@ -38,9 +45,10 @@ public class ChartSpinnerAdapter extends ArrayAdapter<String> {
             spinnerRow = LayoutInflater.from(mContext).inflate(R.layout.chart_spinner_row_item,null);
         }
 
-        TextView spinnerTicker = (TextView) spinnerRow.findViewById(R.id.tv_spinner_item_ticker);
+        ButterKnife.inject(this, spinnerRow);
+       /* TextView spinnerTicker = (TextView) spinnerRow.findViewById(R.id.tv_spinner_item_ticker);
         ImageView spinnerIcon = (ImageView) spinnerRow.findViewById(R.id.iv_spinner_item_icon);
-        ImageView spinnerSelected = (ImageView) spinnerRow.findViewById(R.id.iv_spinner_item_indicator);
+        ImageView spinnerSelected = (ImageView) spinnerRow.findViewById(R.id.iv_spinner_item_indicator);*/
 
 
         spinnerTicker.setText(mModelData.get(position));

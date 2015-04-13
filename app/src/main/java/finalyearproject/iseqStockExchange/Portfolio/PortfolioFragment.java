@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.ChartFragment.PortfolioLineChartFragment;
 import finalyearproject.iseqStockExchange.Dialogs.PortfolioDialog;
 import finalyearproject.iseqStockExchange.Formatter.NumberFormatter;
@@ -27,30 +30,26 @@ import finalyearproject.iseqStockExchange.R;
  */
 public class PortfolioFragment extends Fragment{
 
-    TextView mPortfolioValueView;
-    ImageButton mPortTransHistory, mPortChart , mPortSell;
+    @InjectView(R.id.tv_portfolio_value)TextView mPortfolioValueView;
+    @InjectView(R.id.tv_portfolio_info) TextView mPortValueInfo;
+    @InjectView(R.id.ib_port_history) ImageButton mPortTransHistory;
+    @InjectView(R.id.ib_port_chart) ImageButton mPortChart;
+    @InjectView(R.id.ib_port_sell) ImageButton mPortSell;
+    @InjectView(R.id.ll_portfolio_value_background) LinearLayout mPortfolioValueBackground;
 
+    NumberFormatter mFormatter;
     String portfolioStringValue,portfolioStringCost;
-    TextView mPortValueInfo;
-    LinearLayout mPorfoilioValueBackground;
     Double mPortfolioCost,mPortfolioValue;
-    NumberFormatter formatter;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View android = inflater.inflate(R.layout.frag_portfolio, container, false);
-        formatter = new NumberFormatter();
-        mPortfolioValueView = (TextView) android.findViewById(R.id.tv_portfolio_value);
-        mPortTransHistory = (ImageButton) android.findViewById(R.id.ib_port_history);
-        mPortSell = (ImageButton) android.findViewById(R.id.ib_port_sell);
-        mPortChart = (ImageButton) android.findViewById(R.id.ib_port_chart);
-        mPortValueInfo = (TextView) android.findViewById(R.id.tv_portfolio_info);
-        mPorfoilioValueBackground = (LinearLayout) android.findViewById(R.id.ll_portfolio_value_background);
+        View portfolioView = inflater.inflate(R.layout.frag_portfolio, container, false);
+        ButterKnife.inject(this,portfolioView);
 
-        mPortfolioCost = formatter.round(((MainActivity) this.getActivity()).getPortfolioCost(), 3);
-        mPortfolioValue = formatter.round(((MainActivity) this.getActivity()).getPortfolioValue(), 3);
+        mFormatter = new NumberFormatter();
+        mPortfolioCost = mFormatter.round(((MainActivity) this.getActivity()).getPortfolioCost(), 3);
+        mPortfolioValue = mFormatter.round(((MainActivity) this.getActivity()).getPortfolioValue(), 3);
 
         setPortfolioBackground();
 
@@ -121,7 +120,7 @@ public class PortfolioFragment extends Fragment{
             }
         });
 
-        return android;
+        return portfolioView;
     }
 
 
@@ -147,11 +146,11 @@ public class PortfolioFragment extends Fragment{
 
     public void setPortfolioBackground(){
         if(mPortfolioValue > mPortfolioCost){
-            mPorfoilioValueBackground.setBackgroundResource(R.drawable.portfolio_green);
+            mPortfolioValueBackground.setBackgroundResource(R.drawable.portfolio_green);
         }else if (mPortfolioValue < mPortfolioCost){
-            mPorfoilioValueBackground.setBackgroundResource(R.drawable.portfolio_red);
+            mPortfolioValueBackground.setBackgroundResource(R.drawable.portfolio_red);
         }else{
-            mPorfoilioValueBackground.setBackgroundResource(R.drawable.portfolio_orange);
+            mPortfolioValueBackground.setBackgroundResource(R.drawable.portfolio_orange);
         }
 
     }

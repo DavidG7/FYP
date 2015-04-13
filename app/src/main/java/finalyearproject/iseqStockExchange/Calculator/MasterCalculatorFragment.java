@@ -10,7 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnPageChange;
 import finalyearproject.iseqStockExchange.CustomListeners.CustomOnPageChangeListener;
 import finalyearproject.iseqStockExchange.R;
 
@@ -20,24 +24,25 @@ import finalyearproject.iseqStockExchange.R;
 public class MasterCalculatorFragment extends Fragment{
 
 
+    @InjectView(R.id.vp_calculator_pager) ViewPager mPager;
+    @InjectView(R.id.iv_calculator_simple) ImageView mSimple;
+    @InjectView(R.id.iv_calculator_fools) ImageView mFools;
+
     private static final int NUM_PAGES = 2;
-    private ViewPager mPager;
     private PagerAdapter mPagerAdapter;
     private Fragment[] mCalculatorFragments = new Fragment[NUM_PAGES];
-    private ImageView mSimple, mFools;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View calculatorView = inflater.inflate(R.layout.calculator, container, false);
+        ButterKnife.inject(this, calculatorView);
 
-        mPager = (ViewPager) calculatorView.findViewById(R.id.vp_calculator_pager);
         mPagerAdapter = new ScreenSlideCalculatorPagerAdapter(getChildFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-
-        mSimple = (ImageView) calculatorView.findViewById(R.id.iv_calculator_simple);
-        mFools = (ImageView) calculatorView.findViewById(R.id.iv_calculator_fools);
 
         setListeners();
 
@@ -111,5 +116,8 @@ public class MasterCalculatorFragment extends Fragment{
 
 
     }
+
+
+
 
 }

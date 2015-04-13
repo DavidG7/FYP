@@ -46,7 +46,7 @@ import finalyearproject.iseqStockExchange.Subject.Subject;
 
 
 public class MainActivity extends ActionBarActivity implements Observer {
-    private static final int MENU_ITEMS = 6;
+
     private DrawerLayout mDrawerLayout;
     private LinearLayout mDrawerLinLay;
     private ListView mDrawerList;
@@ -72,20 +72,12 @@ public class MainActivity extends ActionBarActivity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.icon);
-        ActivityManager.TaskDescription tDesc = new ActivityManager.TaskDescription("ISEQ Stock Exchange",bm,R.color.list_background);
-        MainActivity.setTaskDescription(tDesc);*/
-
-
         pref = new SharedPref(this);
-
         chart_values = pref.loadChartValueFavSavedPreferences(Constants.CHART_VALUES);
 
         stock_group = new MySQLiteHelper(this);
         stock_group.open();
         setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
-        //chart_values.add(stock_group.getPortfolioValueFromSQLLiteDB());
-        //pref.saveChartValuePreferences(chart_values,Constants.CHART_VALUES);
         setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
         stock_group.close();
 
@@ -100,20 +92,15 @@ public class MainActivity extends ActionBarActivity implements Observer {
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         final ViewFlipper v = (ViewFlipper) findViewById(R.id.switcher);
 
-        // load slide menu items
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
-        // nav drawer icons from resources
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
+
+        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerLinLay = (LinearLayout) findViewById(R.id.drawer_lin_lay);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
-
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-
-
+        navDrawerItems = new ArrayList<>();
 
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1),selectedVisible[0]));
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1),selectedVisible[1]));
@@ -132,25 +119,19 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
 
 
-        // setting the nav drawer list adapter
         adapter = new NavDrawerListAdapter(getApplicationContext(),
                 navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
-        // enabling action bar app icon and behaving it as toggle button
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 mToolbar, //nav menu toggle icon
-                R.string.drawer_open, // nav drawer open - description for accessibility
-                R.string.drawer_close // nav drawer close - description for accessibility
+                R.string.drawer_open,
+                R.string.drawer_close
         ) {
             public void onDrawerClosed(View view) {
-                // getSupportActionBar().setTitle("iStocks");
-                // calling onPrepareOptionsMenu() to show action bar icons
-
-
                 mDrawerLayout.closeDrawer(mDrawerLinLay);
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.frame_container, fragment)
@@ -160,8 +141,6 @@ public class MainActivity extends ActionBarActivity implements Observer {
             }
 
             public void onDrawerOpened(View view) {
-                // getSupportActionBar().setTitle("iStocks");
-                // calling onPrepareOptionsMenu() to hide action bar icons
                 adapter.notifyDataSetChanged();
                 invalidateOptionsMenu();
             }
@@ -170,9 +149,7 @@ public class MainActivity extends ActionBarActivity implements Observer {
 
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
-
         if (savedInstanceState == null) {
-            // on first time display view for first nav item
             fragment = new ISEQFragment(this);
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.frame_container, fragment)
@@ -188,72 +165,8 @@ public class MainActivity extends ActionBarActivity implements Observer {
         favourites = pref.loadFavSavedPreferences(Constants.FAVOURITES);
     }
 
-    @Override
-    public void update(Subject subject) {
-        stock_group.open();
-        setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
-        setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
-        chart_values.add(stock_group.getPortfolioValueFromSQLLiteDB());
-        stock_group.close();
-        pref.saveChartValuePreferences(chart_values,Constants.CHART_VALUES);
-    }
 
-    public double getPortfolioValue(){
-        return mPortfolioValue;
-    }
-
-    public void setPortfolioValue(double portfolioValue){
-        mPortfolioValue = portfolioValue;
-    }
-
-    public double getPortfolioCost(){
-        return mPortfolioCost;
-    }
-
-    public void setPortfolioCost(double portfolioCost){
-        mPortfolioCost = portfolioCost;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // toggle nav drawer on selecting action bar app icon/title
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-        // Handle action bar actions click
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    /***
-     * Called when invalidateOptionsMenu() is triggered
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        // if nav drawer is opened, hide the action items
-        //boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerLinLay);
-        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    /**
-     * Diplaying fragment view for selected nav drawer list item
-     * */
     private void displayView(int position) {
-        // update the main content by replacing fragments
-
         switch (position) {
             case 0:
                 fragment = new ISEQFragment(this);
@@ -295,17 +208,6 @@ public class MainActivity extends ActionBarActivity implements Observer {
         }
 
         if (fragment != null) {
-
-            // update selected item and title, then close the drawer
-           /* mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerLinLay);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.frame_container, fragment)
-                    .commit();*/
-
-
             mDrawerList.setItemChecked(position, true);
             mDrawerList.setSelection(position);
             Handler mHandler = new Handler();
@@ -318,12 +220,63 @@ public class MainActivity extends ActionBarActivity implements Observer {
             }, 150);
 
         } else {
-            // error in creating fragment
             Log.e("MainActivity", "Error in creating fragment");
         }
     }
 
 
+    public void updateNavDrawerItems(int position){
+        //navDrawerItems.clear();
+      /*  */
+        for(int i = 0;i<selectedVisible.length;i++) {
+            if (i != position){
+                selectedVisible[i] = false;
+            }else{
+                selectedVisible[i] = true;
+            }
+            navDrawerItems.get(i).setSelected(selectedVisible[i]);
+        }
+
+    }
+
+
+    public ResultWrapper getRESTResult(){
+        return result;
+    }
+
+    public void setRESTResult(ResultWrapper result){
+        this.result = result;
+    }
+
+
+    public double getPortfolioValue(){
+        return mPortfolioValue;
+    }
+
+    public void setPortfolioValue(double portfolioValue){
+        mPortfolioValue = portfolioValue;
+    }
+
+    public double getPortfolioCost(){
+        return mPortfolioCost;
+    }
+
+    public void setPortfolioCost(double portfolioCost){
+        mPortfolioCost = portfolioCost;
+    }
+
+
+
+
+    @Override
+    public void update(Subject subject) {
+        stock_group.open();
+        setPortfolioValue(stock_group.getPortfolioValueFromSQLLiteDB());
+        setPortfolioCost(stock_group.getPortfolioCostFromSQLLiteDB());
+        chart_values.add(stock_group.getPortfolioValueFromSQLLiteDB());
+        stock_group.close();
+        pref.saveChartValuePreferences(chart_values,Constants.CHART_VALUES);
+    }
 
 
     @Override
@@ -336,17 +289,48 @@ public class MainActivity extends ActionBarActivity implements Observer {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    public ResultWrapper getRESTResult(){
-        return result;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
-    public void setRESTResult(ResultWrapper result){
-        this.result = result;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerLinLay);
+        menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
+            System.exit(-1);
+        }else{
+            mDrawerLayout.openDrawer(Gravity.LEFT);
+        }
+    }
+
+
 
 
     @Subscribe
@@ -375,34 +359,4 @@ public class MainActivity extends ActionBarActivity implements Observer {
         favourites.clear();
 
     }
-
-
-    @Override
-    public void onBackPressed() {
-        if(mDrawerLayout.isDrawerOpen(Gravity.LEFT)){
-            System.exit(-1);
-        }else{
-            mDrawerLayout.openDrawer(Gravity.LEFT);
-        }
-    }
-
-
-    public void updateNavDrawerItems(int position){
-        //navDrawerItems.clear();
-      /*  */
-        for(int i = 0;i<selectedVisible.length;i++) {
-            if (i != position){
-                selectedVisible[i] = false;
-            }else{
-                selectedVisible[i] = true;
-            }
-            navDrawerItems.get(i).setSelected(selectedVisible[i]);
-        }
-
-   }
-
-
-
-
-
 }

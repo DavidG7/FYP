@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar;
 import com.squareup.picasso.Picasso;
 
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.POJO.Quote;
 import finalyearproject.iseqStockExchange.R;
 
@@ -33,8 +36,10 @@ import finalyearproject.iseqStockExchange.R;
 public class LineChartYahooFragment extends Fragment {
 
     Quote mQuote;
-    ImageView mYahooChart;
-    CircleProgressBar mCircularProgress;
+   /* ImageView mYahooChart;
+    CircleProgressBar mCircularProgress;*/
+    @InjectView(R.id.iv_yahoo_chart)ImageView mYahooChart;
+    @InjectView(R.id.progressBar_chart)CircleProgressBar mCircularProgress;
 
     public LineChartYahooFragment(Quote quote) {
         this.mQuote = quote;
@@ -45,8 +50,9 @@ public class LineChartYahooFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View yahooBarGraph = inflater.inflate(R.layout.barchart_yahoo, container, false);
-        mYahooChart = (ImageView) yahooBarGraph.findViewById(R.id.iv_yahoo_chart);
-        mCircularProgress = (CircleProgressBar) yahooBarGraph.findViewById(R.id.progressBar_chart);
+        ButterKnife.inject(this,yahooBarGraph);
+        /*mYahooChart = (ImageView) yahooBarGraph.findViewById(R.id.iv_yahoo_chart);
+        mCircularProgress = (CircleProgressBar) yahooBarGraph.findViewById(R.id.progressBar_chart);*/
         mCircularProgress.setColorSchemeResources(R.color.app_orange);
 
         String tickerIdBeforeFullStop = mQuote.getsymbol().split("\\.")[0];//needed to query webpage

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -13,6 +14,8 @@ import com.github.mikephil.charting.data.PieDataSet;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.Formatter.NumberFormatter;
 import finalyearproject.iseqStockExchange.POJO.Quote;
 import finalyearproject.iseqStockExchange.R;
@@ -24,7 +27,8 @@ import finalyearproject.iseqStockExchange.SQLiteDatabase.MySQLiteHelper;
 public class PieChartFragment extends Fragment {
 
 
-    private PieChart mChart;
+    //private PieChart mChart;
+    @InjectView(R.id.pie_chart)PieChart mChart;
     private Quote mQuote;
     private NumberFormatter mNumFormatter;
 
@@ -38,6 +42,8 @@ public class PieChartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View pieChart = inflater.inflate(R.layout.piechart, container, false);
+        ButterKnife.inject(this,pieChart);
+
         double totalPortfolioValue = 0.0, quotePercentageInPortfolio = 0.0;
 
         MySQLiteHelper stock_port_value = new MySQLiteHelper(getActivity());
@@ -55,7 +61,7 @@ public class PieChartFragment extends Fragment {
             portfolioMinusStockPercentage = 100.00;
         }
 
-        mChart = (PieChart) pieChart.findViewById(R.id.pie_chart);
+
         mChart.animateXY(3000, 3000);
         ArrayList<Entry> pieEntries = new ArrayList<>();
 

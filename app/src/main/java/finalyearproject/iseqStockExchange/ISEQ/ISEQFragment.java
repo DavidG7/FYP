@@ -92,10 +92,10 @@ public class ISEQFragment extends Fragment implements Subject {
         pref = new SharedPref(getActivity());
         favourites = pref.loadFavSavedPreferences(Constants.FAVOURITES);
 
-        View android = inflater.inflate(R.layout.frag_iseq, container, false);
+        View iseqView = inflater.inflate(R.layout.frag_iseq, container, false);
 
 
-        recyclerView = (RecyclerView) android.findViewById(R.id.recyclerView);
+        recyclerView = (RecyclerView) iseqView.findViewById(R.id.recyclerView);
         recylerViewAdapter = new RecyclerViewAdapter(getActivity(),StockItems,mWatchlist,QuoteItems);
 
         recyclerView.setAdapter(recylerViewAdapter);
@@ -113,7 +113,7 @@ public class ISEQFragment extends Fragment implements Subject {
         populateView(inflater,container);
 
 
-        mPullToRefreshView = (PullToRefreshView) android.findViewById(R.id.pull_to_refresh);
+        mPullToRefreshView = (PullToRefreshView) iseqView.findViewById(R.id.pull_to_refresh);
         mPullToRefreshView.setOnRefreshListener(new PullToRefreshView.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -140,7 +140,7 @@ public class ISEQFragment extends Fragment implements Subject {
         });
 
 
-        return android;
+        return iseqView;
 
 
     }
@@ -149,18 +149,12 @@ public class ISEQFragment extends Fragment implements Subject {
 
     public void populateView(LayoutInflater inflater, ViewGroup container) {
 
-
-           /* result = RetrofitInterface.getStockApiClient()
-                    .listQuotes();*/
-
         MySQLiteHelper stock_backup = new MySQLiteHelper(getActivity());
 
         stock_backup.open();
         StockItems.clear();
         stock_backup.truncateTable("STOCK_BACKUP");
 
-
-       //     stock_backup.truncate("STOCK_BACKUP");
             if(result!=null) {
 
                 if (mWatchlist == true) {
@@ -181,19 +175,7 @@ public class ISEQFragment extends Fragment implements Subject {
                 StockItems.addAll(getStockItemsFromBackup());
             }
 
-
-
-            //QuoteItems = null;
-            /*ArrayList<StockItemRow> items = new ArrayList<StockItemRow>();
-            items = stock_backup.getStockBackup();
-            for(int i = 0;i < items.size();i++) {
-                StockItems.add(items.get(i));
-            }
-            //stock_backup.getStockBackup();*/
-
-
-        recylerViewAdapter.notifyDataSetChanged();
-      //  stock_backup.close();
+           recylerViewAdapter.notifyDataSetChanged();
    }
 
 
@@ -216,11 +198,9 @@ public class ISEQFragment extends Fragment implements Subject {
     @Override
     public void notifyObservers() {
         // TODO Auto-generated method stub
-        System.out.println("NOTIFYOBSERVERS");
         for (int i = 0; i < stockMarketObservers.size(); i++) {
             Observer observer = (Observer)stockMarketObservers.get(i);
             observer.update(this);
-            //System.out.println("NOTIFYOBSERVERS");
         }
     }
 

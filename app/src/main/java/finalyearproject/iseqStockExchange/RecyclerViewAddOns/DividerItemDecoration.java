@@ -17,30 +17,11 @@ public class DividerItemDecoration extends RecyclerView.ItemDecoration {
     private boolean mShowLastDivider = false;
 
 
-    public DividerItemDecoration(Context context, AttributeSet attrs) {
-        final TypedArray a = context
-                .obtainStyledAttributes(attrs, new int[]{android.R.attr.listDivider});
-        mDivider = a.getDrawable(0);
-        a.recycle();
-    }
-
-    public DividerItemDecoration(Context context, AttributeSet attrs, boolean showFirstDivider,
-                                 boolean showLastDivider) {
-        this(context, attrs);
-        mShowFirstDivider = showFirstDivider;
-        mShowLastDivider = showLastDivider;
-    }
-
     public DividerItemDecoration(Drawable divider) {
         mDivider = divider;
     }
 
-    public DividerItemDecoration(Drawable divider, boolean showFirstDivider,
-                                 boolean showLastDivider) {
-        this(divider);
-        mShowFirstDivider = showFirstDivider;
-        mShowLastDivider = showLastDivider;
-    }
+
 
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent,

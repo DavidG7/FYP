@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 import finalyearproject.iseqStockExchange.Animation.CircularReveal;
 import finalyearproject.iseqStockExchange.Formatter.NumberFormatter;
 import finalyearproject.iseqStockExchange.R;
@@ -26,8 +29,13 @@ import finalyearproject.iseqStockExchange.R;
 public class FoolsRatioCalculatorFragment extends Fragment {
 
 
-    private EditText mPERatioEdit,mEstimateNextEdit,mEstimateCurrentEdit;
-    private TextView mCalculate, mResult,mRevealRatio;
+    @InjectView(R.id.et_fools_pe) EditText mPERatioEdit;
+    @InjectView(R.id.et_fools_estimate_next) EditText mEstimateNextEdit;
+    @InjectView(R.id.et_fools_estimate_current) EditText mEstimateCurrentEdit;
+    @InjectView(R.id.tv_fools_calculate) TextView mCalculate;
+    @InjectView(R.id.tv_fools_result) TextView mResult;
+    @InjectView(R.id.tv_reveal) TextView mRevealRatio;
+
     private NumberFormatter mFormatter;
     private CircularReveal mCircularReveal;
     private double mFoolsRatio;
@@ -39,57 +47,10 @@ public class FoolsRatioCalculatorFragment extends Fragment {
 
 
         View foolsRatioView = inflater.inflate(R.layout.frag_fools_ratio, container, false);
-        mPERatioEdit =  (EditText) foolsRatioView.findViewById(R.id.et_fools_pe);
-        mEstimateNextEdit = (EditText) foolsRatioView.findViewById(R.id.et_fools_estimate_next);
-        mEstimateCurrentEdit =(EditText) foolsRatioView.findViewById(R.id.et_fools_estimate_current);
-        mCalculate = (TextView) foolsRatioView.findViewById(R.id.tv_fools_calculate);
-        mResult =  (TextView) foolsRatioView.findViewById(R.id.tv_fools_result);
-        mRevealRatio = (TextView) foolsRatioView.findViewById(R.id.tv_reveal);
+
+        ButterKnife.inject(this, foolsRatioView);
         mFormatter = new NumberFormatter();
         mCircularReveal = new CircularReveal(mRevealRatio,getActivity());
-
-        mCalculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try{
-                    double priceToEarnings = Integer.parseInt(mPERatioEdit.getText().toString());
-                    double estimateNext = Integer.parseInt(mEstimateNextEdit.getText().toString());
-                    double estimateCurrent = Integer.parseInt(mEstimateCurrentEdit.getText().toString());
-
-                    mFoolsRatio = mFormatter.getFoolsRatio(priceToEarnings,estimateNext,estimateCurrent);
-                    DecimalFormat roundDecimal = new DecimalFormat("##.00");
-                    mResult.setText(roundDecimal.format(mFoolsRatio));
-                    mCircularReveal.revealImageCircular(getResultAsFoolsIndicator(mFoolsRatio));
-
-
-                }catch(Exception e){
-                    e.printStackTrace();
-                    mResult.setText("0.0");
-                }
-            }
-        });
-
-        mRevealRatio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setView(new FoolsDialogView(getActivity(),mCurrentColor,mRevealRatio,Double.parseDouble(mResult.getText().toString())))
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-
-                            }
-                        });
-
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
-                final Button buttonPositiveInvolvement = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
-                buttonPositiveInvolvement.setTextColor(mCurrentColor);
-
-            }
-        });
 
         return foolsRatioView;
     }
@@ -131,6 +92,45 @@ public class FoolsRatioCalculatorFragment extends Fragment {
 
 
     }
+
+
+    @OnClick(R.id.tv_fools_calculate)
+    public void Caluclate() {
+        try{
+            double priceToEarnings = Integer.parseInt(mPERatioEdit.getText().toString());
+            double estimateNext = Integer.parseInt(mEstimateNextEdit.getText().toString());
+            double estimateCurrent = Integer.parseInt(mEstimateCurrentEdit.getText().toString());
+
+            mFoolsRatio = mFormatter.getFoolsRatio(priceToEarnings,estimateNext,estimateCurrent);
+            DecimalFormat roundDecimal = new DecimalFormat("##.00");
+            mResult.setText(roundDecimal.format(mFoolsRatio));
+            mCircularReveal.revealImageCircular(getResultAsFoolsIndicator(mFoolsRatio));
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+            mResult.setText("0.0");
+        }
+    }
+
+    @OnClick(R.id.tv_reveal)
+    public void Reveal(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(new FoolsDialogView(getActivity(),mCurrentColor,mRevealRatio,Double.parseDouble(mResult.getText().toString())))
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+        final AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        final Button buttonPositiveInvolvement = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        buttonPositiveInvolvement.setTextColor(mCurrentColor);
+    }
+
 
 
 }

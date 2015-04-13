@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.Constants.Constants;
 import finalyearproject.iseqStockExchange.R;
 import finalyearproject.iseqStockExchange.RecyclerViewAddOns.DividerItemDecoration;
@@ -23,22 +25,25 @@ import finalyearproject.iseqStockExchange.SQLiteDatabase.StockPurchase;
  */
 public class PortfolioTransactionListFragment extends Fragment {
 
+
+    @InjectView(R.id.rv_trans_list) RecyclerView mTransListRecycler;
     ArrayList<StockPurchase> mStockPurchases;
-    RecyclerView mTransListRecycler;
     PortfolioTransactionListAdapter mTransListRecyclerAdapter;
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-       View android = inflater.inflate(R.layout.frag_trans_list, container, false);
+       View transListView = inflater.inflate(R.layout.frag_trans_list, container, false);
+
+        ButterKnife.inject(this, transListView);
 
         MySQLiteHelper stock_individual = new MySQLiteHelper(getActivity());
         stock_individual.open();
-        mStockPurchases = new ArrayList<StockPurchase>();
+        mStockPurchases = new ArrayList<>();
         mStockPurchases = stock_individual.getStockGroupEntry(Constants.BOTH);
         stock_individual.close();
 
-        mTransListRecycler = (RecyclerView) android.findViewById(R.id.rv_trans_list);
+
         mTransListRecyclerAdapter = new PortfolioTransactionListAdapter(getActivity(),mStockPurchases);
 
         mTransListRecycler.setAdapter(mTransListRecyclerAdapter);
@@ -51,6 +56,6 @@ public class PortfolioTransactionListFragment extends Fragment {
         mTransListRecycler.addItemDecoration(new DividerItemDecoration(getActivity().getDrawable(R.drawable.divider)));
         mTransListRecyclerAdapter.notifyDataSetChanged();
 
-        return android;
+        return transListView;
     }
 }

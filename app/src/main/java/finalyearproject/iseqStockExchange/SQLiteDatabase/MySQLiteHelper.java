@@ -49,25 +49,6 @@ public class MySQLiteHelper {
     private final Context ourContext;
     private SQLiteDatabase ourDatabase;
 
-    public double getValueFromRow(int position, String key) {
-        String[] columns = new String[]{key};
-        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
-
-        double result = 0.0;
-
-        try {
-            int i_num = c.getColumnIndex(key);
-
-
-            c.moveToPosition(position);
-            result = c.getDouble(i_num);
-        }catch(CursorIndexOutOfBoundsException e){
-            e.printStackTrace();
-        }
-
-        return result;
-
-    }
 
 
     private static class DatabaseHelper extends SQLiteOpenHelper
@@ -332,6 +313,28 @@ public class MySQLiteHelper {
 
 
     }
+
+
+    public double getValueFromRow(int position, String key) {
+        String[] columns = new String[]{key};
+        Cursor c = ourDatabase.query(NAME_PURCHASE, columns, null, null, null, null, null);
+
+        double result = 0.0;
+
+        try {
+            int i_num = c.getColumnIndex(key);
+
+
+            c.moveToPosition(position);
+            result = c.getDouble(i_num);
+        }catch(CursorIndexOutOfBoundsException e){
+            e.printStackTrace();
+        }
+
+        return result;
+
+    }
+
 
 }
 

@@ -2,12 +2,15 @@ package finalyearproject.iseqStockExchange.Portfolio;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.TreeSet;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.Constants.Constants;
 import finalyearproject.iseqStockExchange.R;
 import finalyearproject.iseqStockExchange.SQLiteDatabase.MySQLiteHelper;
@@ -18,7 +21,8 @@ import finalyearproject.iseqStockExchange.SQLiteDatabase.StockPurchase;
  */
 public class PortfolioSellActivity extends Activity{
 
-    FrameLayout mSellContainer;
+
+    @InjectView(R.id.fl_portfolio_sell)FrameLayout mSellContainer;
     ArrayList<StockPurchase> mTemp = new ArrayList<StockPurchase>();
     Set<Integer> mPurchasedStockIds = new TreeSet<Integer>(); // order is preserved
 
@@ -26,9 +30,8 @@ public class PortfolioSellActivity extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_portfolio_sell);
-        mSellContainer = (FrameLayout) findViewById(R.id.fl_portfolio_sell);
-
-        MySQLiteHelper stock_individual = new MySQLiteHelper(this);
+        ButterKnife.inject(this);
+           MySQLiteHelper stock_individual = new MySQLiteHelper(this);
         stock_individual.open();
         mTemp = stock_individual.getStockGroupEntry(Constants.BUY);
         stock_individual.close();

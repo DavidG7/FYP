@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
@@ -13,6 +14,8 @@ import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.Constants.Constants;
 import finalyearproject.iseqStockExchange.R;
 import finalyearproject.iseqStockExchange.SharedPreferences.SharedPref;
@@ -22,19 +25,17 @@ import finalyearproject.iseqStockExchange.SharedPreferences.SharedPref;
  */
 public class PortfolioLineChartFragment extends Fragment {
 
-    LineChart mChart;
+    @InjectView(R.id.line_chart)LineChart mChart;
     SharedPref mPref;
     ArrayList <Double> mLineChartValues;
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View lineChart = inflater.inflate(R.layout.linechart, container, false);
+        ButterKnife.inject(this,lineChart);
 
-        mChart = (LineChart) lineChart.findViewById(R.id.line_chart);
         mChart.animateXY(3000, 3000);
 
         ArrayList<Entry> lineEntries = new ArrayList<>();

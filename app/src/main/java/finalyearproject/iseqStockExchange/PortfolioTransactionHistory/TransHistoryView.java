@@ -26,7 +26,6 @@ public class TransHistoryView extends View {
     Context mContext;
     Canvas mCanvas;
     private static int xScreen,yScreen;
-    String mColor = "#009A49";
     private String mColorBackup = "#ffb347";
     private int temp;
     private boolean isHit;
@@ -57,7 +56,7 @@ public class TransHistoryView extends View {
         this.mLastTenRecords = mLastTenRecords;
         mRadii = new float[] {185f,150f,110f,110f,110f,95f,95f,70f,70f,70f};
         mImages = new int[10];
-        mColors = new String[10];//{"#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49","#009A49"};
+        mColors = new String[10];
         for(int i = 0;i < 10;i++){
             try {
                 if (mLastTenRecords.get(i).getType().equals(Constants.BUY)) {
@@ -85,22 +84,17 @@ public class TransHistoryView extends View {
                 }
             }
         }
-        mTextColors = new String[]{"#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff"};
-
+        mTextColors = new String[]{"#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff","#ffffff",
+                "#ffffff","#ffffff","#ffffff"};
         mAlpha = new int[]{255,255,200,200,200,200,200,255,255,255};
-       //{R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,
-              //  R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image,R.drawable.bought_image_green,
-                //R.drawable.bought_image_green,R.drawable.bought_image_green};
         mScales = new int[]{150,150,100,100,100,80,80,60,60,60};
         mBrushStyles = new Paint.Style[]{Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,Paint.Style.FILL,
                 Paint.Style.FILL,Paint.Style.FILL,Paint.Style.STROKE,Paint.Style.STROKE,Paint.Style.STROKE};
-        mXArray = new ArrayList<Float>();
-        mYArray = new ArrayList<Float>();
+        mXArray = new ArrayList<>();
+        mYArray = new ArrayList<>();
         mArrowColors = new String[]{"#ffffff","#ffb347"};
         mTextSizes = new float[]{20f,20f,17f,17f,17f,14f,14f,11f,11f,11f};
         arrowDrawable = R.drawable.arrow_back;
-
-
 
         this.setOnTouchListener(new OnTouchListener() {
 
@@ -108,13 +102,9 @@ public class TransHistoryView extends View {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
-
-
-                float xTouchPosition = event.getX();
-                float yTouchPosition = event.getY();
-
-
-                if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
+             float xTouchPosition = event.getX();
+             float yTouchPosition = event.getY();
+             if (event.getAction() == android.view.MotionEvent.ACTION_DOWN) {
 
                     for (int i = 0; i < NUM_OF_ELEMENTS; i++) {
                         if ((xTouchPosition <= mXArray.get(i) + mRadii[i] && xTouchPosition >= mXArray.get(i) - mRadii[i])
@@ -123,11 +113,6 @@ public class TransHistoryView extends View {
                             setIsHit(true);
                             mColorBackup = mColors[i];
                             mColors[i] = "#ffb347";
-
-                         /*   if (i > 6) {
-                                mImages[i] = R.drawable.bought_image_orange;
-                            }*/
-
                             v.invalidate();
                         }
                     }
@@ -144,9 +129,6 @@ public class TransHistoryView extends View {
                 }else if(event.getAction() == android.view.MotionEvent.ACTION_UP){
 
                     mColors[getTemp()] = mColorBackup;
-                    /*if(getTemp()>6) {
-                       // mImages[getTemp()] = R.drawable.bought_image_green;
-                    }*/
                     v.invalidate();
                     if(getIsHit() == true) {
                         try {
@@ -202,28 +184,21 @@ public class TransHistoryView extends View {
             }
 
         }
-
-
-
-
-
     }
-
-
 
     public ArrayList putXYValsInArray(ArrayList xyArray,String key){
 
         if(key.equals("X")){
-            xyArray.add((float)xScreen / 2);//,y/2);
-            xyArray.add((float)3*(xScreen/4)); //3*(y/4)+50);
-            xyArray.add(3.60f*(xScreen/(4)));//y/2+30);
-            xyArray.add((float)(xScreen/(10)));//y/2+140);
-            xyArray.add((float)6*(xScreen/10));//1*(y/5));
-            xyArray.add((float)(xScreen/(10)));//y/2-120);
-            xyArray.add((float)4*(xScreen/10));//3*(y/4)+50);
-            xyArray.add(0.8f*(xScreen/(6)));//8.5f*(y/10));
-            xyArray.add(3.1f*(xScreen/(10)));//2.5f*(y/10));
-            xyArray.add(8.2f*(xScreen/(10)));//3.4f*(y/10));
+            xyArray.add((float)xScreen / 2);
+            xyArray.add((float)3*(xScreen/4));
+            xyArray.add(3.60f*(xScreen/(4)));
+            xyArray.add((float)(xScreen/(10)));
+            xyArray.add((float)6*(xScreen/10));
+            xyArray.add((float)(xScreen/(10)));
+            xyArray.add((float)4*(xScreen/10));
+            xyArray.add(0.8f*(xScreen/(6)));
+            xyArray.add(3.1f*(xScreen/(10)));
+            xyArray.add(8.2f*(xScreen/(10)));
         }else if (key.equals("Y")){
             xyArray.add((float)yScreen/2);
             xyArray.add((float)3*(yScreen/4)+50);
@@ -237,16 +212,6 @@ public class TransHistoryView extends View {
             xyArray.add(3.25f*(yScreen/10));
         }
         return xyArray;
-    }
-
-
-
-    public int getXScreen(){
-        return xScreen;
-    }
-
-    public int getYScreen(){
-        return yScreen;
     }
 
     public void setXScreen(int x){

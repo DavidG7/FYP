@@ -144,7 +144,7 @@ public class PortfolioSellView extends View {
         Paint paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(getResources().getColor(R.color.app_orange));
-        Bitmap boughtImage;
+        Bitmap image;
         int count = 0;
 
         for(int i = 1;i<=15;i++) {
@@ -164,10 +164,10 @@ public class PortfolioSellView extends View {
                     }
                 }
                 canvas.drawCircle(xPositions.get(j), yPositions.get(i*4-1), mRadius, paint);
-                boughtImage = BitmapFactory.decodeResource(this.getResources(),
+                image = BitmapFactory.decodeResource(this.getResources(),
                         mISEQIcons.getResourceId(count, -1));
-                boughtImage = Bitmap.createScaledBitmap(boughtImage, 100, 100, false);
-                canvas.drawBitmap(boughtImage,(xPositions.get(j)-(boughtImage.getWidth()/2)), ( yPositions.get(i*4-1)-(boughtImage.getHeight()/2)),  paint);
+                image = Bitmap.createScaledBitmap(image, 100, 100, false);
+                canvas.drawBitmap(image,(xPositions.get(j)-(image.getWidth()/2)), ( yPositions.get(i*4-1)-(image.getHeight()/2)),  paint);
                 count++;
 
             }

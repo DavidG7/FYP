@@ -19,6 +19,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import finalyearproject.iseqStockExchange.Constants.Constants;
 import finalyearproject.iseqStockExchange.Dialogs.TransHistoryMaterialDialog;
 import finalyearproject.iseqStockExchange.R;
@@ -66,13 +68,7 @@ public class PortfolioTransactionListAdapter extends RecyclerView.Adapter<Portfo
                 }
             });
 
-           //holder.mTransDate.setText(mModelData.get(position).getDate().substring(0,5));
-
     }
-
-
-
-
 
     @Override
     public int getItemCount() {
@@ -80,17 +76,14 @@ public class PortfolioTransactionListAdapter extends RecyclerView.Adapter<Portfo
     }
 
     public final static class ListItemViewHolder extends RecyclerView.ViewHolder {
-        TextView mTransTicker,mTransNum,mTransDate;
-        ImageButton mTransMore;
-        ImageView mTransIcon;
+        @InjectView(R.id.tv_trans_list_ticker) TextView mTransTicker;
+        @InjectView(R.id.tv_trans_list_num) TextView mTransNum;
+        @InjectView(R.id.ib_trans_list_more) ImageButton mTransMore;
+        @InjectView(R.id.iv_trans_list_icon) ImageView mTransIcon;
 
         public ListItemViewHolder(final View itemView) {
             super(itemView);
-            mTransTicker = (TextView) itemView.findViewById(R.id.tv_trans_list_ticker);
-            mTransNum = (TextView) itemView.findViewById(R.id.tv_trans_list_num);
-          //  mTransDate = (TextView) itemView.findViewById(R.id.tv_trans_list_date);
-            mTransMore= (ImageButton) itemView.findViewById(R.id.ib_trans_list_more);
-            mTransIcon = (ImageView) itemView.findViewById(R.id.iv_trans_list_icon);
+            ButterKnife.inject(this, itemView);
         }
     }
 

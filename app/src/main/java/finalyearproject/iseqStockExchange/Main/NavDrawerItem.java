@@ -9,9 +9,6 @@ public class NavDrawerItem {
     private int icon;
     private boolean isSelected = false;
 
-    public NavDrawerItem(){}
-
-
     public NavDrawerItem(String title, int icon, boolean isSelected){
         this.title = title;
         this.icon = icon;
@@ -25,7 +22,6 @@ public class NavDrawerItem {
     public int getIcon(){
         return this.icon;
     }
-
 
     public boolean getSelected(){
         return this.isSelected;

@@ -229,7 +229,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                                    stock_group.open();
                                    indCost = stockItems.get(viewHolder.getPosition()).getLastTradePrice();
                                    totCost = formatter.round(stockItems.get(viewHolder.getPosition()).getLastTradePrice()*numOfStocksBought,3);
-                                   //double test = Double.parseDouble(value)
                                    stock_group.createStockItemEntry(position, stockItems.get(viewHolder.getPosition()).getSymbol(), stockItems.get(viewHolder.getPosition()).getName(), numOfStocksBought, indCost, totCost, totCost, formattedDate, Constants.BUY);
                                    BusProvider.getInstance().post(new ObserverEvent());
                                    stock_group.close();
