@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/list_divider"
+        android:textColor="@color/app_orange"
         android:fontFamily="serif"
         android:background="@null"
         android:text = "Bank Of Ireland"
@@ -38,7 +38,6 @@
             android:id="@+id/rv_trans_data_list"
 
             android:layout_height="match_parent"
-            android:divider="@drawable/list_selector"
             android:dividerHeight="1dip"
             android:layout_width="match_parent">
         </android.support.v7.widget.RecyclerView>

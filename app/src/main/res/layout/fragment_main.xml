@@ -3,29 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="finalyearproject.drawer.SplashScreen.FragmentMain">
+    tools:context="finalyearproject.iseqStockExchange.SplashScreen.FragmentMain">
 
-    <finalyearproject.drawer.SplashScreen.views.Scroller
+    <finalyearproject.iseqStockExchange.SplashScreen.views.Scroller
         android:id="@+id/scroller"
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-
-    <com.lsjwzh.widget.materialloadingprogressbar.CircleProgressBar
-        android:id="@+id/progressBar_splash"
-        android:layout_marginBottom="100dp"
-
-        android:layout_gravity="center_horizontal|bottom"
-        app:mlpb_show_arrow="true"
-        app:mlpb_arrow_height="5dp"
-        app:mlpb_arrow_width="10dp"
-        app:mlpb_enable_circle_background="true"
-
-        app:mlpb_progress_stoke_width="5dp"
-
-        android:layout_width="60dp"
-        android:layout_height="60dp"/>
 
 
 

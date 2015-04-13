@@ -4,5 +4,5 @@
         android:state_pressed="true" />
     <item android:drawable="@drawable/mycircle_scale"
         android:state_focused="true" />
-    <item android:drawable="@drawable/mycircle_white" />
+    <item android:drawable="@drawable/mycircle_white_scale" />
 </selector>

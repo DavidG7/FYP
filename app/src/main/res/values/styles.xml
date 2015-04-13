@@ -10,7 +10,7 @@
     <!--   darker variant for the status bar and contextual app bars -->
     <item name="android:colorPrimaryDark">@color/White</item>
     <!--   theme UI controls like checkboxes and text fields -->
-    <item name="android:colorAccent">@color/list_divider</item>
+    <item name="android:colorAccent">@color/app_orange</item>
     <item name="android:actionOverflowButtonStyle">@style/AppTheme.OverFlow</item>
     <item name="actionDropDownStyle">@style/SpinnerColor</item><!-- if you use ABS -->
     <item name="android:actionDropDownStyle">@style/SpinnerColor</item>
@@ -22,7 +22,7 @@
     </style>
 
     <style name="MyTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/list_divider</item>
+        <item name="android:textColor">@color/app_orange</item>
     </style>
 
 
@@ -35,7 +35,7 @@
 
 <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
     <item name="spinBars">true</item>
-    <item name="color">@color/list_divider</item>
+    <item name="color">@color/app_orange</item>
 </style>
 
 

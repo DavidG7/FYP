@@ -44,7 +44,7 @@
             android:layout_width="45dp"
             android:padding="10dp"
             android:src = "@drawable/motly"
-            android:background="@drawable/mycircle_white"
+            android:background="@drawable/mycircle_white_scale"
 
             android:gravity="center"
 

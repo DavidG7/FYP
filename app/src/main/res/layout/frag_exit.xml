@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:textColor="@color/list_divider"
+        android:textColor="@color/app_orange"
         android:layout_centerInParent="true"
         android:text="Would you like to exit the application?" />
 

@@ -4,5 +4,5 @@
         android:color="@color/White" /> <!-- pressed -->
     <item android:state_focused="true"
         android:color="@color/White" /> <!-- focused -->
-    <item android:color="@color/list_divider" /> <!-- default -->
+    <item android:color="@color/app_orange" /> <!-- default -->
 </selector>

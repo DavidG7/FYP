@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     app:rv_alpha = "255"
     app:rv_rippleDuration = "50"
-    app:rv_color = "@color/list_divider"
+    app:rv_color = "@color/change_neu"
     rv_centered="true">
 
 
@@ -35,7 +35,7 @@
         android:fontFamily="sans-serif-medium"
         android:textSize="15dp"
         android:layout_toRightOf="@id/icon"
-        android:textColor="@color/list_item_title"
+        android:textColor="@color/app_orange"
         android:layout_centerVertical="true"
         android:paddingRight="40dp"/>
 

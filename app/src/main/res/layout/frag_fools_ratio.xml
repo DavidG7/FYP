@@ -32,7 +32,7 @@
             android:fontFamily="serif"
             android:text="Price to earnings ratio: "
             android:textSize="15dp"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity="center"
 
             />
@@ -44,7 +44,7 @@
             android:background="@color/LightGrey"
             android:textSize="15dp"
             android:inputType="numberDecimal"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity = "center"
             />
 
@@ -65,7 +65,7 @@
             android:text="Earnings estimate for next year: "
             android:textSize="15dp"
             android:fontFamily="serif"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity="center"
 
             />
@@ -78,7 +78,7 @@
             android:layout_width="100dp"
             android:background="@color/LightGrey"
             android:id="@+id/et_fools_estimate_next"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity = "center"
             />
     </LinearLayout>
@@ -110,7 +110,7 @@
             android:fontFamily="serif"
             android:text="Current earnings: "
             android:textSize="15dp"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity="center"
 
             />
@@ -122,7 +122,7 @@
             android:background="@color/LightGrey"
             android:textSize="15dp"
             android:inputType="number"
-            android:textColor="@color/list_divider"
+            android:textColor="@color/app_orange"
             android:layout_gravity = "center"
             />
             </LinearLayout>
@@ -192,7 +192,7 @@
         android:textSize = "25dp"
         android:paddingLeft="30dp"
         android:gravity="center_vertical"
-        android:background="@color/list_divider"
+        android:background="@color/app_orange"
         android:layout_weight="0.15">
     </TextView>
 

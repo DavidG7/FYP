@@ -80,7 +80,7 @@
             android:gravity="left"
             android:layout_gravity="start"
             android:choiceMode="singleChoice"
-            android:divider="@drawable/list_selector"
+
             android:dividerHeight="0.5dip"
             android:background="@color/White"/>
 

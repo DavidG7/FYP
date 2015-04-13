@@ -31,7 +31,7 @@
                 android:textSize="30dp"
                 android:gravity="center"
                 android:background="@drawable/selector_portfolio_trans"
-                android:textColor="@color/list_divider"
+                android:textColor="@color/app_orange"
 
 
                 />

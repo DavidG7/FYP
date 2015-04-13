@@ -218,7 +218,7 @@
         android:paddingLeft="30dp"
         android:gravity="center_vertical"
 
-        android:background="@color/list_divider"
+        android:background="@color/app_orange"
        />
         >
 

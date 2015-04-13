@@ -5,14 +5,14 @@
 
 
 
-    <finalyearproject.drawer.SplashScreen.views.ObservableScrollView
+    <finalyearproject.iseqStockExchange.SplashScreen.views.ObservableScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:scrollbars="none" >
-    </finalyearproject.drawer.SplashScreen.views.ObservableScrollView>
+    </finalyearproject.iseqStockExchange.SplashScreen.views.ObservableScrollView>
 
 
 
@@ -32,7 +32,7 @@
             android:src="@drawable/icon_unfilled"
             android:visibility="visible" />
 
-        <finalyearproject.drawer.SplashScreen.views.BottomCropImage
+        <finalyearproject.iseqStockExchange.SplashScreen.views.BottomCropImage
             android:id="@+id/mask_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
